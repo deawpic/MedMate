@@ -140,5 +140,5 @@ The system connects to authoritative global repositories (PubMed, US FDA, WHO Gl
 
 - **`read_file`**, **`search_files`**, **`list_directory`**: Sandboxed access strictly within `./RAG` (e.g. `"case_study_01.txt"`, `"case_study_03.txt"`).
 
-
-
+### 4.1 💾 User File Export Destination (`./output/`)
+- All generated reports, clinical cheat-sheets, exported markdown summaries, or data files requested by the user must be saved inside `./output/` (e.g. `./output/filename.md`).

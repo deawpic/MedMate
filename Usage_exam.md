@@ -13,9 +13,9 @@
    - [3-Pillar MCP Architecture](#3--ขุมพลัง-3-เสาหลักของ-model-context-protocol-mcp)
 3. [🗂️ สารบัญเคสศึกษาจำลอง 10 โรคในคลังความรู้ (RAG Case Studies)](#️-สารบัญเคสศึกษาจำลองในคลังความรู้-rag)
 4. [📋 ตัวอย่างข้อความคำถามทดสอบจริง (Usage & Examination Prompts)](#-ตัวอย่างข้อความคำถามทดสอบจริง-usage--examination-prompts)
-   - [Tier 2: สำหรับนักศึกษาแพทย์ (Medical Student Mode)](#-1-ตัวอย่างสำหรับ-นักศึกษาแพทย์-นศพ-tier-2---medical-student-mode)
-   - [Tier 1: สำหรับแพทย์ / บุคลากรคลินิก (Doctor Mode)](#-2-ตัวอย่างสำหรับ-แพทย์--บุคลากรคลินิก-tier-1---doctor-mode)
-   - [Tier 3: สำหรับคนทั่วไป / ผู้ป่วย (Patient Mode)](#-3-ตัวอย่างสำหรับ-คนทั่วไป--คนไข้-tier-3---patient-mode)
+   - [Tier 2: สำหรับนักศึกษาแพทย์ (Medical Student Mode) — ครบ 10 เคส](#-1-ตัวอย่างสำหรับ-นักศึกษาแพทย์-นศพ-tier-2---medical-student-mode)
+   - [Tier 1: สำหรับแพทย์ / บุคลากรคลินิก (Doctor Mode) — ครบ 10 เคส](#-2-ตัวอย่างสำหรับ-แพทย์--บุคลากรคลินิก-tier-1---doctor-mode)
+   - [Tier 3: สำหรับคนทั่วไป / ผู้ป่วย (Patient Mode & Red Flags)](#-3-ตัวอย่างสำหรับ-คนทั่วไป--คนไข้-tier-3---patient-mode)
    - [Medical Terminologies MCP Prompts](#️-4-ตัวอย่างการสืบค้นรหัสมาตรฐานสากล-medical-terminologies-mcp)
    - [Medical MCP Prompts (DDI, PubMed, Guidelines)](#-5-ตัวอย่างการสืบค้นหลักฐานงานวิจัยและความปลอดภัยของยา-medical-mcp)
 5. [🛡️ ความปลอดภัย การคุ้มครองข้อมูล และการตรวจวัดผล (Safety & Governance)](#️-ความปลอดภัย-การคุ้มครองข้อมูล-และการตรวจวัดผล-safety--governance)
@@ -124,13 +124,33 @@ graph TB
     > `[นศพ.ปี 4] รบกวนอ่านเคส RAG/case_study_02.txt แล้วช่วยอธิบายความสัมพันธ์ระหว่าง EKG ที่พบ ST elevation ใน lead II, III, aVF, V4R กับหลอดเลือดหัวใจ Right Coronary Artery (RCA) พร้อมเหตุผลว่าทำไมเคสนี้จึงห้ามให้ Nitroglycerin`
     - **สาระสำคัญที่คาดหวัง:** อธิบายการอุดกั้นของ Proximal RCA ส่งผลต่อ PDA (Inferior LV wall) และ Marginal branches (RV wall), กลไก Preload Dependency ของหัวใจห้องขวา และผลของ Nitroglycerin ที่ลด Preload จนเกิด Cardiovascular Collapse
 
+*   **ตัวอย่างเคส 03 (Acute Ischemic Stroke / NIHSS & Thrombolysis Window):**
+    > `[นศพ.ปี 5] จากเคส RAG/case_study_03.txt ช่วยวิเคราะห์คะแนน NIHSS = 16 และประเมินเกณฑ์ Inclusion/Exclusion criteria ในการพิจารณาให้ Intravenous rt-PA (Alteplase) ในคนไข้รายนี้ พร้อมอธิบายกลไก Cardioembolic Stroke จาก AF`
+    - **สาระสำคัญที่คาดหวัง:** ประเมิน Onset-to-door 90 นาที (< 4.5 ชม. Golden Period), ตรวจสอบผล NCCT Brain ไม่มีเลือดออก (No ICH), ค่า INR 1.28 (< 1.7) จึงผ่านเกณฑ์รับ rt-PA (0.9 mg/kg), และอธิบายการเกิดลิ่มเลือดจาก Left Atrial Appendage ในผู้ป่วย Atrial Fibrillation ที่ทาน Warfarin ไม่สม่ำเสมอ
+
+*   **ตัวอย่างเคส 04 (Severe CAP / CURB-65 Calculation & Microbiology):**
+    > `[นศพ.ปี 4] ช่วยแสดงวิธีคำนวณและแจกแจงเกณฑ์ CURB-65 Score จากข้อมูลผู้ป่วยใน RAG/case_study_04.txt พร้อมอธิบายผลย้อมเสมหะ Gram-positive diplococci และสรุปแนวทางการให้ยาปฏิชีวนะตาม Sepsis Hour-1 Bundle`
+    - **สาระสำคัญที่คาดหวัง:** แจกแจง 5 องค์ประกอบ (C=1, U=1, R=1, B=1, 65=0) รวม CURB-65 = 4 (High risk รับเข้า ICU), ระบุเชื้อก่อโรค Streptococcus pneumoniae จากเสมหะสีสนิม, เจาะ Hemoculture, วัด Lactate, สารน้ำ 30 mL/kg, Empirical Ceftriaxone + Azithromycin
+
+*   **ตัวอย่างเคส 05 (Cirrhosis / Variceal Bleeding & Restrictive Transfusion):**
+    > `[นศพ.ปี 6] ช่วยสรุปหลักการ Restrictive Blood Transfusion Strategy (Target Hb 7-8 g/dL) และกลไกของยา Somatostatin/Octreotide ในการลด Portal Pressure พร้อมคำนวณ Child-Pugh Score จากเคส RAG/case_study_05.txt`
+    - **สาระสำคัญที่คาดหวัง:** อธิบายเป้าหมายการให้เลือดรักษาระดับ Target Hb 7–8 g/dL เพื่อป้องกันการเพิ่มขึ้นของ Portal Pressure และการเกิด Rebleeding, กลไกของ Octreotide ในการหดหลอดเลือด Splanchnic circulation, การให้ Ceftriaxone ป้องกัน SBP, และคำนวณ Child-Pugh Class C (13 คะแนน)
+
 *   **ตัวอย่างเคส 06 (Severe Asthma / ABG Pitfall):**
     > `[นศพ.ปี 4] รบกวนวิเคราะห์ผล ABG จาก RAG/case_study_06.txt ที่พบ PaCO2 = 42 mmHg ในคนไข้หอบเหนื่อยรุนแรง ว่าเหตุใดจึงเป็นสัญญาณเตือนวิกฤตของ Respiratory Muscle Exhaustion พร้อมระบุกลไกยา IV Magnesium Sulfate`
-    - **สาระสำคัญที่คาดหวัง:** อธิบายภาวะ Pseudo-normal PaCO2 ที่แสดงถึงกล้ามเนื้อหายใจล้า, กลไกของ Magnesium Sulfate ในการยับยั้ง Calcium influx สู่เซลล์กล้ามเนื้อเรียบหลอดลม
+    - **สาระสำคัญที่คาดหวัง:** อธิบายภาวะ Pseudo-normal PaCO2 ที่แสดงถึงกล้ามเนื้อหายใจล้า (Impending Arrest), กลไกของ Magnesium Sulfate ในการยับยั้ง Calcium influx สู่เซลล์กล้ามเนื้อเรียบหลอดลม
+
+*   **ตัวอย่างเคส 07 (Biliary Pancreatitis / BISAP Score & Pathophysiology):**
+    > `[นศพ.ปี 5] จากเคส RAG/case_study_07.txt ช่วยแจกแจงเกณฑ์วินิจฉัย Acute Pancreatitis ตาม Atlanta Criteria, คำนวณ BISAP Score = 3 และอธิบายความสำคัญของค่า ALT > 150 U/L ในการระบุสาเหตุ Gallstone Pancreatitis`
+    - **สาระสำคัญที่คาดหวัง:** แจกแจงอาการปวดร้าวไปหลัง + Lipase > 3x + US Abdomen, อธิบาย BISAP 3 คะแนน (BUN>25, SIRS, Age>55), และความจำเพาะสูง (>95%) ของ ALT > 150 U/L
 
 *   **ตัวอย่างเคส 08 (Anaphylaxis / Epinephrine Route):**
     > `[นศพ.ปี 5] จากเคส RAG/case_study_08.txt ช่วยอธิบายพยาธิสรีรวิทยาของ Anaphylactic Shock และให้เหตุผลว่าทำไมต้องฉีด Epinephrine เข้ากล้ามเนื้อต้นขาด้านข้าง (IM Anterolateral Thigh) เท่านั้น โดยห้ามรอให้ยาแก้แพ้หรือสเตียรอยด์ก่อน`
     - **สาระสำคัญที่คาดหวัง:** อธิบายกลไก Type I IgE-mediated Mast cell degranulation, เภสัชจลนศาสตร์ของการดูดซึมยาผ่าน Vastus lateralis ที่รวดเร็วกว่ากล้ามเนื้ออื่นอย่างมีนัยสำคัญ
+
+*   **ตัวอย่างเคส 09 (Hypertensive Emergency / Afterload Mismatch):**
+    > `[นศพ.ปี 4] รบกวนอธิบายกลไก Afterload Mismatch ที่ทำให้เกิด Flash Pulmonary Edema ในเคส RAG/case_study_09.txt พร้อมอธิบายเหตุผลว่าทำไมจึงห้ามเจาะบีบ Sublingual Nifedipine ใต้ลิ้นเด็ดขาด`
+    - **สาระสำคัญที่คาดหวัง:** อธิบายความดันโลหิตสูงรุนแรงทำให้เกิด Systemic Vascular Resistance สูงจน LV บีบเลือดไม่ออก เลือดคั่งย้อนกลับสู่ปอด, ผลอันตรายของ Sublingual Nifedipine ที่ทำให้เกิด Precipitous BP drop จนสมอง/หัวใจขาดเลือด
 
 *   **ตัวอย่างเคส 10 (SIADH / ODS Pathophysiology):**
     > `[นศพ.ปี 6] ช่วยอธิบายเกณฑ์วินิจฉัย SIADH จากเคส RAG/case_study_10.txt และอธิบายกลไกการเกิด Osmotic Demyelination Syndrome (ODS) หากแก้ไขระดับโซเดียมเร็วเกิน 8 mEq/L ใน 24 ชั่วโมง`
@@ -140,27 +160,67 @@ graph TB
 
 ### 🩺 2. ตัวอย่างสำหรับ "แพทย์ / บุคลากรคลินิก" [Tier 1 - Doctor Mode]
 
+*   **ตัวอย่างเคส 01 (Endocrine / DKA Resuscitation Protocol):**
+    > `[Doctor Context] ขอ Evidence-based Protocol สำหรับ DKA with Prerenal AKI ใน RAG/case_study_01.txt: การปรับชนิดสารน้ำ IV Fluid, การให้ Regular Insulin Infusion หลังตรวจ K, และเกณฑ์การพิจารณา Resolution of DKA (Anion gap normalization)`
+    - **สาระสำคัญที่คาดหวัง:** IV Saline Resuscitation, Regular Insulin 0.1 U/kg/hr เมื่อ K > 3.3 mEq/L, เติม Potassium เมื่อ K < 5.0, เป้าหมายรักษาจนกว่า Anion Gap ปิด (< 12) และ Bicarbonate > 18
+
 *   **ตัวอย่างเคส 02 (Cardiology / Primary PCI Protocol):**
     > `[Doctor Context] เคส DIS-2026-0092 ใน RAG/case_study_02.txt ขอ Comprehensive Management Protocol สำหรับ Inferior STEMI with RV Infarction & Cardiogenic Shock ระหว่างรอ Cath Lab (DAPT loading, Vasopressor choice, and Inotropic support)`
     - **สาระสำคัญที่คาดหวัง:** สื่อสารกระชับแบบ Peer-to-Peer, DAPT Loading (Aspirin 300 mg + Ticagrelor 180 mg), Norepinephrine IV พยุงความดัน, เตรียม Emergency Primary PCI (< 90 นาที), เตือนห้ามให้ Nitrates/Morphine/Diuretics
+
+*   **ตัวอย่างเคส 03 (Neurology / Thrombolysis & EVT Protocol):**
+    > `[Doctor Context] เคส Acute Ischemic Stroke ใน RAG/case_study_03.txt ขอ Clinical Consensus เรื่อง Post-thrombolysis BP management (< 180/105 mmHg), การเฝ้าระวัง Hemorrhagic Transformation, และข้อบ่งชี้ในการส่งทำ Emergency Mechanical Thrombectomy (EVT) ในกรณี Large Vessel Occlusion`
+    - **สาระสำคัญที่คาดหวัง:** แนะนำเกณฑ์คุมความดัน Target BP < 180/105 mmHg หลังให้ rt-PA (Nicardipine/Labetalol IV), ตรวจสอบ INR < 1.7 และ NCCT No ICH, ข้อบ่งชี้ส่ง CTA/CTP เพื่อประเมิน EVT ลากลิ่มเลือด
+
+*   **ตัวอย่างเคส 04 (Pulmonary / Sepsis Hour-1 Bundle & Empiric Abx):**
+    > `[Doctor Context] เคส Severe CAP with Sepsis (CURB-65 = 4) ใน RAG/case_study_04.txt ขอ Guideline-directed Sepsis Resuscitation Bundle: การให้ IV Fluid 30 mL/kg, การเลือก Empiric Antibiotics (Beta-lactam + Macrolide), และข้อบ่งชี้การย้ายเข้า ICU`
+    - **สาระสำคัญที่คาดหวัง:** ปฏิบัติตาม Surviving Sepsis Campaign 1-Hour Bundle: Hemoculture x 2, Serum Lactate, Crystalloid 30 mL/kg, IV Ceftriaxone 2g OD + Azithromycin 500mg OD, ย้ายเข้า ICU
+
+*   **ตัวอย่างเคส 05 (GI / Variceal Bleeding & Secondary Prophylaxis):**
+    > `[Doctor Context] คนไข้ Cirrhosis Child-Pugh Class C ที่มี Acute Variceal Bleeding s/p EVL ใน RAG/case_study_05.txt ขอ Clinical Guidelines ล่าสุดเรื่องการให้ Prophylactic Ceftriaxone ร่วมกับการเริ่มยา Non-selective Beta-blockers (Carvedilol vs Propranolol) สำหรับ Secondary Prophylaxis`
+    - **สาระสำคัญที่คาดหวัง:** แนะนำ Ceftriaxone 1 g IV OD นาน 5–7 วัน, การเริ่ม NSBB (Carvedilol หรือ Propranolol) หลังจากผู้ป่วยมีเสถียรภาพทางโลหิตวิทยาและหยุดเลือดแล้ว พร้อมนัดทำ EVL ซ้ำทุก 2–4 สัปดาห์
+
+*   **ตัวอย่างเคส 06 (Critical Care / Severe Asthma Ventilation):**
+    > `[Doctor Context] เคส Acute Severe Asthma with Impending Exhaustion (PaCO2 42 mmHg) ใน RAG/case_study_06.txt ขอ ICU Management Protocol: การให้ Continuous SABA/Ipratropium, IV Steroid, IV Magnesium Sulfate 2g, และกลยุทธ์การตั้งเครื่องช่วยหายใจ (Permissive Hypercapnia) หากต้อง Intubation`
+    - **สาระสำคัญที่คาดหวัง:** แนะนำ IV MgSO4 2g drip 20 min, IV Methylprednisolone, หากต้องใส่ท่อช่วยหายใจให้ใช้กลยุทธ์ Permissive Hypercapnia (Low Tidal Volume 6-8 mL/kg, Low RR, Prolonged Expiratory time) เพื่อป้องกัน Dynamic Hyperinflation (Auto-PEEP)
 
 *   **ตัวอย่างเคส 07 (GI / Acute Biliary Pancreatitis Management):**
     > `[Doctor Context] คนไข้หญิง 58 ปี ใน RAG/case_study_07.txt สงสัย Gallstone Pancreatitis with BISAP 3 ขอ Management Bundle: การปรับอัตรา Fluid Resuscitation ด้วย Lactated Ringer's, ข้อบ่งชี้ Urgent ERCP within 24-48h, และ Position เรื่อง Prophylactic Antibiotics`
     - **สาระสำคัญที่คาดหวัง:** แนะนำ Goal-directed Ringer's lactate (200-250 mL/hr), ข้อบ่งชี้ ERCP ในรายที่มี Cholangitis/Biliary obstruction, และยืนยันไม่แนะนำยาปฏิชีวนะป้องกันหากไม่มีหลักฐานติดเชื้อ
 
-*   **ตัวอย่างเคส 09 (Cardiology / Hypertensive Emergency):**
+*   **ตัวอย่างเคส 08 (Emergency / Refractory Anaphylactic Shock):**
+    > `[Doctor Context] เคส Anaphylactic Shock ใน RAG/case_study_08.txt หากผู้ป่วยได้รับ IM Epinephrine 0.5 mg ไปแล้ว 2 โดส แต่ BP ยังคงอยู่ที่ 70/40 mmHg ขอ Refractory Anaphylaxis Protocol (IV Epinephrine infusion titration, IV Glucagon indication for beta-blocker users)`
+    - **สาระสำคัญที่คาดหวัง:** แนะนำเริ่ม IV Epinephrine Continuous Infusion (0.1-0.5 mcg/kg/min Titrate), IV Fluid Bolus ต่อเนื่อง, และพิจารณาให้ IV Glucagon 1-5 mg ในผู้ป่วยที่ทาน Beta-blockers อยู่เดิม
+
+*   **ตัวอย่างเคส 09 (Cardiology / Hypertensive Emergency Management):**
     > `[Doctor Context] เคส DIS-2026-0099 ใน RAG/case_study_09.txt มี BP 238/136 mmHg with Flash Pulmonary Edema ขอ Titration protocol ของ IV Nicardipine/Nitroglycerin, เป้าหมาย MAP Reduction ใน 1 ชั่วโมงแรก, และข้อห้ามใช้ของ Sublingual Nifedipine`
     - **สาระสำคัญที่คาดหวัง:** แนะนำลด MAP ไม่เกิน 20-25% ใน 1 ชม.แรก, Titrate IV Nicardipine (5-15 mg/hr) หรือ IV NTG, ให้ IV Furosemide, ใช้ NIV BiPAP, และเน้นย้ำ Black Box Warning ห้ามใช้ Sublingual Nifedipine
+
+*   **ตัวอย่างเคส 10 (Nephrology / SIADH Hypertonic Saline Protocol):**
+    > `[Doctor Context] เคส Severe Symptomatic Hyponatremia (Na 112 mEq/L) จาก SSRI-induced SIADH ใน RAG/case_study_10.txt ขอ 3% Hypertonic Saline Bolus Protocol, อัตราเป้าหมายการแก้ Na ใน 24 ชั่วโมงแรก (< 8 mEq/L), และแนวทางการจัดการกรณี Overcorrection ด้วย Desmopressin (dDAVP)`
+    - **สาระสำคัญที่คาดหวัง:** แนะนำ 3% NaCl 100 mL IV bolus x 1-2 doses (ดึง Na ขึ้น 4-6 mEq/L ทันที), ตั้งเป้าแก้ไม่เกิน 8 mEq/L/day เพื่อป้องกัน ODS, หาก Overcorrection ให้หยุด 3% NaCl และให้ D5W หรือ Desmopressin (dDAVP) 1-2 mcg IV
 
 ---
 
 ### 👥 3. ตัวอย่างสำหรับ "คนทั่วไป / คนไข้" [Tier 3 - Patient Mode]
 
-*   **ตัวอย่างข้อความสอบถามอาการฉุกเฉิน (Red Flag Trigger - แน่นหน้าอก):**
+*   **ตัวอย่างเคส 02 (Red Flag Trigger - แน่นหน้าอกสงสัยกล้ามเนื้อหัวใจขาดเลือด):**
     > `คุณพ่อมีอาการแน่นหน้าอกเหมือนโดนเหงื่อแตกท่วมตัว หายใจไม่อิ่มมา 2 ชั่วโมงแล้ว แบบนี้ควรทำอย่างไรดีครับ`
     - **พฤติกรรมคำตอบที่คาดหวัง:** AI จะตรวจจับว่าเป็นสัญญาณวิกฤตของกล้ามเนื้อหัวใจขาดเลือดเฉียบพลัน และขึ้นคำเตือนตัวหนาสีแดงให้โทรแจ้งสายด่วน **1669** หรือนำส่งห้องฉุกเฉินทันที ห้ามขับรถไปเอง และห้ามรับประทานยาใดๆ โดยพลการ พร้อมแนบท้ายด้วยข้อความคำเตือนทางการแพทย์
 
-*   **ตัวอย่างข้อความสอบถามอาการแพ้ยารุนแรง (Red Flag Trigger - ปากบวมหายใจไม่ออก):**
+*   **ตัวอย่างเคส 03 (Red Flag Trigger - อาการสโตรก FAST ปากเบี้ยว แขนขาอ่อนแรง):**
+    > `คุณแม่กำลังทานข้าวอยู่แล้วจู่ๆ ช้อนหลุดมือ ปากเบี้ยวด้านขวา พูดไม่ออก เรียกแล้วตอบไม่รู้เรื่อง เพิ่งเป็นเมื่อกี้เลยค่ะ`
+    - **พฤติกรรมคำตอบที่คาดหวัง:** ตรวจจับสัญญาณ FAST ของโรคหลอดเลือดสมองเฉียบพลัน ขึ้นคำเตือนตัวหนาให้รีบโทร **1669** หรือนำส่งศูนย์หลอดเลือดสมอง (Stroke Center) ทันทีภายใน Golden Period ห้ามป้อนน้ำ ป้อนอาหาร หรือให้ยานอนหลับเด็ดขาด
+
+*   **ตัวอย่างเคส 04 (Red Flag Trigger - ไข้สูง หายใจหอบ สับสน ปอดบวมติดเชื้อ):**
+    > `คุณยายอายุ 74 ปี มีไข้สูง ไอมีเสมหะสีสนิม หายใจหอบเหนื่อยมาก และเริ่มพูดจาสับสนจำลูกหลานไม่ได้ อันตรายไหมครับ`
+    - **พฤติกรรมคำตอบที่คาดหวัง:** ตรวจจับสัญญาณเตือนวิกฤตของปอดอักเสบติดเชื้อรุนแรงและภาวะติดเชื้อในกระแสเลือด (Sepsis) ขึ้นเตือนให้นำส่งโรงพยาบาลหรือโทร **1669** ทันที ห้ามรอสังเกตอาการที่บ้าน
+
+*   **ตัวอย่างเคส 05 (Red Flag Trigger - อาเจียนเป็นเลือด ถ่ายดำ ตับแข็ง):**
+    > `ผู้ป่วยโรคตับแข็ง จู่ๆ อาเจียนออกมาเป็นเลือดสดหลายครั้ง และมีถ่ายอุจจาระเป็นสีดำเหนียว ตัวเย็นเฉียบ ทำอย่างไรดีครับ`
+    - **พฤติกรรมคำตอบที่คาดหวัง:** ตรวจจับภาวะเลือดออกในทางเดินอาหารส่วนบนขั้นวิกฤต (Variceal Bleeding) ขึ้นเตือน **1669** ทันที แนะนำจัดท่านอนตะแคงเพื่อป้องกันการสำลักเลือดลงปอด งดน้ำงดอาหารเด็ดขาด
+
+*   **ตัวอย่างเคส 08 (Red Flag Trigger - แพ้ยารุนแรง ปากบวม หายใจไม่ออก):**
     > `ทานยาฆ่าเชื้อแล้วมีผื่นขึ้นเต็มตัว ปากบวม แน่นคอ หายใจมีเสียงดังฮืดๆ หน้ามืดมาก ทำอย่างไรดีคะ`
     - **พฤติกรรมคำตอบที่คาดหวัง:** ตรวจจับภาวะแพ้ยารุนแรง (Anaphylaxis) ขึ้นเตือนโทร **1669** ทันที ให้นอนราบยกขาสูง ห้ามลุกยืนหรือเดิน และนำซองยาที่ทานติดตัวไปด้วย
 

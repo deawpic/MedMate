@@ -202,5 +202,6 @@ graph TB
 
 1. **🚨 Red Flag Interceptor:** หากตรวจพบอาการวิกฤต (เจ็บแน่นหน้าอก, อาการสโตรก FAST, DKA ช็อก, หอบหืดวิกฤต, แพ้ยา Anaphylaxis) ระบบจะขึ้นเตือนเป็นข้อความฉุกเฉินตัวหนาสีแดง ให้โทรเรียกรถพยาบาล **1669** หรือไปห้องฉุกเฉินทันที
 2. **🔒 Patient Privacy & De-identification:** เซนเซอร์และลบข้อมูลระบุตัวตนบุคคล (ชื่อ-นามสกุล, เลขประจำตัวผู้ป่วย HN/AN, เบอร์โทรศัพท์) ตามมาตรฐาน PDPA / HIPAA
-3. **🧪 Clinical Benchmark Evaluation Harness:** มีระบบทดสอบความแม่นยำเทียบกับ Ground Truth ครบทั้ง 10 เคส ([`evals/eval_case_study.py`](evals/eval_case_study.py)) โดยมีผลการทดสอบผ่าน **100% ทุกเคส**
-4. **⚙️ MCP Diagnostic & Auto-Fix:** สคริปต์ตรวจความพร้อมของสภาพแวดล้อมระบบ ([`check_mcp_health.py`](.agents/skills/config_manager_skill/scripts/check_mcp_health.py)) สำหรับตรวจสอบ Node.js, NPX, และ JSON Configuration
+3. **🛡️ Anti-Hallucination & Verified Citations:** ห้ามประดิษฐ์หรือเดาตัวเลข PMID, DOI หรือสร้างผลแล็บขึ้นมาเองเด็ดขาด อ้างอิงเฉพาะงานวิจัยที่ค้นพบจริงผ่าน MCP เท่านั้น และแจ้งตามตรงหากไม่พบหลักฐานในหัวข้อนั้นๆ
+4. **🧪 Clinical Benchmark Evaluation Harness:** มีระบบทดสอบความแม่นยำเทียบกับ Ground Truth ครบทั้ง 10 เคส ([`evals/eval_case_study.py`](evals/eval_case_study.py)) โดยมีผลการทดสอบผ่าน **100% ทุกเคส**
+5. **⚙️ MCP Diagnostic & Auto-Fix:** สคริปต์ตรวจความพร้อมของสภาพแวดล้อมระบบ ([`check_mcp_health.py`](.agents/skills/config_manager_skill/scripts/check_mcp_health.py)) สำหรับตรวจสอบ Node.js, NPX, และ JSON Configuration

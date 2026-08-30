@@ -1,0 +1,15 @@
+# Output & Temporary Exports
+output/
+
+# Python cache & environment
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+
+# OS & IDE
+.DS_Store
+.vscode/
+.idea/

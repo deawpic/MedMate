@@ -56,10 +56,9 @@ def inspect_and_fix_mcp_config(config_path: Path, auto_fix: bool = False):
         args = srv_conf.get("args", [])
         cmd_available = check_command_exists(cmd)
         
-        # Check for outdated or known broken package names
-        if auto_fix and name == "medical-terminologies":
-            # Fix legacy package name "@sidneybissoli/medical-terminologies-mcp" -> "medical-terminologies-mcp@latest"
-            if args and "@sidneybissoli/medical-terminologies-mcp" in args:
+        # Check for outdated or known broken package names / inspector usage
+        if auto_fix and ("medical-terminologies" in name or name == "medical-terminologies-mcp"):
+            if args and ("@sidneybissoli/medical-terminologies-mcp" in args or "@modelcontextprotocol/inspector" in args):
                 print(f"    [FIX] Updating '{name}' args to official 'medical-terminologies-mcp@latest'...")
                 srv_conf["args"] = ["-y", "medical-terminologies-mcp@latest"]
                 needs_save = True

@@ -11,11 +11,7 @@
       "command": "npx",
       "args": [
         "-y",
-        "@modelcontextprotocol/inspector",
-        "--transport",
-        "streamable-http",
-        "--server-url",
-        "https://medical.sidneybissoli.com/mcp"
+        "medical-terminologies-mcp@latest"
       ]
     },
     "local-rag": {

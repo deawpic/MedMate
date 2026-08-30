@@ -1,0 +1,73 @@
+====================================================================
+บันทึกประวัติผู้ป่วยจำลองเพื่อการศึกษาทางการแพทย์ (CONFIDENTIAL MEDICAL STUDY CASE)
+ID: DIS-2026-0100
+ศาลาผู้ป่วย: หอผู้ป่วยอายุรกรรมโรคไตและระบบประสาท (Nephrology & Neurology Ward)
+====================================================================
+
+[Chief Complaint (อาการสำคัญ)]
+ผู้ป่วยหญิงไทยอายุ 66 ปี มีอาการสับสน ซึมลง เดินเซ กล้ามเนื้อกระตุก และพูดจาวกวน เป็นมา 2 วันก่อนมาโรงพยาบาล
+
+[Present Illness (ประวัติปัจจุบัน)]
+ผู้ป่วยมีโรคประจำตัวเป็นภาวะซึมเศร้า (Major Depressive Disorder) และโรคนอนไม่หลับ ได้รับการปรับเพิ่มยาต้านเศร้ากลุ่ม SSRI (Sertraline 100 mg/day) เมื่อ 3 สัปดาห์ก่อน
+2 วันก่อนมาโรงพยาบาล ญาติสังเกตว่าผู้ป่วยเริ่มมีอาการเซื่องซึม เฉื่อยชา เบื่ออาหาร คลื่นไส้ ปวดศีรษะตื้อๆ และมีอาการสับสน ถามตอบช้า จำวันเวลาและสถานที่ไม่ได้
+1 วันก่อนมาโรงพยาบาล ผู้ป่วยมีอาการเดินเซ ทรงตัวไม่อยู่ ล้มในห้องน้ำ 1 ครั้ง มีอาการกระตุกของกล้ามเนื้อแขนขาเป็นระยะ (Myoclonic jerks) และมีอาการง่วงซึม ปลุกตื่นยากขึ้นเรื่อยๆ ญาติจึงนำตัวส่งโรงพยาบาลเพื่อตรวจหาสาเหตุ
+
+[Past Medical History (ประวัติอดีต)]
+- Major Depressive Disorder (ยาเดิม: Sertraline 100 mg 1x1 pc เช้า)
+- ปฏิเสธประวัติการรับประทานยาขับปัสสาวะ (No Diuretics)
+- ปฏิเสธประวัติโรคหัวใจล้มเหลว โรคตับแข็ง หรือโรคไตเรื้อรัง
+- ปฏิเสธประวัติอุบัติเหตุทางศีรษะ
+- ปฏิเสธประวัติการดื่มสุราหรือสูบบุหรี่
+
+[Physical Examination (ผลตรวจร่างกายที่ห้องฉุกเฉิน)]
+- Vital Signs: T 36.8 C, BP 126/78 mmHg (Normotensive), HR 74 bpm, RR 16 bpm, SpO2 99% on Room air
+- General Appearance: An elderly Thai female, drowsy, disoriented to time and place, responding to verbal stimuli slowly (GCS E3V4M6 = 13).
+- Fluid Volume Status (Euvolemic Assessment):
+  - Skin turgor normal, mucous membranes moist, axillae moist.
+  - JVP 2 cm above sternal angle (Normal JVP, no elevated venous pressure, no flat neck veins).
+  - Chest: Clear breath sounds bilaterally, no crackles, no wheezing.
+  - Heart: Normal S1 S2, no murmur, no S3/S4.
+  - Abdomen: Soft, non-tender, no ascites.
+  - Extremities: No pedal edema, no pretibial pitting edema.
+- Neurological Examination:
+  - Cranial nerves intact, pupils 3 mm equal and reactive to light bilaterally.
+  - Motor: Power grade 4/5 all extremities with generalized hypotonia and occasional myoclonic twitches.
+  - Reflexes: Hyporeflexia (1+ generalized), Babinski sign negative.
+  - Cerebellar: Unable to perform tandem gait, past-pointing absent.
+
+[Laboratory & Diagnostic Results (ผลตรวจทางห้องปฏิบัติการและการตรวจพิเศษ)]
+
+1. Serum Electrolytes & Osmolality (Stat):
+   - Serum Sodium (Stat POC & Lab confirmed): 112 mEq/L (Severe Hypotonic Hyponatremia: < 120 mEq/L)
+   - Serum Potassium: 4.1 mEq/L
+   - Serum Chloride: 78 mEq/L
+   - Serum Bicarbonate: 24 mEq/L
+   - Measured Serum Osmolality: 236 mOsm/kg H2O (Hypotonic: Normal 275-295 mOsm/kg)
+   - Blood Glucose (Stat): 104 mg/dL (Pseudo-hyponatremia from hyperglycemia ruled out)
+   - Blood Urea Nitrogen (BUN): 7 mg/dL (Low, typical of SIADH / volume expansion)
+   - Serum Creatinine: 0.6 mg/dL, Serum Uric Acid: 2.4 mg/dL (Hypouricemia < 4.0 mg/dL: classic for SIADH)
+
+2. Urine Chemistry & Osmolality:
+   - Urine Sodium: 68 mEq/L (Inappropriately high > 30-40 mEq/L in the presence of severe hyponatremia)
+   - Urine Osmolality: 490 mOsm/kg H2O (Inappropriately concentrated > 100 mOsm/kg H2O, > Serum Osmolality)
+
+3. Endocrine & Organ Function:
+   - Thyroid Stimulating Hormone (TSH): 2.4 uIU/mL, Free T4: 1.2 ng/dL (Normal euthyroid)
+   - Morning Serum Cortisol: 18.5 mcg/dL (Adrenal insufficiency ruled out)
+   - Non-Contrast Computed Tomography of Brain (NCCT Brain): Mild diffuse cerebral edema, no acute intracranial hemorrhage, no acute large-territory territorial infarction.
+
+====================================================================
+[Educational Objectives for RAG Evaluation]
+เคสนี้ถูกออกแบบมาเพื่อทดสอบการวินิจฉัยและรักษาภาวะโซเดียมในเลือดต่ำรุนแรง (Severe Symptomatic Euvolemic Hyponatremia from SIADH):
+1. การวินิจฉัยภาวะ SIADH (Syndrome of Inappropriate Antidiuretic Hormone Secretion) ทุติยภูมิต่อการใช้ยา SSRI (Sertraline) ตาม Bartter-Schwartz Criteria:
+   - Hypotonic hyponatremia (Serum Na 112, Posm 236)
+   - Clinical Euvolemia (ไม่มีบวม ไม่มีภาวะขาดน้ำ)
+   - Inappropriate urinary concentration (Uosm 490 > 100) ร่วมกับ Natriuresis (UNa 68 > 40 mEq/L)
+   - ตัดสาเหตุ Hypothyroidism และ Adrenal insufficiency เรียบร้อย
+2. การรักษาภาวะฉุกเฉินที่มีอาการทางระบบประสาทรุนแรง (Severe Neurological Symptoms):
+   - ให้ **3% Hypertonic Saline (3% NaCl) IV Bolus 100 mL over 10-15 minutes** (สามารถให้ซ้ำได้ 1-2 ครั้งหากยังมีอาการทางระบบประสาท) เพื่อดึงระดับ Serum Sodium ขึ้นมา 4-6 mEq/L ในระยะเฉียบพลัน เพื่อลดภาวะสมองบวม (Cerebral Edema / Herniation risk)
+3. กฎความปลอดภัยขั้นสูงสุดเพื่อป้องกัน Osmotic Demyelination Syndrome (ODS / Central Pontine Myelinolysis):
+   - **Strict Rate of Correction:** ห้ามแก้ระดับ Serum Sodium เร็วเกินไป โดยต้อง **ไม่เกิน 8 mEq/L ใน 24 ชั่วโมงแรก** (เป้าหมายปลอดภัยอยู่ที่ 4-6 mEq/L/day)
+   - หากระดับโซเดียมขึ้นเร็วเกินเกณฑ์ (> 8 mEq/L ใน 24 ชม.) ต้องหยุดให้สารละลาย Hypertonic ทันที และพิจารณาให้ D5W หรือ Desmopressin (dDAVP) เพื่อ Re-lower serum sodium
+4. การรักษาสาเหตุระยะยาว: หยุดยา SSRI (Sertraline) ทันที และจำกัดปริมาณน้ำดื่ม (Fluid Restriction < 800 - 1,000 mL/day)
+====================================================================

@@ -1,0 +1,56 @@
+====================================================================
+บันทึกประวัติผู้ป่วยจำลองเพื่อการศึกษาทางการแพทย์ (CONFIDENTIAL MEDICAL STUDY CASE)
+ID: DIS-2026-0099
+ศาลาผู้ป่วย: หอผู้ป่วยวิกฤตหัวใจและหลอดเลือด (CCU / Emergency Resuscitation)
+====================================================================
+
+[Chief Complaint (อาการสำคัญ)]
+ผู้ป่วยชายไทยอายุ 68 ปี มีอาการหายใจหอบเหนื่อยรุนแรงเฉียบพลัน นอนราบไม่ได้ ไอมีฟองเสมหะปนเลือดสีชมพู และความดันโลหิตสูงวิกฤต เป็นมา 1.5 ชั่วโมงก่อนมาโรงพยาบาล
+
+[Present Illness (ประวัติปัจจุบัน)]
+ผู้ป่วยมีโรคประจำตัวเป็นโรคความดันโลหิตสูง (Essential Hypertension) มานานกว่า 15 ปี และโรคไตเรื้อรังระยะเริ่มต้น (CKD Stage 3a) ขาดยาและหยุดรับประทานยาลดความดันโลหิต (Amlodipine, Losartan) มานานกว่า 1 เดือนเนื่องจากคิดว่าไม่มีอาการผิดปกติ
+1.5 ชั่วโมงก่อนมาโรงพยาบาล ขณะกำลังนอนหลับ ผู้ป่วยตื่นขึ้นมากลางดึกด้วยอาการสำลักและหายใจไม่ออกรุนแรง (Paroxysmal Nocturnal Dyspnea) ไม่สามารถนอนราบได้ ต้องลุกขึ้นมานั่งกอดเข่าริมเตียง (Orthopnea) หายใจหอบเหนื่อย เหงื่อแตกท่วมตัว ปากซีดเขียว ไอมีเสมหะเป็นฟองละเอียดสีชมพู (Pink frothy sputum) ผู้ป่วยรู้สึกแน่นหน้าอกและปวดศีรษะตุบๆ ทั่วศีรษะ ญาติวัดความดันโลหิตด้วยเครื่องวัดที่บ้านพบค่าสูงถึง 230/130 mmHg จึงรีบพานำส่งห้องฉุกเฉินทันที
+
+[Past Medical History (ประวัติอดีต)]
+- Essential Hypertension (ยาเดิม: Amlodipine 10 mg 1x1, Losartan 100 mg 1x1 แต่ขาดยา)
+- Chronic Kidney Disease (CKD Stage 3a, Baseline Cr 1.4 mg/dL)
+- ปฏิเสธประวัติการสูบบุหรี่และการดื่มสุรา
+- ปฏิเสธประวัติการแพ้ยา
+
+[Physical Examination (ผลตรวจร่างกายที่ห้องฉุกเฉิน)]
+- Vital Signs: T 36.7 C, BP 238/136 mmHg (Severe Hypertensive Emergency, MAP ~ 170 mmHg), HR 124 bpm, RR 36 bpm, SpO2 81% on Room air
+- General Appearance: An elderly Thai male in extreme respiratory distress, sitting bolt upright, gasping for air, cyanotic lips and nail beds, drenched in cold sweat.
+- HEENT: Fundoscopy: Grade III Hypertensive Retinopathy (Flame-shaped retinal hemorrhages, soft cotton-wool exudates, arteriolar narrowing, no papilledema).
+- Neck: JVP 5 cm above sternal angle (Elevated jugular venous pressure).
+- Lungs: Bilateral coarse bubbling crackles (crepitations) and widespread wheezes involving all lung fields from bases to apices.
+- Heart: Tachycardia, loud S2, prominent S3 and S4 gallop rhythm audible at cardiac apex, no significant murmurs.
+- Extremities: 1+ pitting edema at bilateral ankles, cool peripheries, capillary refill time 3.5 seconds.
+- Neurological: Alert, oriented to time, place, and person, but agitated from air hunger; no focal neurological deficits.
+
+[Laboratory & Imaging Results (ผลตรวจทางห้องปฏิบัติการและรังสีวิทยา)]
+
+1. Chest Radiography (CXR Portable upright):
+   - Cardiomegaly with enlarged cardiac silhouette (Cardiothoracic ratio = 0.62)
+   - Diffuse bilateral perihilar alveolar infiltrates with classic "Bat-wing / Butterfly" appearance
+   - Prominent upper lobe pulmonary venous diversion (Cephalization) and Kerley B lines
+   - Bilateral costophrenic angle blunting (Pleural effusions).
+
+2. Cardiac Biomarkers & Chemistry:
+   - NT-proBNP: 9,250 pg/mL (Markedly elevated, indicating acute decompensated heart failure)
+   - High-Sensitivity Troponin-T: 42 ng/L (Slightly elevated: myocardial oxygen supply-demand mismatch from extreme afterload)
+   - Serum Creatinine: 2.1 mg/dL, BUN: 38 mg/dL (Acute on top of Chronic Kidney Disease)
+   - Potassium: 4.4 mEq/L, Sodium: 139 mEq/L, Chloride: 101 mEq/L, Bicarbonate: 21 mEq/L
+   - Arterial Blood Gas (on Non-Rebreather Mask 10 LPM): pH 7.29, PaCO2 48 mmHg, PaO2 65 mmHg, HCO3- 22.5 mEq/L, SaO2 89% (Mixed hypoxemic & mild respiratory acidosis)
+
+====================================================================
+[Educational Objectives for RAG Evaluation]
+เคสนี้ถูกออกแบบมาเพื่อทดสอบการประเมินและการรักษาภาวะ Hypertensive Emergency ร่วมกับ Flash Pulmonary Edema:
+1. การวินิจฉัย Hypertensive Emergency with Acute Pulmonary Edema / Acute Heart Failure จากภาวะ Severe Systemic Vascular Resistance (SVR) & Afterload Mismatch
+2. หลักการลดความดันโลหิตอย่างปลอดภัย (Controlled BP Lowering):
+   - เป้าหมาย: ลด Mean Arterial Pressure (MAP) ลงไม่เกิน 20-25% ภายในชั่วโมงแรก หรือลดความดันลงมาที่ระดับประมาณ 160-180/100-110 mmHg อย่างระมัดระวัง
+   - *ข้อห้ามใช้วิกฤต:* ห้ามใช้ Short-acting Sublingual Nifedipine เจาะบีบใต้ลิ้นเด็ดขาด เพราะทำให้ความดันโลหิตลดลงอย่างรวดเร็วและควบคุมไม่ได้ (Precipitous BP drop) เสี่ยงต่อการเกิด Cerebral/Myocardial Infarction และเสียชีวิต
+3. ยาและการช่วยหายใจที่เป็นมาตรฐาน (Standard Protocol):
+   - Intravenous Vasodilator Infusion: **IV Nicardipine** (เริ่ม 5 mg/hr ปรับเพิ่มทุก 5-15 นาที สูงสุด 15 mg/hr) หรือ **IV Nitroglycerin infusion** (เริ่ม 10-20 mcg/min) เพื่อลด Afterload และ Preload
+   - Intravenous Loop Diuretic: **IV Furosemide** (40-80 mg IV bolus) เพื่อลดปริมาตรเลือดและกระตุ้นการขยายหลอดเลือดดำ
+   - Non-Invasive Positive Pressure Ventilation (**NIV: BiPAP / CPAP**): ช่วยลด Preload/Afterload เพิ่ม Functional Residual Capacity และลดอัตราการต้องใส่ท่อช่วยหายใจ (Intubation)
+====================================================================

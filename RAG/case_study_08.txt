@@ -1,0 +1,49 @@
+====================================================================
+บันทึกประวัติผู้ป่วยจำลองเพื่อการศึกษาทางการแพทย์ (CONFIDENTIAL MEDICAL STUDY CASE)
+ID: DIS-2026-0098
+ศาลาผู้ป่วย: ห้องช่วยชีวิตและเวชศาสตร์ฉุกเฉิน (Emergency Resuscitation Area / ER)
+====================================================================
+
+[Chief Complaint (อาการสำคัญ)]
+ผู้ป่วยชายไทยอายุ 32 ปี มีผื่นลมพิษเห่อคันทั้งตัว ปากบวม หายใจมีเสียงหวีด แน่นหน้าอก และหน้ามืดหมดสติเฉียบพลัน 20 นาทีหลังรับประทานยาปฏิชีวนะ
+
+[Present Illness (ประวัติปัจจุบัน)]
+ผู้ป่วยไม่มีโรคประจำตัว ปฏิเสธประวัติภูมิแพ้หรือหอบหืด
+ช่วงเช้าวันนี้ ผู้ป่วยไปรับการตรวจรักษาที่คลินิกด้วยอาการไซนัสอักเสบเฉียบพลัน (Acute Sinusitis) และได้รับยาปฏิชีวนะชนิดรับประทาน Amoxicillin/Clavulanic acid (Augmentin 1 g) เม็ดแรกกลับมารับประทานหลังอาหารกลางวัน
+20 นาทีหลังกลืนยาเม็ดแรก ผู้ป่วยเริ่มมีอาการคันยุบยิบที่ฝ่ามือและฝ่าเท้าอย่างรุนแรง จากนั้นมีผื่นลมพิษปื้นแดงนูน (Generalized urticaria) ลามไปทั่วใบหน้า ลำตัว และแขนขาอย่างรวดเร็ว ตามด้วยอาการริมฝีปากบวม ลิ้นบวมแน่นคอ (Angioedema) เสียงแหบ หายใจมีเสียงดังฮืดๆ (Inspiratory stridor) แน่นหน้าอก หายใจไม่ออก เวียนศีรษะ เหงื่อแตก และล้มหมดสติลงกับพื้น ภรรยาเรียกรถพยาบาลฉุกเฉิน 1669 นำส่งห้องฉุกเฉินทันที
+
+[Past Medical History (ประวัติอดีต)]
+- ปฏิเสธโรคประจำตัว
+- เคยรับประทาน Amoxicillin ในวัยเด็กไม่มีอาการผิดปกติ
+- ปฏิเสธประวัติการแพ้อาหารทะเลหรือถั่ว
+
+[Physical Examination (ผลตรวจร่างกายที่ห้องฉุกเฉิน - Triage Level 1 Resuscitation)]
+- Vital Signs: T 36.5 C, BP 68/38 mmHg (Profound shock), HR 138 bpm (Weak thready tachycardia), RR 34 bpm (Tachypneic & labored breathing), SpO2 84% on Room air
+- General Appearance: A young adult male in acute extremis, obtunded, pale, cool and clammy skin, profuse diaphoresis.
+- HEENT: Massive angioedema with prominent lip swelling, uvular and lingual edema, audible inspiratory stridor over larynx.
+- Lungs: Bilateral generalized expiratory polyphonic wheezes with prolonged expiratory phase.
+- Skin: Diffuse erythematous wheals and generalized urticarial plaques covering trunk, back, and all extremities, intense pruritus markings.
+- Cardiovascular: Muffled heart sounds, rapid regular tachycardia, peripheral pulses barely palpable, capillary refill time > 4 seconds.
+- Neurological: GCS E2V2M5 = 9 (Drowsy, confused due to severe cerebral hypoperfusion).
+
+[Laboratory & Stat Point-of-Care Results (ผลตรวจทางห้องปฏิบัติการฉุกเฉิน)]
+- Point-of-Care Blood Glucose: 118 mg/dL (Hypoglycemia ruled out)
+- Arterial Blood Gas (on O2 High flow 10 LPM): pH 7.28, PaCO2 36 mmHg, PaO2 68 mmHg, HCO3- 16.5 mEq/L, Lactate 4.8 mmol/L (Severe tissue lactic acidosis)
+- CBC: Hb 14.2 g/dL, Hct 43%, WBC 13,500 /uL, Platelet 220,000 /uL
+- ECG: Sinus tachycardia with non-specific ST-T wave changes, no acute STEMI.
+
+====================================================================
+[Educational Objectives for RAG Evaluation]
+เคสนี้ถูกออกแบบมาเพื่อทดสอบการวินิจฉัยและการช่วยชีวิตในภาวะ Anaphylactic Shock อย่างเฉียบพลัน:
+1. การวินิจฉัย Anaphylaxis ตามเกณฑ์ World Allergy Organization (WAO) / NIAID Criteria (เฉียบพลันหลังสัมผัสสารก่อภูมิแพ้ มีรอยโรคผิวหนัง/เยื่อบุ ร่วมกับระบบทางเดินหายใจล้มเหลว และระบบไหลเวียนโลหิตช็อกล้มเหลว)
+2. ยาอันดับหนึ่งที่ต้องให้ทันทีโดยไม่มีข้อห้าม (First-Line Life-Saving Drug):
+   - **Intramuscular (IM) Epinephrine (Adrenaline 1:1,000) 0.5 mg (0.5 mL)** ฉีดเข้ากล้ามเนื้อบริเวณต้นขาด้านข้างส่วนหน้า (**Anterolateral thigh - Vastus lateralis**) ทันที!
+   - สามารถฉีดซ้ำได้ทุก 5-15 นาทีหากความดันโลหิตหรืออาการทางเดินหายใจยังไม่ตอบสนอง
+   - *คำเตือนขั้นวิกฤต:* ห้ามรอให้ยาแก้แพ้หรือสเตียรอยด์ก่อนฉีด Epinephrine เด็ดขาด!
+3. การจัดการระบบไหลเวียนและการหายใจร่วม (Airway & Hemodynamic Resuscitation):
+   - จัดท่าผู้ป่วยนอนหงายยกขาสูง (Supine with legs elevated) ห้ามลุกนั่งเด็ดขาด (ป้องกัน Empty Heart Syndrome)
+   - เปิดเส้น IV ขนาดใหญ่ (18G x 2 lines) และให้ IV Fluid Resuscitation (Normal Saline / Ringer's Acetate) 1,000-2,000 mL Rapid Bolus
+   - ให้ออกซิเจน High Flow Mask with Reservoir Bag 10-15 LPM และเตรียมพร้อมสำหรับ Difficult Airway Intubation หรือ Cricothyroidotomy หากทางเดินหายใจอุดกั้นสมบูรณ์
+   - ยารอง (Adjunctive/Second-Line Medications) หลังจากให้ Epinephrine แล้ว: IV Chlorpheniramine (10 mg) / Diphenhydramine, IV Ranitidine/Famotidine, และ IV Hydrocortisone (200 mg) / Dexamethasone
+   - เฝ้าระวังปฏิกิริยาเฟสสอง (**Biphasic Anaphylaxis**) ในหอผู้ป่วยวิกฤตอย่างน้อย 8-24 ชั่วโมง
+====================================================================

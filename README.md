@@ -13,14 +13,19 @@ MedMate/
 ├── AGENTS.md                   # 🧠 กฎและบทบาทระดับ Root Workspace
 ├── README.md                   # 📄 คู่มือการใช้งานระบบฉบับละเอียด (ไฟล์นี้)
 ├── Usage_exam.md               # 📋 ตัวอย่างโจทย์คำถามและการทดสอบตาม Tier
-├── RAG/                        # 📂 คลังเอกสารส่วนตัวผู้ใช้ (5 เคสศึกษาจำลองคลินิก)
+├── RAG/                        # 📂 คลังเอกสารส่วนตัวผู้ใช้ (10 เคสศึกษาจำลองคลินิก)
 │   ├── case_study_01.txt       # เคส 01: DKA + Prerenal AKI + Anion Gap 23
 │   ├── case_study_02.txt       # เคส 02: Inferior STEMI + RV Infarction + Shock
 │   ├── case_study_03.txt       # เคส 03: Acute Ischemic Stroke + rt-PA Window
 │   ├── case_study_04.txt       # เคส 04: Severe CAP + Sepsis (CURB-65 = 4)
-│   └── case_study_05.txt       # เคส 05: Cirrhosis + Variceal Bleeding + Encephalopathy
+│   ├── case_study_05.txt       # เคส 05: Cirrhosis + Variceal Bleeding + Encephalopathy
+│   ├── case_study_06.txt       # เคส 06: Severe Asthma + Impending Respiratory Arrest
+│   ├── case_study_07.txt       # เคส 07: Acute Biliary Pancreatitis + SIRS (BISAP = 3)
+│   ├── case_study_08.txt       # เคส 08: Severe Anaphylactic Shock + IM Epinephrine
+│   ├── case_study_09.txt       # เคส 09: Hypertensive Emergency + Flash Pulmonary Edema
+│   └── case_study_10.txt       # เคส 10: Severe Hyponatremia (SIADH) + ODS Prevention
 ├── evals/                      # 🧪 ระบบ Evaluation Harness วัดผลความแม่นยำทางการแพทย์
-│   └── eval_case_study.py      # สคริปต์ตรวจให้คะแนนและเปรียบเทียบกับ Ground Truth
+│   └── eval_case_study.py      # สคริปต์ตรวจให้คะแนนและเปรียบเทียบกับ Ground Truth (10 เคส)
 └── .agents/                    # ⚙️ โฟลเดอร์ควบคุมระบบหลักของ Antigravity
     ├── AGENTS.md               # กฎระเบียบและบทบาทของ Agent (Mirror)
     ├── mcp_config.json         # พูลลงทะเบียนเชื่อมต่อ MCP Servers
@@ -72,7 +77,9 @@ MedMate/
    ค้นหาความรู้แบบสองประสาน โดยค้นคว้าสดจากวารสารการแพทย์ทั่วโลก (PubMed API) ควบคู่กับการสแกนหาข้อสอบ เอกสารสไลด์เรียน หรือประวัติคนไข้ในโรงพยาบาลของคุณที่เก็บไว้ในโฟลเดอร์ `RAG/`
 5. **Lab Interpretation Tool:**
    รองรับระบบดึงค่ามาตรฐานสากล (LOINC Reference Ranges) ช่วยจำแนกผลแล็บเบื้องต้น เช่น ผลเลือด ค่าตับ ค่าไต พร้อมแสดงแนวทางการวินิจฉัยแยกโรค (Differential Diagnosis) สำหรับสายวิชาการ
-6. **Mandatory Legal Disclaimer:**
+6. **Proactive Evidence-on-Demand (PubMed Inquiry):**
+   สำหรับผู้ใช้ระดับแพทย์ (Tier 1) และ นศพ. (Tier 2) ระบบจะสรุปแนวทางทางคลินิกอย่างกระชับก่อน แล้วเสนอทางเลือกถามผู้ใช้ว่าต้องการให้สืบค้นงานวิจัย RCTs / Systematic Reviews ฉบับเต็มจาก PubMed เพิ่มเติมหรือไม่ เพื่อให้ควบคุมความลึกของข้อมูลได้ตามสะดวก
+7. **Mandatory Legal Disclaimer:**
    มีกลไกตรวจสอบความปลอดภัยทางกฎหมาย (Safe-Guard Footer) หากตรวจพบว่าผู้ใช้งานเป็นคนทั่วไป ระบบจะบังคับพิมพ์ข้อความคำเตือนปฏิเสธความรับผิดชอบทางการแพทย์ภาษาไทยไว้ที่ท้ายคำตอบเสมออย่างเคร่งครัด
 
 ---
@@ -120,11 +127,13 @@ graph TD
     style S3 fill:#E8F5E9,stroke:#A5D6A7,stroke-width:1px
 ```
 
-### 1. `medical-mcp` — คลังงานวิจัยและการใช้ยาทางคลินิก
-* **สืบค้นวารสารและงานวิจัยระดับโลก:** ดึงบทความวิชาการ การทดลองทางคลินิก (RCTs) และบทคัดย่อฉบับเต็มสดจาก **PubMed** และฐานข้อมูลสากล
-* **ตรวจสอบปฏิกิริยาระหว่างยา (Drug-Drug Interactions):** วิเคราะห์ความเสี่ยงและข้อควรระวังเมื่อใช้ยาร่วมกันหลายตัว
-* **แนวทางเวชปฏิบัติ (Clinical Practice Guidelines):** ค้นหาเกณฑ์และแนวทางการรักษาโรคที่ได้มาตรฐานสากล
-* **สถิติสุขภาพโลก:** ดึงข้อมูลตัวชี้วัดด้านสาธารณสุขจาก WHO Global Health Observatory
+### 1. `medical-mcp` — คลังงานวิจัย เภสัชวิทยา และแนวทางเวชปฏิบัติ
+* **สืบค้นวารสารและงานวิจัยระดับโลก (`search-medical-literature`, `get-article-details`, `search-medical-journals`, `search-google-scholar`):** ดึงบทความวิชาการ การทดลองทางคลินิก (RCTs), Meta-Analyses และบทคัดย่อฉบับเต็มสดจาก **PubMed** พร้อม PMID และ URL
+* **เภสัชวิทยาและฐานข้อมูลยา FDA (`search-drugs`, `get-drug-details`, `search-drug-nomenclature`):** ค้นหาข้อมูลยาที่ขึ้นทะเบียนกับ US FDA, NDC, ข้อบ่งชี้, ข้อห้ามใช้ และ Black Box Warnings
+* **ตรวจสอบปฏิกิริยาระหว่างยา (`check-drug-interactions`):** วิเคราะห์ความเสี่ยงของอันตรกิริยาระหว่างยา (Drug-Drug Interactions: DDI) พร้อมระดับความรุนแรงและแนวทางการจัดการ
+* **แนวทางเวชปฏิบัติสากล (`search-clinical-guidelines`):** ค้นหาเกณฑ์และแนวทางการรักษาโรคที่ได้มาตรฐานตามหมวดหมู่การแพทย์และระดับหลักฐาน (Level of Evidence)
+* **สถิติสุขภาพโลก (`get-health-statistics`):** ดึงข้อมูลตัวชี้วัดด้านสาธารณสุขและระบาดวิทยาจาก WHO Global Health Observatory
+
 
 ### 2. `medical-terminologies-mcp` — รหัสมาตรฐานและคำศัพท์การแพทย์สากล
 * **แปลผลและค้นหารหัสแล็บ (LOINC):** ค้นหารหัสมาตรฐานการตรวจทางห้องปฏิบัติการและค่าการวัดทางคลินิก เช่น ค่าน้ำตาล (Glucose), ค่าไต (Creatinine), ค่าตับ, เกลือแร่

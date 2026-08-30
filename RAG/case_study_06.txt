@@ -1,0 +1,54 @@
+====================================================================
+บันทึกประวัติผู้ป่วยจำลองเพื่อการศึกษาทางการแพทย์ (CONFIDENTIAL MEDICAL STUDY CASE)
+ID: DIS-2026-0096
+ศาลาผู้ป่วย: หอผู้ป่วยวิกฤตระบบทางเดินหายใจ (Respiratory ICU / ER Resuscitation)
+====================================================================
+
+[Chief Complaint (อาการสำคัญ)]
+ผู้ป่วยหญิงไทยอายุ 24 ปี มีอาการหอบเหนื่อยรุนแรง หายใจมีเสียงหวีด แน่นหน้าอก พูดได้ทีละคำ และพ่นยาขยายหลอดลมที่บ้านแล้วไม่ทุเลา เป็นมา 4 ชั่วโมงก่อนมาโรงพยาบาล
+
+[Present Illness (ประวัติปัจจุบัน)]
+ผู้ป่วยมีโรคประจำตัวเป็นโรคหืด (Bronchial Asthma) ตั้งแต่เด็ก ได้รับยาพ่นควบคุมอาการ (Budesonide/Formoterol) แต่ขาดยาและไม่ได้พ่นยาต่อเนื่องมา 2 เดือน มีประวัติเคยนอนโรงพยาบาลและใส่ท่อช่วยหายใจจากโรคหืดกำเริบเมื่อ 2 ปีก่อน (Near-fatal asthma history)
+4 ชั่วโมงก่อนมาโรงพยาบาล มีอาการไอ แน่นหน้าอก และเริ่มหายใจมีเสียงหวีดดังขึ้นเรื่อยๆ หลังสัมผัสควันธูปและละอองเกสรดอกไม้ ผู้ป่วยใช้ยาพ่นขยายหลอดลมฉุกเฉิน (Salbutamol MDI) พ่นไปมากกว่า 10 ครั้ง แต่อาการเหนื่อยไม่ดีขึ้น หายใจไม่ออก รู้สึกหมดแรง อ่อนเพลียมาก ญาติตัดสินใจเรียกรถพยาบาลนำส่งห้องฉุกเฉินทันที
+
+[Past Medical History (ประวัติอดีต)]
+- Bronchial Asthma (High-risk near-fatal asthma: เคยใส่ท่อช่วยหายใจ 1 ครั้ง)
+- Allergic Rhinitis (โรคจมูกอักเสบจากภูมิแพ้)
+- ปฏิเสธประวัติการแพ้ยาและสารเคมี
+- ปฏิเสธประวัติสูบบุหรี่
+
+[Physical Examination (ผลตรวจร่างกายที่ห้องฉุกเฉิน)]
+- Vital Signs: T 37.0 C, BP 142/88 mmHg, HR 132 bpm (Sinus tachycardia), RR 36 bpm (Severe tachypnea), SpO2 88% on Room air
+- General Appearance: A young Thai female in severe respiratory distress, sitting forward in tripod position, diaphoresis, unable to speak in full sentences (speaks in single words only), using accessory muscles (sternocleidomastoid retractions marked).
+- Pulsus Paradoxus: Drop in systolic BP > 18 mmHg during inspiration (Severe airflow obstruction).
+- Peak Expiratory Flow Rate (PEFR): 140 L/min (35% of predicted value, Severe obstruction < 50%).
+- Lungs: Markedly decreased air entry bilaterally with faint expiratory wheezes throughout both lungs; regions of "Silent chest" at lower lung bases.
+- Heart: Tachycardia, regular rhythm, normal heart sounds, no murmur.
+- Extremities: No peripheral edema, capillary refill time 2.5 seconds.
+
+[Laboratory & Arterial Blood Gas Results (ผลตรวจทางห้องปฏิบัติการและก๊าซในเลือดแดง)]
+
+1. Arterial Blood Gas (ABG on Room air at arrival):
+   - pH: 7.34
+   - PaCO2: 42 mmHg (Pseudo-normalization of PaCO2: บ่งชี้ภาวะกล้ามเนื้อหายใจล้าและเสี่ยงต่อภาวะหยุดหายใจเฉียบพลัน)
+   - PaO2: 54 mmHg (Severe hypoxemia)
+   - HCO3-: 22 mEq/L
+   - Base Excess: -2.0 mEq/L
+   - SaO2: 87%
+
+2. Complete Blood Count (CBC) & Electrolytes:
+   - Hb: 13.2 g/dL, Hct: 39.5%, WBC: 11,200 /uL (Eosinophils 8%, PMN 72%)
+   - Platelet: 280,000 /uL
+   - Sodium: 140 mEq/L, Potassium: 3.8 mEq/L, Chloride: 102 mEq/L, Bicarbonate: 22 mEq/L
+
+3. Chest Radiography (CXR Portable upright):
+   - Bilateral lung hyperinflation with flattening of diaphragms
+   - No visible pneumothorax, no pneumomediastinum, no lung consolidation.
+
+====================================================================
+[Educational Objectives for RAG Evaluation]
+เคสนี้ถูกออกแบบมาเพื่อทดสอบการประเมินและรักษาโรคหืดกำเริบรุนแรงวิกฤต (Acute Severe Asthma with Impending Respiratory Failure):
+1. การแปลผล ABG และตรวจพบ "Normal/Elevated PaCO2 (42 mmHg)" ในขณะที่ผู้ป่วยยังหายใจหอบเร็ว (Tachypneic) ซึ่งเป็นสัญญาณเตือนวิกฤตของ Respiratory Muscle Exhaustion / Impending Respiratory Arrest (ปกติผู้ป่วยหอบเร็วควรมี Hyperventilation และ Low PaCO2 < 35 mmHg)
+2. การให้การรักษาขั้นเร่งด่วน: High-flow Oxygen (เป้าหมาย SpO2 93-95%), Continuous/Frequent SABA (Salbutamol 5 mg) + Ipratropium Bromide (0.5 mg) Nebulization, Early Systemic Corticosteroids (IV Hydrocortisone 200 mg หรือ Methylprednisolone 60-80 mg), และ IV Magnesium Sulfate (2 g IV drip over 20 min)
+3. การเฝ้าระวังข้อบ่งชี้ในการใส่ท่อช่วยหายใจ (Rapid Sequence Intubation) เมื่อผู้ป่วยซึมลง, PaCO2 คั่งสูงขึ้น (PaCO2 > 45), หรือเกิด Silent Chest สมบูรณ์
+====================================================================

@@ -62,34 +62,77 @@ When interpreting blood gas data:
 
 ---
 
-## 2. MCP Tool Routing Matrix
+## 2. Standard Medical Terminologies & MCP Routing Matrix (`medical-terminologies-mcp`)
 
-### 2.1 search_pubmed / search_literature
-Queries global biomedical literature and clinical trials.
-- **tool**: `search-medical-literature`, `get-article-details`, `search-google-scholar` (server: `medical-mcp`)
-- **fallback skill**: `pubmed-database` (Direct E-utilities REST API)
+The system integrates seven international clinical coding systems (LOINC, RxNorm, ATC, MeSH, ICD-11, ICD-10/CID-10, SNOMED CT) via `medical-terminologies-mcp`:
 
-### 2.2 decode_icd11 / icd_search
-Translates clinical concepts, diagnostic queries, and disease classifications.
-- **tool**: `icd11_search`, `icd11_lookup`, `map_icd10_to_icd11` (server: `medical-terminologies-mcp`)
-- **tool**: `search-clinical-guidelines`, `search-medical-databases` (server: `medical-mcp`)
+### 2.1 🧪 LOINC (Lab Tests, Observations & Clinical Scales)
+Fetches observation codes, reference units, clinical panels, and standardized assessment scales:
+- **`loinc_search`**: Search by test name or keyword (e.g. `"creatinine"`, `"glucose"`, `"INR"`, `"troponin"`, `"arterial blood gas"`).
+- **`loinc_details`**: Fetch specific LOINC component, property, time aspect, and system details.
+- **`loinc_panels`**: Retrieve full panel compositions (e.g. Basic Metabolic Panel, Lipid Panel, ABG Panel).
+- **`loinc_answers`**: Fetch discrete answer lists or scoring values (e.g. for NIHSS, Glasgow Coma Scale, APGAR).
 
-### 2.3 decode_loinc_range / loinc_search
-Fetches standard clinical laboratory observation data, reference metadata, and tests.
-- **tool**: `loinc_search`, `loinc_details`, `loinc_panels` (server: `medical-terminologies-mcp`)
-- **tool**: `get-health-statistics` (server: `medical-mcp`)
+### 2.2 💊 RxNorm (Normalized Clinical Drugs & Ingredients)
+Retrieves normalized drug concepts, active ingredients, formulations, brand names, and RxCUIs:
+- **`rxnorm_search`**: Search drug concepts by brand or generic name (e.g. `"Alteplase"`, `"Metformin"`, `"Warfarin"`, `"Ceftriaxone"`).
+- **`rxnorm_concept`**: Look up concept details by RxCUI identifier.
+- **`rxnorm_ingredients`**: Deconstruct multi-ingredient combination drugs into base components.
+- **`rxnorm_classes`**: Retrieve drug classes associated with an RxCUI.
+- **`rxnorm_ndc`**: National Drug Code cross-referencing.
 
-### 2.4 check_drugs / drug_terminologies
-Searches drugs, inspects dosages, indications, checks drug interactions, and standard classifications.
-- **tool**: `search-drugs`, `get-drug-details`, `check-drug-interactions` (server: `medical-mcp`)
-- **tool**: `rxnorm_search`, `rxnorm_concept`, `atc_classify`, `atc_lookup` (server: `medical-terminologies-mcp`)
+### 2.3 🧬 ATC Classification (Anatomical Therapeutic Chemical)
+Provides WHO ATC hierarchy (Levels 1–5: Anatomical, Therapeutic, Pharmacological, Chemical):
+- **`atc_classify`**: Classify a drug name into its standard ATC codes and drug classes (e.g. `"Metformin"` -> `A10BA` Biguanides; `"Alteplase"` -> `B01AD` Enzymes).
+- **`atc_lookup`**: Resolve ATC codes (levels 1–4) to class names and hierarchy.
+- **`atc_members`**: List drugs belonging to an ATC class.
 
-### 2.5 mesh_search / cross_terminology
-Searches biomedical subject headings and finds equivalent terms across coding systems.
-- **tool**: `mesh_search`, `mesh_descriptor`, `find_equivalent` (server: `medical-terminologies-mcp`)
+### 2.4 📚 MeSH (Biomedical Subject Headings)
+Searches indexed biomedical concepts and hierarchical taxonomy:
+- **`mesh_search`**: Find MeSH descriptors for clinical diseases and conditions (e.g. `"Ischemic Stroke"`, `"Atrial Fibrillation"`, `"Diabetic Ketoacidosis"`).
+- **`mesh_descriptor`**: Retrieve tree numbers, scope notes, and details for a MeSH ID.
+- **`mesh_tree`**: Navigate the MeSH hierarchy (parent and child terms).
+- **`mesh_qualifiers`**: Retrieve standard topical qualifiers (e.g. therapy, etiology, diagnosis).
 
-### 2.6 search_local_rag
-Searches and reads custom user text files, lecture notes, and spreadsheets stored inside the local `./RAG` folder.
-- **tool**: `read_file`, `search_files`, `list_directory` (server: `local-rag`)
-- **arguments**:
-  - `path`: The target filename inside the RAG directory (e.g., "case_study_01.txt", "lecture.txt", "cases.csv").
+### 2.5 🌐 Cross-Terminology & Equivalent Search
+- **`find_equivalent`**: Unified ranked search mapping a single clinical concept across multiple terminologies (LOINC, RxNorm, MeSH, SNOMED, ICD-11) with lexical similarity scores.
+- **`map_icd10_to_icd11`**: Official WHO mapping between ICD-10 and ICD-11 classifications.
+- **`map_loinc_to_snomed`**: Map laboratory observation codes to SNOMED CT clinical terms.
+- **`validate_codes`**: Validate code formatting and syntax against target standard systems.
+
+---
+
+## 3. Global Biomedical Evidence, Drug Safety & Guidelines (`medical-mcp`)
+
+The system connects to authoritative global repositories (PubMed, US FDA, WHO Global Health Observatory, NLM) via `medical-mcp`:
+
+### 3.1 💊 Pharmacology, Drug Safety & Interactions Suite
+- **`search-drugs`**: Search FDA-approved drug database (brand name, generic name, active ingredients, dosage forms, manufacturer, and approval status).
+- **`get-drug-details`**: Retrieve in-depth labeling, black box warnings, indications, contraindications, and NDC identifiers.
+- **`search-drug-nomenclature`**: Standardized drug naming and aliases lookup via NLM RxNorm.
+- **`check-drug-interactions`**: Automated Drug-Drug Interaction (DDI) analysis between two medications (returns severity level, clinical risk mechanisms, and evidence-based management guidance).
+
+### 3.2 📖 Biomedical Literature & Research Suite
+- **`search-medical-literature`**: Live search of PubMed for clinical trials, randomized controlled trials (RCTs), systematic reviews, and cohort studies with PMIDs and abstracts.
+- **`get-article-details`**: Fetch complete article metadata, author affiliations, abstract, and publication dates by PMID.
+- **`search-google-scholar`**: Cross-reference academic citations, author profiles, and scholarly publications.
+- **`search-medical-journals`**: Targeted literature search filtered by leading biomedical peer-reviewed journals (e.g. NEJM, Lancet, JAMA, Circulation, Stroke).
+- **`search-medical-databases`**: Federated search across multiple international biomedical repositories.
+
+### 3.3 📋 Clinical Guidelines & Global Health Indicators Suite
+- **`search-clinical-guidelines`**: Search international clinical practice guidelines, consensus statements, and meta-analyses categorized by medical specialty and evidence level.
+- **`get-health-statistics`**: Query global health indicators and epidemiological statistics from the WHO Global Health Observatory (by country code and indicator).
+
+### 3.4 💡 Proactive Evidence-on-Demand Protocol (Tier 1 & Tier 2)
+- **Explicit Request**: If the user explicitly asks for latest evidence, RCTs, PMID, or guidelines -> Call `search-medical-literature` / `search-clinical-guidelines` immediately.
+- **General Clinical Inquiry / Case Discussion**: Deliver concise clinical synthesis / SOAP note first, then append a polite proactive suggestion offering to retrieve PubMed trials/systematic reviews if desired:
+  > *"💡 **ทางเลือกเพิ่มเติม:** หากต้องการหลักฐานเชิงประจักษ์ฉบับเต็ม สามารถแจ้งให้ผมสืบค้นงานวิจัย RCTs / Systematic Reviews ล่าสุดจาก PubMed พร้อมระบุ PMID และระดับหลักฐาน (Level of Evidence) เพิ่มเติมได้ครับ"*
+- **Tier 3 (Patient)**: Skip PubMed offers to prevent medical jargon overload.
+
+---
+
+## 4. Local Clinical Documents & RAG (`local-rag`)
+
+- **`read_file`**, **`search_files`**, **`list_directory`**: Sandboxed access strictly within `./RAG` (e.g. `"case_study_01.txt"`, `"case_study_03.txt"`).
+
+

@@ -28,10 +28,15 @@
 #### 📚 2.3 Hybrid Knowledge Retrieval & PICO Search
 - หากเป็นข้อมูลเคสในโรงพยาบาล สรุปเลกเชอร์ หรือไฟล์ในเครื่อง -> ใช้ `medical_skill/search_local_rag` ร่วมกับสกิล `rag-engineer`
 - หากเป็นหลักฐานงานวิจัยสากล -> แปลงเป็น PICO Query ภาษาอังกฤษ ค้นหาผ่าน `pubmed-database` หรือ `medical_skill/search_pubmed`
+- **💡 Proactive On-Demand Evidence Rule (สำหรับ Tier 1 & Tier 2)**:
+  - หากผู้ใช้ระบุชัดเจนว่าต้องการงานวิจัย/Evidence/PMID/Clinical Trials -> ดึงข้อมูลจาก PubMed ทันที
+  - หากผู้ใช้ถามเคส ปรึกษาแนวทางรักษา หรือขอสรุปเคสทั่วไป -> ตอบสรุปทางคลินิกอย่างกระชับก่อน แล้ว**เสนอทางเลือกทิ้งท้าย**ว่าต้องการให้สืบค้นงานวิจัย RCTs / Systematic Reviews เพิ่มเติมจาก PubMed หรือไม่ เพื่อให้ผู้ใช้ควบคุมความลึกของข้อมูลได้ตามต้องการ
+  - สำหรับ Tier 3 (คนทั่วไป) -> ไม่ต้องเสนอถาม PubMed เพื่อรักษาความกระชับและเข้าใจง่าย
 
-#### 🧪 2.4 Clinical Lab & Acid-Base Interpretation
+#### 🧪 2.4 Clinical Lab & Standard Terminology Codification
 - คำนวณค่าทางคลินิกอย่างแม่นยำตาม Runbook ใน `medical_skill` (เช่น Anion Gap, Delta Ratio, KDIGO AKI Staging, DKA Severity)
 - วิเคราะห์แนวโน้มผลแล็บเปรียบเทียบกับค่าเดิมในอดีตผ่าน `health-trend-analyzer`
+- เชื่อมโยงรหัสมาตรฐานสากล (LOINC, RxNorm, ATC, MeSH) ผ่าน `medical-terminologies-mcp` เมื่อต้องการถอดรหัสแล็บ ตัวยา หรือแนวทางการวินิจฉัยในโหมดแพทย์/นศพ.
 
 ---
 
@@ -59,7 +64,7 @@
 
 | Skill Identifier | Primary Domain & Responsibility | Supported Users |
 | :--- | :--- | :---: |
-| **`medical_skill`** | Clinical Runbooks (ABG, Anion Gap, DKA, AKI KDIGO, LOINC, ICD-11) & MCP Router | All Tiers |
+| **`medical_skill`** | Clinical Runbooks (ABG, Anion Gap, DKA, AKI KDIGO), Terminology Codification & MCP Router (`medical-mcp`, `medical-terminologies-mcp`, `local-rag`) | All Tiers |
 | **`pubmed-database`** | Advanced MeSH, PICO Syntax, RCT/Meta-analysis filtering & E-utilities API | Tier 1, Tier 2 |
 | **`claude-ally-health`** | Clinical Triage, Symptom Tracking, Differential Diagnosis & Red Flag Alerts | All Tiers |
 | **`health-trend-analyzer`** | Longitudinal Health & Lab Trend Analysis over time | Tier 1, Tier 3 |

@@ -1,0 +1,58 @@
+====================================================================
+บันทึกประวัติผู้ป่วยจำลองเพื่อการศึกษาทางการแพทย์ (CONFIDENTIAL MEDICAL STUDY CASE)
+ID: DIS-2026-0097
+ศาลาผู้ป่วย: หอผู้ป่วยศัลยกรรมระบบทางเดินอาหารและตับ (GI & Hepato-Biliary Surgery)
+====================================================================
+
+[Chief Complaint (อาการสำคัญ)]
+ผู้ป่วยหญิงไทยอายุ 58 ปี มีอาการปวดจุกแน่นท้องส่วนบนอย่างรุนแรง ทะลุร้าวไปข้างหลัง คลื่นไส้อาเจียนตลอดเวลา เป็นมา 18 ชั่วโมงก่อนมาโรงพยาบาล
+
+[Present Illness (ประวัติปัจจุบัน)]
+ผู้ป่วยมีโรคประจำตัวเป็นภาวะไขมันในเลือดสูง (Dyslipidemia) และนิ่วในถุงน้ำดี (Asymptomatic Gallstone) ปฏิเสธประวัติการดื่มแอลกอฮอล์
+18 ชั่วโมงก่อนมาโรงพยาบาล หลังรับประทานอาหารมื้อค่ำที่มีไขมันสูง เริ่มมีอาการปวดแสบร้อนและจุกแน่นรุนแรงบริเวณใต้ลิ้นปี่และใต้ชายโครงขวา (Severe epigastric pain) ปวดตื้อบิดเกร็งตลอดเวลาและปวดร้าวทะลุไปยังแผ่นหลังด้านซ้ายและขวา (Radiating to the back, Pain score 10/10) ผู้ป่วยมีอาการคลื่นไส้ อาเจียนเป็นเศษอาหารและน้ำดีมากกว่า 8 ครั้ง ดื่มน้ำหรือรับประทานยาแก้ปวดที่บ้านแล้วไม่ทุเลา ปวดจนต้องนอนงอตัวคุดคู้ (Sitting forward relieves pain slightly) ญาติจึงนำส่งห้องฉุกเฉิน
+
+[Past Medical History (ประวัติอดีต)]
+- Cholelithiasis (พบจากตรวจสุขภาพประจำปีเมื่อ 1 ปีก่อน)
+- Dyslipidemia ยาเดิม: Simvastatin (20 mg) 1x1 hs
+- ปฏิเสธประวัติการดื่มสุราหรือสูบบุหรี่
+- ปฏิเสธประวัติการแพ้ยา
+
+[Physical Examination (ผลตรวจร่างกายที่ห้องฉุกเฉิน)]
+- Vital Signs: T 38.4 C (Fever), BP 98/62 mmHg, HR 118 bpm (Sinus tachycardia), RR 24 bpm, SpO2 95% on Room air
+- General Appearance: A middle-aged Thai female in moderate-to-severe distress, lying with knees drawn to chest, restless, mild jaundice on sclerae.
+- Abdomen: Mildly distended, marked tenderness and guarding at epigastrium and right upper quadrant, hypoactive bowel sounds, no Cullen sign, no Grey Turner sign.
+- Lungs: Decreased breath sounds at left lung base with dullness to percussion (Left pleural effusion).
+- Heart: Tachycardia, normal S1 S2, no murmur.
+
+[Laboratory & Imaging Results (ผลตรวจทางห้องปฏิบัติการและรังสีวิทยา)]
+
+1. Serum Pancreatic Enzymes & Liver Function Tests:
+   - Serum Lipase (Stat): 1,480 U/L (Normal 10 - 140 U/L: สูงมากกว่า 10 เท่าของ Upper Limit of Normal)
+   - Serum Amylase: 920 U/L (Normal 28 - 100 U/L)
+   - Total Bilirubin: 3.8 mg/dL, Direct Bilirubin: 2.8 mg/dL (Cholestatic pattern)
+   - AST: 280 U/L, ALT: 340 U/L (ALT > 150 U/L บ่งชี้สาเหตุ Gallstone Pancreatitis ความจำเพาะ > 95%)
+   - Alkaline Phosphatase (ALP): 210 U/L
+
+2. Complete Blood Count (CBC) & Renal Function:
+   - Hb: 14.8 g/dL, Hct: 46.2% (Hemoconcentration from third-space fluid loss)
+   - WBC: 17,200 /uL (Neutrophil 86%, Band 6%)
+   - Blood Urea Nitrogen (BUN): 32 mg/dL (Elevated > 25 mg/dL)
+   - Serum Creatinine: 1.6 mg/dL (Baseline 0.8 mg/dL: Acute Pre-renal Azotemia)
+   - Blood Glucose: 178 mg/dL, Serum Calcium: 8.2 mg/dL
+
+3. Ultrasonography of Upper Abdomen (Bedside US):
+   - Multiple gallstones inside gallbladder with thickened gallbladder wall (3.5 mm)
+   - Common Bile Duct (CBD) dilated measuring 9.5 mm with suspected impacted microcalculus at distal CBD
+   - Swollen, diffusely hypoechoic pancreatic parenchyma with peripancreatic fluid collection
+
+====================================================================
+[Educational Objectives for RAG Evaluation]
+เคสนี้ถูกออกแบบมาเพื่อทดสอบการประเมินความรุนแรงและการรักษา Acute Biliary Pancreatitis:
+1. การวินิจฉัย Acute Pancreatitis ตาม Atlanta Criteria (เข้าเกณฑ์ครบ 3 ข้อ: ปวดท้องร้าวไปหลัง, Lipase > 3x ULN, และภาพ US พบพยาธิสภาพของตับอ่อน) โดยมีสาเหตุจาก Gallstone/Biliary etiology (ยืนยันด้วย ALT > 150 U/L ร่วมกับ CBD dilatation)
+2. การประเมินความรุนแรงด้วย BISAP Score = 3 คะแนน (BUN > 25, Impaired mental/SIRS [HR>90, RR>20, WBC>12k], Age > 55, Pleural effusion) บ่งชี้ความเสี่ยงสูงต่อ Organ failure และการเสียชีวิต
+3. แผนการรักษาตามแนวทางสากล (IAP/APA Guidelines):
+   - Early Goal-Directed Fluid Resuscitation ด้วย Balanced Crystalloid (Lactated Ringer's solution 200-250 mL/hr) ติดตาม Hct และ BUN
+   - Adequate Multimodal Pain Control (IV Opioids เช่น Fentanyl หรือ Morphine)
+   - การพิจารณาทำ Urgent ERCP within 24-48 hours หากมีภาวะ Acute Cholangitis หรือ Persisting Biliary Obstruction
+   - ไม่แนะนำการให้ Prophylactic Antibiotics เป็นประจำหากไม่มีหลักฐานการติดเชื้อ (Infected Necrosis)
+====================================================================

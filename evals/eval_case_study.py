@@ -1,11 +1,16 @@
 """
 Medical Case Benchmark Evaluation Harness for MedMate
-Evaluates Agent Responses against Clinical Ground Truth across 5 Comprehensive Medical Cases:
+Evaluates Agent Responses against Clinical Ground Truth across 10 Comprehensive Medical Cases:
 - Case 01: Diabetic Ketoacidosis (DKA) + Prerenal AKI + HAGMA
 - Case 02: Acute Inferior STEMI + RV Infarction + Cardiogenic Shock
 - Case 03: Acute Ischemic Stroke + IV Thrombolysis (rt-PA) + AF Cardioembolism
 - Case 04: Severe Community-Acquired Pneumonia (CAP) + Sepsis + CURB-65
 - Case 05: Decompensated Cirrhosis + Acute Variceal Hemorrhage + Hepatic Encephalopathy
+- Case 06: Acute Severe Asthma Exacerbation + Impending Respiratory Failure
+- Case 07: Acute Biliary Pancreatitis + BISAP Score + SIRS
+- Case 08: Severe Anaphylactic Shock (Amoxicillin/Clavulanate-induced)
+- Case 09: Hypertensive Emergency + Flash Pulmonary Edema + Acute Heart Failure
+- Case 10: Severe Symptomatic Hyponatremia (SIADH) + ODS Prevention
 """
 
 import os
@@ -166,12 +171,152 @@ GT_CASE_05 = CaseGroundTruth(
     }
 )
 
+# Ground Truth 06: Acute Severe Asthma Exacerbation
+GT_CASE_06 = CaseGroundTruth(
+    case_id="DIS-2026-0096",
+    filename="case_study_06.txt",
+    title="Acute Severe Asthma Exacerbation with Impending Respiratory Failure",
+    target_diagnoses=["Acute Severe Asthma", "Status Asthmaticus", "Impending Respiratory Failure", "Near-Fatal Asthma"],
+    critical_interpretations={"pefr": 35.0, "paco2": 42.0, "abg_finding": "Pseudo-normalization of PaCO2 / Exhaustion", "pulsus_paradoxus": 18.0},
+    rubrics={
+        "Tier1_Doctor": [
+            EvaluationCriterion("Diagnosis & Severity", 0.30, ["acute severe asthma", "status asthmaticus", "respiratory failure", "หอบหืดรุนแรงวิกฤต"], "Recognizes Acute Severe Asthma & Impending Arrest"),
+            EvaluationCriterion("ABG Critical Pitfall", 0.25, ["paco2", "pseudo-normal", "fatigue", "exhaustion", "กล้ามเนื้อหายใจล้า"], "Identifies PaCO2 42 mmHg as exhaustion sign"),
+            EvaluationCriterion("Aggressive Pharmacotherapy", 0.25, ["saba", "salbutamol", "ipratropium", "hydrocortisone", "methylprednisolone", "magnesium sulfate"], "Orders SABA+Ipratropium, Systemic Steroid, IV MgSO4"),
+            EvaluationCriterion("Airway Readiness", 0.20, ["intubation", "mechanical ventilation", "ใส่ท่อช่วยหายใจ"], "Prepares for rapid sequence intubation if deteriorating")
+        ],
+        "Tier2_Student": [
+            EvaluationCriterion("SOAP Note", 0.30, ["subjective", "objective", "assessment", "plan"], "Structured SOAP Note"),
+            EvaluationCriterion("ABG Pathophysiology", 0.35, ["paco2", "hyperventilation", "respiratory muscle fatigue", "silent chest"], "Explains PaCO2 normal in tachypnea = muscle fatigue"),
+            EvaluationCriterion("Pharmacodynamics", 0.35, ["beta-2 agonist", "anticholinergic", "magnesium", "bronchodilation"], "Explains MgSO4 and bronchodilator mechanisms")
+        ],
+        "Tier3_Patient": [
+            EvaluationCriterion("Immediate ER Alert", 0.50, ["1669", "ห้องฉุกเฉินด่วน", "หอบรุนแรง", "อันตรายถึงชีวิต"], "Urgent 1669 ambulance alert"),
+            EvaluationCriterion("First Aid Positioning", 0.25, ["นั่งโน้มตัวไปข้างหน้า", "พ่นยาต่อเนื่องระหว่างรอรถ"], "Positioning & continuous SABA usage"),
+            EvaluationCriterion("Disclaimer", 0.25, ["ข้อความแจ้งเตือนทางการแพทย์"], "Mandatory legal disclaimer")
+        ]
+    }
+)
+
+# Ground Truth 07: Acute Biliary Pancreatitis
+GT_CASE_07 = CaseGroundTruth(
+    case_id="DIS-2026-0097",
+    filename="case_study_07.txt",
+    title="Acute Biliary Pancreatitis with High BISAP Score & SIRS",
+    target_diagnoses=["Acute Pancreatitis", "Gallstone Pancreatitis", "Biliary Pancreatitis", "SIRS"],
+    critical_interpretations={"lipase": 1480.0, "alt": 340.0, "bisap_score": 3, "cbd_dilated": 9.5},
+    rubrics={
+        "Tier1_Doctor": [
+            EvaluationCriterion("Diagnosis & Etiology", 0.30, ["acute pancreatitis", "gallstone", "biliary", "ตับอ่อนอักเสบเฉียบพลันจากนิ่ว"], "Diagnoses Biliary Pancreatitis (Lipase > 3x, ALT > 150)"),
+            EvaluationCriterion("Risk Stratification", 0.25, ["bisap", "sirs", "organ failure", "ความรุนแรงสูง"], "Calculates BISAP=3 / SIRS criteria"),
+            EvaluationCriterion("Fluid Resuscitation", 0.25, ["lactated ringer", "ringer", "fluid resuscitation", "สารน้ำ"], "Prescribes Goal-directed balanced crystalloid hydration"),
+            EvaluationCriterion("Biliary Intervention & Antibiotics", 0.20, ["ercp", "cholangitis", "no prophylactic antibiotics", "ไม่ให้ยาปฏิชีวนะพร่ำเพรื่อ"], "Indicates ERCP for obstruction & avoids routine antibiotics")
+        ],
+        "Tier2_Student": [
+            EvaluationCriterion("SOAP Note", 0.30, ["subjective", "objective", "assessment", "plan"], "Structured SOAP"),
+            EvaluationCriterion("Atlanta & BISAP Criteria", 0.35, ["atlanta", "bisap", "lipase", "amylase", "bun > 25"], "Details 3-item Atlanta criteria and BISAP breakdown"),
+            EvaluationCriterion("Biliary Marker Correlation", 0.35, ["alt > 150", "common bile duct", "cbd", "cholelithiasis"], "Explains ALT > 150 U/L specificity for gallstone etiology")
+        ],
+        "Tier3_Patient": [
+            EvaluationCriterion("Severe Warning", 0.50, ["1669", "ตับอ่อนอักเสบรุนแรง", "โรงพยาบาลทันที", "ฉุกเฉิน"], "Urgent ER alert"),
+            EvaluationCriterion("NPO Advice", 0.25, ["งดน้ำงดอาหาร", "ห้ามทานยาแก้ปวดเอง"], "Strict NPO and no self-medication"),
+            EvaluationCriterion("Disclaimer", 0.25, ["ข้อความแจ้งเตือนทางการแพทย์"], "Mandatory disclaimer")
+        ]
+    }
+)
+
+# Ground Truth 08: Severe Anaphylactic Shock
+GT_CASE_08 = CaseGroundTruth(
+    case_id="DIS-2026-0098",
+    filename="case_study_08.txt",
+    title="Severe Anaphylactic Shock (Amoxicillin/Clavulanate-induced)",
+    target_diagnoses=["Anaphylactic Shock", "Drug-Induced Anaphylaxis", "Severe Allergic Reaction", "Angioedema"],
+    critical_interpretations={"bp": "68/38", "stridor": True, "epinephrine_route": "Intramuscular (IM) Anterolateral Thigh"},
+    rubrics={
+        "Tier1_Doctor": [
+            EvaluationCriterion("Immediate Diagnosis", 0.30, ["anaphylactic shock", "anaphylaxis", "แพ้ยารุนแรงเฉียบพลัน"], "Identifies Anaphylactic Shock"),
+            EvaluationCriterion("First-Line Epinephrine", 0.30, ["im epinephrine", "adrenaline", "0.5 mg", "anterolateral thigh", "กล้ามเนื้อต้นขา"], "Emphasizes IMMEDIATE IM Epinephrine 0.5 mg into thigh"),
+            EvaluationCriterion("Resuscitation & Volume", 0.20, ["fluid bolus", "normal saline", "1000", "2000", "supine"], "Orders aggressive IV fluids 1-2L & Supine positioning"),
+            EvaluationCriterion("Adjunctive & Biphasic", 0.20, ["antihistamine", "steroid", "biphasic", "สังเกตอาการ 24 ชั่วโมง"], "Administers 2nd-line drugs and monitors for biphasic reaction")
+        ],
+        "Tier2_Student": [
+            EvaluationCriterion("SOAP Note", 0.30, ["subjective", "objective", "assessment", "plan"], "Structured SOAP"),
+            EvaluationCriterion("Immunological Mechanism", 0.35, ["ige", "mast cell", "histamine", "degranulation", "vasodilation"], "Explains Type I IgE-mediated hypersensitivity"),
+            EvaluationCriterion("Route of Epinephrine", 0.35, ["im vs sc", "anterolateral thigh", "vastus lateralis", "ห้ามรอสเตียรอยด์"], "Justifies IM thigh route over SC/deltoid for peak absorption")
+        ],
+        "Tier3_Patient": [
+            EvaluationCriterion("Life Threatening 1669", 0.50, ["1669", "แพ้ยารุนแรง", "อันตรายถึงชีวิต", "เรียกรถพยาบาลด่วน"], "Critical 1669 emergency alarm"),
+            EvaluationCriterion("Positioning Guidance", 0.25, ["นอนราบยกขาสูง", "ห้ามลุกยืน"], "Supine with legs up guidance"),
+            EvaluationCriterion("Disclaimer", 0.25, ["ข้อความแจ้งเตือนทางการแพทย์"], "Mandatory disclaimer")
+        ]
+    }
+)
+
+# Ground Truth 09: Hypertensive Emergency & Flash Pulmonary Edema
+GT_CASE_09 = CaseGroundTruth(
+    case_id="DIS-2026-0099",
+    filename="case_study_09.txt",
+    title="Hypertensive Emergency with Flash Pulmonary Edema & Acute Heart Failure",
+    target_diagnoses=["Hypertensive Emergency", "Flash Pulmonary Edema", "Acute Decompensated Heart Failure", "Target Organ Damage"],
+    critical_interpretations={"bp": "238/136", "map": 170.0, "nt_probnp": 9250.0, "contraindication": "Sublingual Nifedipine"},
+    rubrics={
+        "Tier1_Doctor": [
+            EvaluationCriterion("Diagnosis", 0.30, ["hypertensive emergency", "flash pulmonary edema", "acute heart failure", "ความดันโลหิตสูงวิกฤต"], "Identifies Hypertensive Emergency with Pulmonary Edema"),
+            EvaluationCriterion("Controlled BP Reduction Target", 0.25, ["map 20-25%", "ลดความดันอย่างระมัดระวัง", "160-180"], "Enforces controlled MAP reduction by <=20-25% in 1st hour"),
+            EvaluationCriterion("IV Vasodilator & Diuretic", 0.25, ["nicardipine", "nitroglycerin", "furosemide", "niv", "bipap"], "Orders IV Nicardipine/Nitroglycerin + IV Furosemide + NIV"),
+            EvaluationCriterion("Sublingual Nifedipine Warning", 0.20, ["ห้าม sublingual nifedipine", "ห้ามเจาะบีบใต้ลิ้น", "precipitous drop"], "Warns strictly against Sublingual Nifedipine")
+        ],
+        "Tier2_Student": [
+            EvaluationCriterion("SOAP Note", 0.30, ["subjective", "objective", "assessment", "plan"], "Structured SOAP"),
+            EvaluationCriterion("Afterload Pathophysiology", 0.35, ["afterload mismatch", "systemic vascular resistance", "bat-wing", "s3 gallop"], "Explains Afterload mismatch & acute LV failure"),
+            EvaluationCriterion("Urgency vs Emergency", 0.35, ["target organ damage", "hypertensive retinopathy", "อวัยวะเป้าหมาย"], "Differentiates Hypertensive Urgency vs Emergency")
+        ],
+        "Tier3_Patient": [
+            EvaluationCriterion("Urgent Alert", 0.50, ["1669", "น้ำท่วมปอด", "ความดันสูงวิกฤต", "โรงพยาบาลทันที"], "Urgent hospital alert"),
+            EvaluationCriterion("Upright Sitting Guidance", 0.25, ["นั่งห้อยขา", "ห้ามนอนราบ"], "Advises upright sitting position"),
+            EvaluationCriterion("Disclaimer", 0.25, ["ข้อความแจ้งเตือนทางการแพทย์"], "Mandatory disclaimer")
+        ]
+    }
+)
+
+# Ground Truth 10: Severe Hyponatremia (SIADH) & ODS Prevention
+GT_CASE_10 = CaseGroundTruth(
+    case_id="DIS-2026-0100",
+    filename="case_study_10.txt",
+    title="Severe Symptomatic Euvolemic Hyponatremia (SIADH) & ODS Prevention",
+    target_diagnoses=["Severe Hyponatremia", "SIADH", "SSRI-induced Hyponatremia", "Osmotic Demyelination Syndrome Risk"],
+    critical_interpretations={"serum_na": 112.0, "urine_osm": 490.0, "urine_na": 68.0, "correction_limit": "<= 8 mEq/L/24hr"},
+    rubrics={
+        "Tier1_Doctor": [
+            EvaluationCriterion("Diagnosis & Etiology", 0.30, ["siadh", "severe hyponatremia", "ssri", "sertraline", "โซเดียมต่ำรุนแรง"], "Diagnoses SSRI-induced SIADH with Na 112 mEq/L"),
+            EvaluationCriterion("Hypertonic Saline Resuscitation", 0.25, ["3% nacl", "3% hypertonic saline", "100 ml bolus", "แก้อาการทางสมอง"], "Orders 3% Hypertonic Saline IV bolus for severe symptoms"),
+            EvaluationCriterion("ODS Prevention Correction Rate", 0.25, ["8 meq/l", "ods", "osmotic demyelination", "ห้ามเกิน 8"], "Enforces strict correction limit <= 8 mEq/L per 24 hours"),
+            EvaluationCriterion("Etiologic Management", 0.20, ["stop sertraline", "หยุดยา", "fluid restriction", "จำกัดน้ำ"], "Discontinues SSRI and enforces fluid restriction")
+        ],
+        "Tier2_Student": [
+            EvaluationCriterion("SOAP Note", 0.30, ["subjective", "objective", "assessment", "plan"], "Structured SOAP"),
+            EvaluationCriterion("Bartter-Schwartz & Euvolemia", 0.35, ["euvolemic", "urine osm > 100", "urine na > 40", "hypotonic"], "Analyzes Euvolemic state & SIADH diagnostic criteria"),
+            EvaluationCriterion("Central Pontine Myelinolysis", 0.35, ["central pontine myelinolysis", "osmotic demyelination", "astrocytes", "สมองตาย"], "Explains pathophysiology of Osmotic Demyelination")
+        ],
+        "Tier3_Patient": [
+            EvaluationCriterion("Danger Sign Warning", 0.50, ["1669", "เกลือแร่ต่ำรุนแรง", "สมองบวม", "โรงพยาบาลทันที"], "Immediate hospital alert"),
+            EvaluationCriterion("Water Restriction Guidance", 0.25, ["จำกัดการดื่มน้ำ", "ห้ามดื่มน้ำเปล่าปริมาณมาก"], "Warns against excessive plain water intake"),
+            EvaluationCriterion("Disclaimer", 0.25, ["ข้อความแจ้งเตือนทางการแพทย์"], "Mandatory disclaimer")
+        ]
+    }
+)
+
 ALL_CASES: Dict[str, CaseGroundTruth] = {
     "case_study_01": GT_CASE_01,
     "case_study_02": GT_CASE_02,
     "case_study_03": GT_CASE_03,
     "case_study_04": GT_CASE_04,
-    "case_study_05": GT_CASE_05
+    "case_study_05": GT_CASE_05,
+    "case_study_06": GT_CASE_06,
+    "case_study_07": GT_CASE_07,
+    "case_study_08": GT_CASE_08,
+    "case_study_09": GT_CASE_09,
+    "case_study_10": GT_CASE_10
 }
 
 class ComprehensiveMedicalEvaluator:
@@ -217,23 +362,30 @@ class ComprehensiveMedicalEvaluator:
 if __name__ == "__main__":
     evaluator = ComprehensiveMedicalEvaluator()
     print("============================================================")
-    print(" MedMate Comprehensive 5-Case Benchmark Harness")
+    print(" MedMate Comprehensive 10-Case Benchmark Harness")
     print("============================================================")
     
-    # Test sample Tier 1 for Case 2 (STEMI)
+    # 1. Test sample Tier 1 for Case 1 (DKA)
+    sample_dka = """
+    ผู้ป่วยมีภาวะ Diabetic Ketoacidosis (DKA) ร่วมกับ High Anion Gap Metabolic Acidosis (HAGMA) โดยคำนวณ Anion Gap ได้ 23 mEq/L
+    และมีภาวะแทรกซ้อน Acute Kidney Injury (Prerenal AKI) จากภาวะขาดน้ำรุนแรง
+    แผนการรักษา: ให้ IV Fluid Resuscitation ด้วย Normal Saline, Continuous IV Regular Insulin Infusion หลังตรวจระดับโพแทสเซียม และติดตามสารน้ำ
+    [สำหรับบุคลากรทางการแพทย์และการศึกษาเท่านั้น โปรดใช้วิจารณญาณทางคลินิกเพิ่มเติม]
+    """
+    res1 = evaluator.evaluate("case_study_01", "Tier1_Doctor", sample_dka)
+    print(f"[*] Case 01 (DKA/AKI): Score = {res1['score']}% [{res1['status']}]")
+
+    # 2. Test sample Tier 1 for Case 2 (STEMI)
     sample_stemi = """
     เคสนี้ผู้ป่วยมีภาวะ Acute Inferior STEMI with Right Ventricular (RV) Infarction และมีภาวะแทรกซ้อน Cardiogenic Shock (Killip Class IV)
-    แผนการรักษาเร่งด่วน:
-    1. ส่งทำ Primary PCI เร่งด่วน (Door-to-Balloon < 90 min)
-    2. ให้ DAPT: Loading Aspirin 300 mg + Ticagrelor 180 mg
-    3. ข้อควรระวังขั้นวิกฤต: ห้ามให้ Nitrate / Nitroglycerin หรือ Morphine เนื่องจากความดันโลหิตต่ำและมี RV infarction
-    4. ให้ Inotrope/Vasopressor support: Norepinephrine IV เพื่อรักษาระดับความดันโลหิต
+    แผนการรักษาเร่งด่วน: ส่งทำ Primary PCI เร่งด่วน, ให้ DAPT Loading Aspirin 300 mg + Ticagrelor 180 mg
+    ข้อควรระวังขั้นวิกฤต: ห้ามให้ Nitrate / Nitroglycerin หรือ Morphine เนื่องจากความดันโลหิตต่ำและมี RV infarction, ให้ Inotrope/Vasopressor Norepinephrine IV
     [สำหรับบุคลากรทางการแพทย์และการศึกษาเท่านั้น โปรดใช้วิจารณญาณทางคลินิกเพิ่มเติม]
     """
     res2 = evaluator.evaluate("case_study_02", "Tier1_Doctor", sample_stemi)
-    print(f"[*] Evaluated Case 02 (STEMI): Score = {res2['score']}% [{res2['status']}]")
+    print(f"[*] Case 02 (STEMI): Score = {res2['score']}% [{res2['status']}]")
     
-    # Test sample Tier 1 for Case 3 (Stroke)
+    # 3. Test sample Tier 1 for Case 3 (Stroke)
     sample_stroke = """
     ผู้ป่วยมีภาวะ Acute Ischemic Stroke ในบริเวณ Left MCA territory จากสาเหตุ Cardioembolic Stroke (Atrial Fibrillation)
     ระยะเวลา Onset-to-Door 90 นาที อยู่ในช่วง Golden Period (< 4.5 ชั่วโมง) ผล CT สมองไม่มีเลือดออก (No ICH) และ INR 1.28 (< 1.7)
@@ -241,32 +393,74 @@ if __name__ == "__main__":
     [สำหรับบุคลากรทางการแพทย์และการศึกษาเท่านั้น โปรดใช้วิจารณญาณทางคลินิกเพิ่มเติม]
     """
     res3 = evaluator.evaluate("case_study_03", "Tier1_Doctor", sample_stroke)
-    print(f"[*] Evaluated Case 03 (Stroke): Score = {res3['score']}% [{res3['status']}]")
+    print(f"[*] Case 03 (Stroke): Score = {res3['score']}% [{res3['status']}]")
 
-    # Test sample Tier 1 for Case 4 (Pneumonia/Sepsis)
+    # 4. Test sample Tier 1 for Case 4 (Pneumonia/Sepsis)
     sample_cap = """
     ผู้ป่วยได้รับการวินิจฉัยเป็น Severe Community-Acquired Pneumonia (Severe CAP) ร่วมกับภาวะ Sepsis จากเชื้อ Streptococcus pneumoniae
     การประเมินความรุนแรง: คำนวณ CURB-65 Score ได้ 4 คะแนน (High risk) แนะนำรับไว้รักษาใน ICU
-    แผนการรักษาตาม Sepsis Hour-1 Bundle:
-    1. เจาะ Hemoculture 2 ขวดก่อนเริ่มยา และตรวจติดตาม Serum Lactate
-    2. ให้ IV Fluid Resuscitation ด้วย Crystalloid 30 mL/kg
-    3. ให้ยาปฏิชีวนะ Empirical IV Antibiotics: Ceftriaxone ร่วมกับ Azithromycin
+    แผนการรักษาตาม Sepsis Hour-1 Bundle: เจาะ Hemoculture 2 ขวดก่อนเริ่มยา, ตรวจ Serum Lactate, ให้ IV Crystalloid 30 mL/kg และ Empirical IV Ceftriaxone + Azithromycin
     [สำหรับบุคลากรทางการแพทย์และการศึกษาเท่านั้น โปรดใช้วิจารณญาณทางคลินิกเพิ่มเติม]
     """
     res4 = evaluator.evaluate("case_study_04", "Tier1_Doctor", sample_cap)
-    print(f"[*] Evaluated Case 04 (CAP/Sepsis): Score = {res4['score']}% [{res4['status']}]")
+    print(f"[*] Case 04 (CAP/Sepsis): Score = {res4['score']}% [{res4['status']}]")
 
-    # Test sample Tier 1 for Case 5 (Cirrhosis/Variceal Bleeding)
+    # 5. Test sample Tier 1 for Case 5 (Cirrhosis/Variceal Bleeding)
     sample_gi = """
     ผู้ป่วยมีภาวะ Acute Esophageal Variceal Bleeding ซ้อนทับบน Decompensated Liver Cirrhosis (Child-Pugh Class C) ร่วมกับ Hepatic Encephalopathy
-    แผนการรักษา:
-    1. ให้ Vasoactive Drug (Octreotide หรือ Somatostatin) ต่อเนื่องเพื่อลด Portal pressure
-    2. ให้ Prophylactic Ceftriaxone ป้องกัน SBP และการติดเชื้อ
-    3. ใช้กลยุทธ์ Restrictive Transfusion โดยให้เลือดตั้งเป้าหมาย Target Hb 7-8 g/dL
-    4. รักษา Hepatic Encephalopathy ด้วย Lactulose
+    แผนการรักษา: ให้ Vasoactive Drug (Octreotide/Somatostatin) ต่อเนื่อง, ให้ Prophylactic Ceftriaxone ป้องกัน SBP, ใช้กลยุทธ์ Restrictive Transfusion Target Hb 7-8 g/dL และรักษา Encephalopathy ด้วย Lactulose
     [สำหรับบุคลากรทางการแพทย์และการศึกษาเท่านั้น โปรดใช้วิจารณญาณทางคลินิกเพิ่มเติม]
     """
     res5 = evaluator.evaluate("case_study_05", "Tier1_Doctor", sample_gi)
-    print(f"[*] Evaluated Case 05 (Variceal Bleeding): Score = {res5['score']}% [{res5['status']}]")
+    print(f"[*] Case 05 (Variceal Bleeding): Score = {res5['score']}% [{res5['status']}]")
+
+    # 6. Test sample Tier 1 for Case 6 (Severe Asthma)
+    sample_asthma = """
+    ผู้ป่วยมีภาวะ Acute Severe Asthma with Impending Respiratory Failure โดยตรวจพบสัญญาณวิกฤตคือ PaCO2 42 mmHg (Pseudo-normalization / Respiratory muscle fatigue) ในขณะที่ผู้ป่วยยังหอบเหนื่อยรุนแรง
+    แผนการรักษา: ให้ High-flow Oxygen, พ่นยา SABA (Salbutamol) ร่วมกับ Ipratropium Bromide ถี่ๆ, ให้ Systemic Steroid (IV Hydrocortisone / Methylprednisolone), ให้ IV Magnesium Sulfate 2 g และเตรียมพร้อมสำหรับการใส่ท่อช่วยหายใจ (Intubation)
+    [สำหรับบุคลากรทางการแพทย์และการศึกษาเท่านั้น โปรดใช้วิจารณญาณทางคลินิกเพิ่มเติม]
+    """
+    res6 = evaluator.evaluate("case_study_06", "Tier1_Doctor", sample_asthma)
+    print(f"[*] Case 06 (Severe Asthma): Score = {res6['score']}% [{res6['status']}]")
+
+    # 7. Test sample Tier 1 for Case 7 (Biliary Pancreatitis)
+    sample_panc = """
+    ผู้ป่วยได้รับการวินิจฉัยเป็น Acute Biliary Pancreatitis จากนิ่วถุงน้ำดี (Gallstone etiology ยืนยันด้วย Lipase > 3x ULN และ ALT 340 U/L) โดยประเมินความรุนแรง BISAP Score = 3 และมีภาวะ SIRS
+    แผนการรักษา: ให้ Early Goal-Directed Fluid Resuscitation ด้วย Lactated Ringer's solution, ควบคุมอาการปวด, พิจารณาทำ Urgent ERCP หากมีภาวะ Cholangitis หรือ Persisting obstruction และไม่แนะนำการให้ Prophylactic Antibiotics พร่ำเพรื่อ
+    [สำหรับบุคลากรทางการแพทย์และการศึกษาเท่านั้น โปรดใช้วิจารณญาณทางคลินิกเพิ่มเติม]
+    """
+    res7 = evaluator.evaluate("case_study_07", "Tier1_Doctor", sample_panc)
+    print(f"[*] Case 07 (Pancreatitis): Score = {res7['score']}% [{res7['status']}]")
+
+    # 8. Test sample Tier 1 for Case 8 (Anaphylactic Shock)
+    sample_anaph = """
+    ผู้ป่วยมีภาวะ Anaphylactic Shock และ Angioedema จากการแพ้ยาปฏิชีวนะ Amoxicillin/Clavulanate
+    การรักษาเร่งด่วนอันดับหนึ่ง: ฉีด Intramuscular (IM) Epinephrine / Adrenaline (1:1000) ขนาด 0.5 mg เข้ากล้ามเนื้อบริเวณ Anterolateral Thigh ทันที ห้ามรอให้ยาอื่นก่อน
+    การรักษาเสริม: จัดท่านอนราบ Supine ยกขาสูง, ให้ IV Normal Saline Fluid Bolus 1000-2000 mL, ให้ออกซิเจน, ให้ยารอง Antihistamines + IV Steroids และเฝ้าระวัง Biphasic reaction ใน ICU อย่างน้อย 24 ชั่วโมง
+    [สำหรับบุคลากรทางการแพทย์และการศึกษาเท่านั้น โปรดใช้วิจารณญาณทางคลินิกเพิ่มเติม]
+    """
+    res8 = evaluator.evaluate("case_study_08", "Tier1_Doctor", sample_anaph)
+    print(f"[*] Case 08 (Anaphylaxis): Score = {res8['score']}% [{res8['status']}]")
+
+    # 9. Test sample Tier 1 for Case 9 (Hypertensive Emergency)
+    sample_htn = """
+    ผู้ป่วยมีภาวะ Hypertensive Emergency ร่วมกับ Flash Pulmonary Edema และ Acute Heart Failure จากความดันโลหิตสูงวิกฤต 238/136 mmHg
+    แผนการรักษา: ตั้งเป้าลดความดันอย่างระมัดระวังโดยลด MAP ไม่เกิน 20-25% ในชั่วโมงแรก (เป้าหมาย 160-180/100-110 mmHg), ให้ยาขยายหลอดเลือดทางหลอดเลือดดำ IV Nicardipine หรือ IV Nitroglycerin infusion ร่วมกับ IV Furosemide และใส่เครื่องช่วยหายใจแรงดันบวก Non-Invasive Ventilation (NIV / BiPAP)
+    ข้อห้ามใช้วิกฤต: ห้ามใช้ Sublingual Nifedipine เจาะบีบใต้ลิ้นเด็ดขาดเนื่องจากเสี่ยงต่อการเกิด Precipitous drop และ Stroke
+    [สำหรับบุคลากรทางการแพทย์และการศึกษาเท่านั้น โปรดใช้วิจารณญาณทางคลินิกเพิ่มเติม]
+    """
+    res9 = evaluator.evaluate("case_study_09", "Tier1_Doctor", sample_htn)
+    print(f"[*] Case 09 (Hypertensive Emergency): Score = {res9['score']}% [{res9['status']}]")
+
+    # 10. Test sample Tier 1 for Case 10 (SIADH Hyponatremia)
+    sample_siadh = """
+    ผู้ป่วยมีภาวะ Severe Symptomatic Euvolemic Hyponatremia (Serum Na 112 mEq/L) จากภาวะ SIADH ทุติยภูมิต่อการใช้ยา SSRI (Sertraline)
+    การรักษาฉุกเฉิน: ให้ 3% Hypertonic Saline (3% NaCl) IV Bolus 100 mL เพื่อดึงระดับโซเดียมขึ้นมา 4-6 mEq/L ป้องกันสมองบวม
+    กฎความปลอดภัยสูงสุด: ต้องจำกัดอัตราการเพิ่มของระดับโซเดียมอย่างเคร่งครัดโดยไม่เกิน 8 mEq/L ต่อ 24 ชั่วโมง เพื่อป้องกันภาวะ Osmotic Demyelination Syndrome (ODS) และสั่งหยุดยา Sertraline ร่วมกับจำกัดการดื่มน้ำ (Fluid Restriction)
+    [สำหรับบุคลากรทางการแพทย์และการศึกษาเท่านั้น โปรดใช้วิจารณญาณทางคลินิกเพิ่มเติม]
+    """
+    res10 = evaluator.evaluate("case_study_10", "Tier1_Doctor", sample_siadh)
+    print(f"[*] Case 10 (SIADH/Hyponatremia): Score = {res10['score']}% [{res10['status']}]")
+
     print("============================================================")
-    print("All 5 Case Study Ground Truth Evaluators Active & Verified!")
+    print("All 10 Case Study Ground Truth Evaluators Active & Verified!")

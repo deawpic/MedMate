@@ -1,0 +1,58 @@
+====================================================================
+บันทึกประวัติผู้ป่วยจำลองเพื่อการศึกษาทางการแพทย์ (CONFIDENTIAL MEDICAL STUDY CASE)
+ID: DIS-2026-0094
+ศาลาผู้ป่วย: หอผู้ป่วยอายุรกรรมระบบทางเดินหายใจ (Pulmonary / Intermediate Care)
+====================================================================
+
+[Chief Complaint (อาการสำคัญ)]
+ผู้ป่วยหญิงไทยอายุ 74 ปี มีไข้สูงหนาวสั่น ไอเสมหะสีสนิมปนเลือด หายใจหอบเหนื่อย และมีอาการสับสนเฉียบพลัน เป็นมา 3 วันก่อนมาโรงพยาบาล
+
+[Present Illness (ประวัติปัจจุบัน)]
+ผู้ป่วยมีโรคประจำตัวเป็นโรคปอดอุดกั้นเรื้อรัง (COPD: Group B ทานยาพ่นประจำ) และโรคข้อเข่าเสื่อม (OA Knee)
+3 วันก่อนมาโรงพยาบาล มีไข้สูง หนาวสั่น ไอมีเสมหะเหนียวข้นเปลี่ยนเป็นสีน้ำตาลคล้ายสนิมเหล็ก (Rusty sputum) มีอาการเจ็บแปลบที่หน้าอกข้างขวาเวลาหายใจเข้าลึกๆ (Pleuritic chest pain) 
+1 วันก่อนมาโรงพยาบาล ผู้ป่วยเริ่มหายใจเหนื่อยหอบมากขึ้น หายใจเร็ว ปากซีดเขียว ทานอาหารไม่ได้ และบุตรสาวสังเกตเห็นว่าผู้ป่วยเริ่มสับสน พูดจาไม่รู้เรื่อง ถามตอบไม่ตรงคำถาม จำคนในบ้านไม่ได้ จึงนำตัวส่งโรงพยาบาล
+
+[Past Medical History (ประวัติอดีต)]
+- COPD (Post-bronchodilator FEV1/FVC = 0.62) ยาเดิม: Formoterol/Budesonide DPI 1x2 puff
+- Osteoarthritis (OA Knee) ทาน Paracetamol เป็นครั้งคราว
+- ปฏิเสธประวัติการใช้ยาปฏิชีวนะในรอบ 90 วันที่ผ่านมา
+- ปฏิเสธการแพ้ยาและสารเคมี
+
+[Physical Examination (ผลตรวจร่างกายที่ห้องฉุกเฉิน)]
+- Vital Signs: T 39.2 C, BP 88/56 mmHg (Hypotension), HR 122 bpm, RR 32 bpm (Tachypnea), SpO2 86% on Room air (Severe Hypoxia)
+- General Appearance: An elderly Thai female, visibly exhausted, tachypneic, using accessory muscles of respiration, confused (GCS E3V4M6 = 13).
+- HEENT: Dry lips and oral mucosa, no cyanosis on tongue, conjunctivae not pale.
+- Lungs: Decreased breath sounds and dense bronchial breath sounds with coarse inspiratory crackles and increased tactile fremitus over right middle and lower lung fields.
+- Heart: Tachycardia, regular rhythm, no murmur.
+- Abdomen: Soft, non-tender, no hepatosplenomegaly.
+- Extremities: Cool extremities, capillary refill time 3.5 seconds, no edema.
+
+[Laboratory & Imaging Results (ผลตรวจทางห้องปฏิบัติการและรังสีวิทยา)]
+
+1. Chest Radiography (CXR PA upright):
+   - Dense alveolar consolidation with visible air bronchograms in the right middle and lower lung lobes
+   - Small right pleural effusion (Parapneumonic effusion)
+   - No pneumothorax
+
+2. Complete Blood Count (CBC):
+   - Hb: 11.8 g/dL, Hct: 36.0%
+   - WBC: 22,500 /uL (Neutrophil 88%, Band forms 8% - Left shift marked)
+   - Platelet: 145,000 /uL
+
+3. Blood Chemistry, Arterial Blood Gas & Sepsis Biomarkers:
+   - Blood Urea Nitrogen (BUN): 34 mg/dL, Serum Creatinine: 1.7 mg/dL (Baseline 0.9 mg/dL)
+   - Serum Sodium: 132 mEq/L, Potassium: 4.6 mEq/L, Bicarbonate: 16 mEq/L
+   - Serum Lactate (Stat): 3.6 mmol/L (Marked tissue hypoperfusion)
+   - ABG (on Cannula O2 3 LPM): pH 7.31, PaCO2 30 mmHg, PaO2 62 mmHg, HCO3- 15 mEq/L, Base Excess -9 mEq/L (PaO2/FiO2 ratio < 250)
+
+4. Microbiology:
+   - Sputum Gram Stain: Numerous polymorphonuclear leukocytes (>25/LPF), Epithelial cells <10/LPF, Abundant Gram-positive lancet-shaped diplococci.
+   - Sputum & Blood Cultures: Pending.
+
+====================================================================
+[Educational Objectives for RAG Evaluation]
+เคสนี้ถูกออกแบบมาเพื่อทดสอบการประเมินและรักษาโรคปอดอักเสบติดเชื้อรุนแรง:
+1. การคำนวณ CURB-65 Score = 4 คะแนน (Confusion, Urea > 19, RR >= 30, BP < 90/60, Age >= 65) -> High risk, mortality rate > 20%, ข้อบ่งชี้รับไว้รักษาใน ICU/Intermediate Care
+2. การวินิจฉัย Severe Community-Acquired Pneumonia (CAP, likely S. pneumoniae) with Sepsis & Septic shock risk
+3. การปฏิบัติตาม Sepsis 1-Hour Bundle: Oxygen therapy (เป้าหมาย SpO2 92-94%), Hemoculture x 2 bottles ก่อนให้ยา, IV Crystalloid fluid resuscitation (30 mL/kg), และ Empirical IV Antibiotics (Ceftriaxone 2g IV OD + Azithromycin 500mg IV OD หรือ Respiratory Fluoroquinolone)
+====================================================================

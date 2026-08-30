@@ -1,0 +1,30 @@
+{
+  "mcpServers": {
+    "medical-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "medical-mcp-server"
+      ]
+    },
+    "medical-terminologies-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/inspector",
+        "--transport",
+        "streamable-http",
+        "--server-url",
+        "https://medical.sidneybissoli.com/mcp"
+      ]
+    },
+    "local-rag": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "./RAG"
+      ]
+    }
+  }
+}

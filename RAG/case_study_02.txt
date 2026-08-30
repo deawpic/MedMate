@@ -1,0 +1,55 @@
+====================================================================
+บันทึกประวัติผู้ป่วยจำลองเพื่อการศึกษาทางการแพทย์ (CONFIDENTIAL MEDICAL STUDY CASE)
+ID: DIS-2026-0092
+ศาลาผู้ป่วย: หอผู้ป่วยวิกฤตหัวใจและหลอดเลือด (CCU / Cardiac Care Unit)
+====================================================================
+
+[Chief Complaint (อาการสำคัญ)]
+ผู้ป่วยชายไทยอายุ 62 ปี มีอาการเจ็บแน่นหน้าอกรุนแรงเหมือนมีของหนักทับ ร้าวไปกรามซ้ายและแขนซ้าย ร่วมกับเหงื่อแตกท่วมตัว หน้ามืด หายใจไม่อิ่ม เป็นมา 2 ชั่วโมงก่อนมาโรงพยาบาล
+
+[Present Illness (ประวัติปัจจุบัน)]
+ผู้ป่วยมีโรคประจำตัวเป็นโรคหลอดเลือดหัวใจ (CAD: เคยทำ PCI ขยายหลอดเลือด LAD 3 ปีก่อน), ภาวะไขมันในเลือดสูง (Dyslipidemia) และโรคเกาต์ (Gout) ทานยาแอสไพรินและยาลดไขมันสม่ำเสมอ
+2 ชั่วโมงก่อนมาโรงพยาบาล ขณะนั่งพักผ่อนหลังรับประทานอาหารเช้า เริ่มมีอาการเจ็บแน่นกลางหน้าอกอย่างรุนแรง (Substernal crushing chest pain, Severity 9/10) ปวดร้าวขึ้นกรามซ้ายและต้นแขนด้านใน พักแล้วไม่ทุเลา มีเหงื่อแตกตัวเย็น คลื่นไส้ หน้ามืดเหมือนจะเป็นลม ญาติจึงเรียกรถพยาบาลนำส่งห้องฉุกเฉินทันที
+
+[Past Medical History (ประวัติอดีต)]
+- CAD s/p PCI to LAD (2023) ยาเดิม: Aspirin (81) 1x1 pc, Atorvastatin (40) 1x1 hs
+- Dyslipidemia & Gout ยาเดิม: Allopurinol (100) 1x1 pc
+- ประวัติสูบบุหรี่: 1 ซอง/วัน มา 30 ปี (Pack-years = 30)
+- ปฏิเสธประวัติการแพ้ยา
+
+[Physical Examination (ผลตรวจร่างกายที่ห้องฉุกเฉิน)]
+- Vital Signs: T 36.8 C, BP 85/52 mmHg (Hypotension), HR 114 bpm (Tachycardia, weak thready pulse), RR 26 bpm, SpO2 93% on Room air
+- General Appearance: An elderly Thai male, looking in severe distress, pale, cold clammy skin, profusely sweating.
+- HEENT: No pale conjunctivae, anicteric sclerae.
+- Heart: Tachycardia, S1 S2 normal, S3 gallop audible at apex, no murmur, JVP 4 cm above sternal angle (Elevated JVP).
+- Lungs: Fine crackles at bilateral lower lung bases (Killip Class III/IV).
+- Extremities: Cold extremities, peripheral cyanosis, capillary refill time = 4 seconds, no pedal edema.
+
+[Laboratory & Investigation Results (ผลตรวจทางห้องปฏิบัติการและการตรวจพิเศษ)]
+
+1. 12-Lead Electrocardiogram (EKG):
+   - Sinus tachycardia with ST-segment elevation 3-4 mm in leads II, III, aVF
+   - Reciprocal ST-segment depression in leads I, aVL, V1-V3
+   - Right-sided EKG (V3R-V5R): ST elevation 1.5 mm in V4R (Right Ventricular Infarction involvement)
+
+2. Cardiac Biomarkers:
+   - High-Sensitivity Troponin-T (hs-cTnT): 1,450 ng/L (Normal < 14 ng/L)
+   - CK-MB (Mass): 68 ng/mL (Normal < 5 ng/mL)
+
+3. Complete Blood Count (CBC) & Coagulation:
+   - Hb: 13.8 g/dL, Hct: 41.2%, WBC: 12,800 /uL, Platelet: 245,000 /uL
+   - PT: 11.5 sec, INR: 1.02, aPTT: 28.0 sec
+
+4. Blood Chemistry & Renal Function:
+   - Blood Glucose: 168 mg/dL
+   - BUN: 28 mg/dL, Serum Creatinine: 1.6 mg/dL (eGFR 46 mL/min/1.73m2)
+   - Sodium: 138 mEq/L, Potassium: 4.2 mEq/L, Chloride: 102 mEq/L, Bicarbonate: 18 mEq/L
+   - Serum Lactate: 4.2 mmol/L (Tissue hypoperfusion)
+
+====================================================================
+[Educational Objectives for RAG Evaluation]
+เคสนี้ถูกออกแบบมาเพื่อทดสอบการประเมินภาวะหัวใจขาดเลือดเฉียบพลัน:
+1. การวินิจฉัย Acute Inferior STEMI with Right Ventricular (RV) Infarction & Cardiogenic Shock (Killip Class IV)
+2. ข้อควรระวังขั้นวิกฤต: ห้ามให้ Nitroglycerin / Morphine / Diuretics ใน RV Infarction ที่มีความดันตก
+3. แผนการรักษาฉุกเฉิน: Emergency Primary PCI (Door-to-Balloon < 90 min), Dual Antiplatelet Therapy (Aspirin 300 mg + Ticagrelor 180 mg loading), Vasoactive support (Norepinephrine) และระมัดระวังการให้สารน้ำ
+====================================================================

@@ -1,0 +1,56 @@
+====================================================================
+บันทึกประวัติผู้ป่วยจำลองเพื่อการศึกษาทางการแพทย์ (CONFIDENTIAL MEDICAL STUDY CASE)
+ID: DIS-2026-0093
+ศาลาผู้ป่วย: หอผู้ป่วยโรคหลอดเลือดสมอง (Stroke Unit / ER)
+====================================================================
+
+[Chief Complaint (อาการสำคัญ)]
+ผู้ป่วยหญิงไทยอายุ 70 ปี มีอาการแขนขาข้างขวาอ่อนแรง ปากเบี้ยว พูดไม่เป็นภาษา และเรียกไม่ค่อยตอบสนอง เริ่มเป็นกะทันหัน 1.5 ชั่วโมงก่อนมาโรงพยาบาล
+
+[Present Illness (ประวัติปัจจุบัน)]
+ผู้ป่วยมีโรคประจำตัวเป็นภาวะหัวใจห้องบนสั่นพลิ้ว (Non-valvular Atrial Fibrillation - AF) และโรคเบาหวาน (T2DM) ได้รับยาวาร์ฟาริน (Warfarin 2 mg) แต่ทานไม่สม่ำเสมอและไม่ได้ไปเจาะตรวจเลือดตรวจ INR มานานกว่า 6 เดือน
+1.5 ชั่วโมงก่อนมาโรงพยาบาล (เวลา 08:30 น.) ขณะกำลังรับประทานอาหารเช้ากับครอบครัว ผู้ป่วยทำช้อนหลุดจากมือขวา พยายามจะพูดแต่พูดออกเสียงไม่ออก ปากเบี้ยวด้านขวา และลุกยืนไม่ได้เนื่องจากขาขวาไม่มีแรง ญาติสังเกตอาการ FAST ได้ชัดเจน จึงรีบพานำส่งศูนย์หลอดเลือดสมอง (Stroke Center) ทันที ถึงห้องฉุกเฉินเวลา 10:00 น. (ระยะเวลาหลังเกิดอาการ = 90 นาที)
+
+[Past Medical History (ประวัติอดีต)]
+- Atrial Fibrillation (AF) ยาเดิม: Warfarin (2 mg) 1x1 hs (ทานไม่สม่ำเสมอ)
+- Type 2 Diabetes Mellitus ยาเดิม: Linagliptin (5 mg) 1x1 pc
+- ปฏิเสธประวัติเลือดออกในสมอง ประวัติผ่าตัดใหญ่ หรืออุบัติเหตุที่ศีรษะในรอบ 3 เดือน
+- ปฏิเสธประวัติการแพ้ยา
+
+[Physical & Neurological Examination (ผลตรวจร่างกายและระบบประสาท)]
+- Vital Signs: T 36.6 C, BP 172/94 mmHg, HR 98 bpm (Irregularly irregular pulse), RR 18 bpm, SpO2 98% on Room air
+- General Appearance: An elderly Thai female, conscious but with expressive aphasia, following simple 1-step commands.
+- Neurological Examination:
+  - Cranial Nerves: Right central facial palsy (Right lower facial droop), pupils 3 mm RTLBE, intact extraocular movements.
+  - Motor Power:
+    - Right Upper Extremity: Grade 1/5 (trace muscle contraction)
+    - Right Lower Extremity: Grade 2/5 (movement with gravity eliminated)
+    - Left Upper/Lower Extremities: Grade 5/5 (normal strength)
+  - Sensory: Decreased sensation to pinprick on right hemibody.
+  - Reflexes: Hyperreflexia right side (3+), Babinski sign positive on right side.
+  - NIH Stroke Scale (NIHSS) Score: 16 (Moderate-to-Severe Stroke)
+
+[Laboratory & Imaging Results (ผลตรวจทางห้องปฏิบัติการและภาพถ่ายทางรังสี)]
+
+1. Non-Contrast Computed Tomography (NCCT Brain):
+   - No acute intracranial hemorrhage (No ICH)
+   - ASPECT Score = 9 (Early subtle ischemic changes with loss of insular ribbon at left MCA territory)
+   - No signs of dense MCA sign or large vessel territory herniation
+
+2. Coagulation Profile (Stat):
+   - Prothrombin Time (PT): 13.8 sec
+   - International Normalized Ratio (INR): 1.28 (อยู่ในเกณฑ์ที่ปลอดภัย < 1.7 สำหรับการให้ Thrombolytic)
+   - aPTT: 30.2 sec, Platelet count: 215,000 /uL
+
+3. Blood Chemistry:
+   - Blood Glucose (Stat Point-of-Care): 142 mg/dL (Rule out Hypoglycemia mimic)
+   - BUN: 18 mg/dL, Cr: 0.9 mg/dL, eGFR: 68 mL/min/1.73m2
+   - Electrolytes: Na 140, K 4.0, Cl 104, HCO3 24 mEq/L
+
+====================================================================
+[Educational Objectives for RAG Evaluation]
+เคสนี้ถูกออกแบบมาเพื่อทดสอบการรักษาโรคหลอดเลือดสมองตีบเฉียบพลัน:
+1. การวินิจฉัย Acute Ischemic Stroke (Left MCA territory, Cardioembolic mechanism from AF) ในช่วงเวลา Golden Period (Onset-to-Door < 4.5 hr)
+2. การประเมินข้อบ่งชี้และข้อห้ามของการให้ยาละลายลิ่มเลือด (Intravenous Thrombolysis - rt-PA / Alteplase 0.9 mg/kg, Max 90 mg) เมื่อ INR < 1.7 และไม่มีเลือดออกในสมอง
+3. การคุมระดับความดันโลหิต (Target BP < 180/105 mmHg หลังให้ rt-PA) และการพิจารณาทำ Mechanical Thrombectomy (EVT) หากมี Large Vessel Occlusion
+====================================================================

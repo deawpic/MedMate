@@ -1,0 +1,57 @@
+====================================================================
+บันทึกประวัติผู้ป่วยจำลองเพื่อการศึกษาทางการแพทย์ (CONFIDENTIAL MEDICAL STUDY CASE)
+ID: DIS-2026-0095
+ศาลาผู้ป่วย: หอผู้ป่วยโรคระบบทางเดินอาหารและตับ (GI Endoscopy Unit / ICU)
+====================================================================
+
+[Chief Complaint (อาการสำคัญ)]
+ผู้ป่วยชายไทยอายุ 54 ปี มีอาการอาเจียนเป็นเลือดสดปริมาณมาก 2 ครั้ง (~600 mL) ถ่ายอุจจาระเป็นยางมะตอยสีดำ หน้ามืดตาลาย และมีอาการสับสนซึมลง เป็นมา 4 ชั่วโมงก่อนมาโรงพยาบาล
+
+[Present Illness (ประวัติปัจจุบัน)]
+ผู้ป่วยได้รับการวินิจฉัยเป็นโรคตับแข็ง (Alcoholic & Chronic Hepatitis B Cirrhosis) มา 4 ปี มีภาวะท้องมาน (Ascites) เคยมีประวัติน้ำในช่องท้องติดเชื้อ (SBP) 1 ครั้ง ทานยาขับปัสสาวะ Spironolactone และ Furosemide เป็นประจำ
+4 ชั่วโมงก่อนมาโรงพยาบาล ผู้ป่วยมีอาการคลื่นไส้เฉียบพลันและอาเจียนพุ่งออกมาเป็นเลือดสดสีแดงคล้ำ มีลิ่มเลือดปนปริมาณประมาณ 2 ชาม (รวม ~600 mL) หลังจากนั้นมีถ่ายอุจจาระเหลวสีดำเหนียวกลิ่นเหม็นคาวรุนแรง (Melena) 2 ครั้ง เริ่มมีอาการวิงเวียน หน้ามืด เหงื่อแตกตัวเย็น 
+1 วันก่อนหน้านี้ ญาติสังเกตว่าผู้ป่วยเริ่มมีพฤติกรรมเปลี่ยนไป นอนไม่หลับตอนกลางคืนแต่ซึมหลับตอนกลางวัน (Sleep-wake inversion) พูดจาสับสนและมีอาการมือสั่นกระตุก
+
+[Past Medical History (ประวัติอดีต)]
+- Cirrhosis from Chronic HBV & Alcoholism (Child-Pugh Class B baseline)
+- ยาเดิม: Spironolactone (100) 1x1 pc, Furosemide (40) 1x1 pc, Entecavir (0.5) 1x1 pc
+- ประวัติดื่มสุราขาว: หยุดดื่มมาได้ 1 ปีหลังทราบว่าเป็นตับแข็ง
+- ปฏิเสธประวัติการแพ้ยา
+
+[Physical Examination (ผลตรวจร่างกายที่ห้องฉุกเฉิน)]
+- Vital Signs: T 36.9 C, BP 88/50 mmHg (Hypotension), HR 126 bpm (Tachycardia, weak pulse), RR 22 bpm, SpO2 96% on Room air
+- General Appearance: A middle-aged Thai male, looking lethargic, markedly pale and deeply jaundiced, confused to time and place (GCS E3V4M6).
+- Skin & Stigmata of Chronic Liver Disease: Multiple spider nevi on anterior chest, palmar erythema, caput medusae around umbilicus, jaundice of whole body.
+- HEENT: Markedly pale conjunctivae, deeply icteric sclerae, blood clot visible in oral cavity.
+- Abdomen: Distended abdomen with prominent collateral veins, positive shifting dullness and fluid thrill (Moderate-to-severe ascites), spleen palpable 3 cm below left costal margin (Splenomegaly), liver dullness decreased (Shrunken liver).
+- Neurological Examination: Bilateral coarse flapping tremor (Asterixis positive), hyperactive tendon reflexes -> Hepatic Encephalopathy West Haven Grade 2.
+- Rectal Examination: Digital rectal exam reveals black tarry stool (Melena), no external hemorrhoids.
+
+[Laboratory & Endoscopy Results (ผลตรวจทางห้องปฏิบัติการและการตรวจส่องกล้อง)]
+
+1. Complete Blood Count (CBC) & Coagulation:
+   - Hemoglobin (Hb): 6.4 g/dL (Severe Acute Anemia), Hct: 19.5%
+   - White Blood Cell (WBC): 11,200 /uL
+   - Platelet Count: 48,000 /uL (Severe Thrombocytopenia from Hypersplenism)
+   - Prothrombin Time (PT): 22.4 sec, INR: 2.15, aPTT: 46.0 sec (Coagulopathy of Liver Disease)
+
+2. Liver Function Tests (LFTs) & Renal Profile:
+   - Total Bilirubin: 5.8 mg/dL, Direct Bilirubin: 3.9 mg/dL
+   - AST: 112 U/L, ALT: 58 U/L, Alkaline Phosphatase: 145 U/L
+   - Serum Albumin: 2.0 g/dL, Globulin: 4.2 g/dL
+   - BUN: 38 mg/dL, Serum Creatinine: 1.8 mg/dL (Baseline 0.9 mg/dL - Hepatorenal Syndrome vs Prerenal AKI)
+   - Blood Ammonia (Stat): 142 umol/L (Normal 15-45 umol/L)
+   - Child-Pugh Score: 13 Points (Class C - Severe hepatic dysfunction)
+
+3. Urgent Esophagogastroduodenoscopy (EGD):
+   - Found 4 columns of large esophageal varices (F3, Red color sign positive) with active spurting of blood at lower esophagus (Gastroesophageal junction)
+   - Successfully performed Endoscopic Variceal Ligation (EVL) with 5 rubber bands, achieving immediate hemostasis.
+
+====================================================================
+[Educational Objectives for RAG Evaluation]
+เคสนี้ถูกออกแบบมาเพื่อทดสอบการจัดการภาวะเลือดออกในทางเดินอาหารส่วนต้นจากหลอดเลือดขอดในตับแข็ง:
+1. การช่วยชีวิตและการให้เลือดอย่างระมัดระวัง (Restrictive Blood Transfusion Strategy: ให้ Packed Red Cells โดยตั้งเป้าหมาย Hb 7.0 - 8.0 g/dL เพื่อป้องกัน Rebound Portal Pressure Elevation)
+2. การให้ยาวาโซแอกทีฟเพื่อลดความดันหลอดเลือดขอดในตับ (Vasoactive Drug Therapy: Somatostatin, Octreotide หรือ Terlipressin ต่อเนื่อง 3-5 วัน)
+3. การให้ยาปฏิชีวนะป้องกันการติดเชื้อ (Prophylactic IV Ceftriaxone 1g/day เป็นเวลา 7 วัน เพื่อลดอัตราการเสียชีวิตและ Rebleeding)
+4. การรักษาภาวะตับวายและ Hepatic Encephalopathy (Lactulose ปรับให้อุจจาระ 2-3 ครั้ง/วัน ร่วมกับ Rifaximin, หลีกเลี่ยงยาระงับประสาท Sedatives, และตรวจประเมินภาวะไตวายซ้ำ)
+====================================================================

@@ -1,0 +1,70 @@
+====================================================================
+บันทึกประวัติผู้ป่วยจำลองเพื่อการศึกษาทางการแพทย์ (CONFIDENTIAL MEDICAL STUDY CASE)
+ID: DIS-2026-0091
+ศาลาผู้ป่วย: อายุรกรรมชาย (Medical Ward)
+====================================================================
+
+[Chief Complaint (อาการสำคัญ)]
+ผู้ป่วยชายไทยอายุ 45 ปี มีอาการเหนื่อยหอบ หายใจไม่อิ่ม อ่อนเพลียมาก และปัสสาวะออกน้อยลงอย่างต่อเนื่องในช่วง 3 วันก่อนมาโรงพยาบาล
+
+[Present Illness (ประวัติปัจจุบัน)]
+ผู้ป่วยเป็นโรคเบาหวานชนิดที่ 2 (Type 2 Diabetes Mellitus) และโรคความดันโลหิตสูง (Essential Hypertension) มาเป็นเวลา 8 ปี ได้รับการรักษาและติดตามอาการขาดๆ หายๆ ล่าสุดทานยาไม่สม่ำเสมอเนื่องจากยาหมดไปประมาณ 2 สัปดาห์ 
+
+3 วันก่อนมาโรงพยาบาล เริ่มมีอาการอ่อนเพลียรุนแรง ปากแห้ง คอแห้ง กระหายน้ำบ่อย ปัสสาวะปริมาณมากในตอนแรก หลังจากนั้นเริ่มมีอาการคลื่นไส้ อาเจียน ทานอาหารไม่ได้ และมีอาการหายใจเหนื่อยหอบลึกอย่างต่อเนื่อง (Kussmaul breathing) 1 วันก่อนมาโรงพยาบาล ญาติสังเกตเห็นว่าผู้ป่วยเริ่มซึมลง สับสน และปัสสาวะออกลดลงอย่างเห็นได้ชัด จึงนำส่งห้องฉุกเฉิน
+
+[Past Medical History (ประวัติอดีต)]
+- Type 2 Diabetes Mellitus (T2DM) ยาเดิม: Metformin (500) 1x2 pc, Glipizide (5) 1x1 ac (ขาดยา 2 สัปดาห์)
+- Essential Hypertension (HT) ยาเดิม: Enalapril (5) 1x1 pc (ขาดยา 2 สัปดาห์)
+- ปฏิเสธประวัติการแพ้ยา สารเคมี หรืออาหารใดๆ
+- ปฏิเสธการสูบบุหรี่และการดื่มแอลกอฮอล์
+
+[Physical Examination (ผลตรวจร่างกายที่ห้องฉุกเฉิน)]
+- Vital Signs: T 37.2 C, BP 98/58 mmHg, HR 118 bpm (Regular, weak pulse), RR 28 bpm (Deep and labored)
+- General Appearance: A Thai male, looking lethargic, confused, severely dehydrated, dry mucous membrane, poor skin turgor.
+- HEENT: Mild pale conjunctivae, anicteric sclerae, fruity odor from breath.
+- Heart: Tachycardia, no murmur.
+- Lungs: Clear, equal biceps breath sounds both sides, tachypnea with Kussmaul respiration.
+- Abdomen: Soft, mild diffuse tenderness, no guarding, no rigidity.
+- Extremities: Cool extremities, capillary refill time = 3 seconds, no pitting edema.
+
+[Laboratory & Investigation Results (ผลตรวจทางห้องปฏิบัติการ)]
+
+1. Complete Blood Count (CBC):
+   - Hb: 14.2 g/dL
+   - Hct: 43.5%
+   - WBC: 14,500 /uL (Neutrophil 82%, Lymphocyte 14%)
+   - Platelet: 280,000 /uL
+
+2. Blood Chemistry & Electrolytes:
+   - Blood Glucose (Stat): 485 mg/dL
+   - Blood Urea Nitrogen (BUN): 42 mg/dL
+   - Serum Creatinine (Cr): 2.1 mg/dL (Baseline 6 พฤษภาคม อยู่ที่ 1.1 mg/dL)
+   - eGFR: 32 mL/min/1.73m2
+   - Serum Sodium (Na+): 131 mEq/L
+   - Serum Potassium (K+): 5.4 mEq/L
+   - Serum Chloride (Cl-): 98 mEq/L
+   - Serum Bicarbonate (HCO3-): 10 mEq/L
+
+3. Arterial Blood Gas (ABG) on Room Air:
+   - pH: 7.15
+   - pCO2: 24 mmHg
+   - pO2: 92 mmHg
+   - HCO3-: 11 mEq/L
+   - Base Excess (BE): -15 mEq/L
+
+4. Urinalysis (UA):
+   - Color: Yellow, Turbidity: Clear
+   - Sp. Gr.: 1.030
+   - pH: 5.5
+   - Glucose: 4+
+   - Ketone: 3+
+   - Protein: 1+
+   - WBC: 1-2 /HPF, RBC: 0-1 /HPF
+
+====================================================================
+[Educational Objectives for RAG Evaluation]
+เคสนี้ถูกออกแบบมาเพื่อทดสอบให้นักศึกษาแพทย์วิเคราะห์สภาวะวิกฤต:
+1. ภาวะกรดเกินในเลือดจากเบาหวาน (Diabetic Ketoacidosis - DKA) ร่วมกับมีภาวะขาดน้ำรุนแรง (Severe Dehydration)
+2. ภาวะไตวายเฉียบพลัน (Acute Kidney Injury - AKI, Prerenal type) ซ้อนทับบนโรคประจำตัวเดิม
+3. การแปลผลกรด-ด่าง (High Anion Gap Metabolic Acidosis with Partial Respiratory Compensation)
+====================================================================

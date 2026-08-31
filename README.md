@@ -6,6 +6,30 @@
 
 ---
 
+## 📑 สารบัญ (Table of Contents)
+
+- [🏗️ โครงสร้างโฟลเดอร์ของโปรเจกต์ (Directory Structure)](#️-โครงสร้างโฟลเดอร์ของโปรเจกต์-directory-structure)
+- [📦 สรุปความสามารถของ Skills ทั้ง 10 ทักษะ (Skills Summary)](#-สรุปความสามารถของ-skills-ทั้ง-10-ทักษะ-skills-summary)
+- [⚙️ คุณสมบัติเด่นของระบบ (Core Features)](#️-คุณสมบัติเด่นของระบบ-core-features)
+- [🛠️ ขุมพลังและการทำงานของ MCP Servers (MCP Capabilities)](#️-ขุมพลังและการทำงานของ-mcp-servers-mcp-capabilities)
+  - [1. `medical-mcp` — คลังงานวิจัย เภสัชวิทยา และแนวทางเวชปฏิบัติ](#1-medical-mcp--คลังงานวิจัย-เภสัชวิทยา-และแนวทางเวชปฏิบัติ)
+  - [2. `medical-terminologies-mcp` — รหัสมาตรฐานและคำศัพท์การแพทย์สากล](#2-medical-terminologies-mcp--รหัสมาตรฐานและคำศัพท์การแพทย์สากล)
+  - [3. `local-rag` — คลังเอกสารและความรู้ส่วนตัว](#3-local-rag--คลังเอกสารและความรู้ส่วนตัว)
+- [💻 วิธีการติดตั้งและใช้งานบน Antigravity CLI (ผ่าน Terminal)](#-วิธีการติดตั้งและใช้งานบน-antigravity-cli-ผ่าน-terminal)
+  - [1. สิ่งที่ต้องเตรียมในเครื่องคอมพิวเตอร์ (Prerequisites)](#1-สิ่งที่ต้องเตรียมในเครื่องคอมพิวเตอร์-prerequisites)
+  - [2. การเปิดใช้งานและสิทธิ์เข้าถึง (Authentication)](#2-การเปิดใช้งานและสิทธิ์เข้าถึง-authentication)
+  - [3. การเตรียมคลังข้อมูลส่วนตัว (Local RAG Setup)](#3-การเตรียมคลังข้อมูลส่วนตัว-local-rag-setup)
+- [🖥️ วิธีการติดตั้งและใช้งานบน Antigravity Desktop (แอปหน้าต่าง GUI)](#️-วิธีการติดตั้งและใช้งานบน-antigravity-desktop-แอปหน้าต่าง-gui)
+  - [ขั้นตอนที่ 1: การเปิด Workspace บนตัวแอป](#ขั้นตอนที่-1-การเปิด-workspace-บนตัวแอป)
+  - [ขั้นตอนที่ 2: การล็อกอินเพื่อยืนยันสิทธิ์ (Account Authentication)](#ขั้นตอนที่-2-การล็อกอินเพื่อยืนยันสิทธิ์-account-authentication)
+  - [ขั้นตอนที่ 3: เปิดสิทธิ์การรัน Medical MCP และ Local RAG](#ขั้นตอนที่-3-เปิดสิทธิ์การรัน-medical-mcp-และ-local-rag)
+  - [ขั้นตอนที่ 4: เริ่มต้นแชตใช้งาน](#ขั้นตอนที่-4-เริ่มต้นแชตใช้งาน)
+- [🧪 การรัน Benchmark และ Evaluation Harness](#-การรัน-benchmark-และ-evaluation-harness)
+- [💡 ตัวอย่างสถานการณ์และการสั่งใช้งานจริง (Production Use Cases)](#-ตัวอย่างสถานการณ์และการสั่งใช้งานจริง-production-use-cases)
+- [🔐 นโยบายความปลอดภัยของข้อมูล (Data Isolation & Privacy)](#-นโยบายความปลอดภัยของข้อมูล-data-isolation--privacy)
+
+---
+
 ## 🏗️ โครงสร้างโฟลเดอร์ของโปรเจกต์ (Directory Structure)
 
 ```text

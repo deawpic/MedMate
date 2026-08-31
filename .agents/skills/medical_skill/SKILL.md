@@ -140,5 +140,7 @@ The system connects to authoritative global repositories (PubMed, US FDA, WHO Gl
 
 - **`read_file`**, **`search_files`**, **`list_directory`**: Sandboxed access strictly within `./RAG` (e.g. `"case_study_01.txt"`, `"case_study_03.txt"`).
 
-### 4.1 💾 User File Export Destination (`./output/`)
+### 4.1 💾 User File Export Destination (`./output/`) & UTF-8 Protocol
 - All generated reports, clinical cheat-sheets, exported markdown summaries, or data files requested by the user must be saved inside `./output/` (e.g. `./output/filename.md`).
+- **UTF-8 Encoding Mandate**: Always enforce UTF-8 encoding (`encoding='utf-8'` / UTF-8 without BOM) for any files containing Thai characters or Thai filenames to prevent font corruption and encoding issues across all platforms.
+

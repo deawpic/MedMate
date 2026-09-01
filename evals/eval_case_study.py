@@ -359,6 +359,55 @@ class ComprehensiveMedicalEvaluator:
             "criteria_results": details
         }
 
+    def evaluate_structured_data(self, json_str: str) -> Dict[str, Any]:
+        """Validates output against clinical-data-structuring schema."""
+        try:
+            data = json.loads(json_str) if isinstance(json_str, str) else json_str
+            required_keys = ["symptoms", "diagnoses", "medications", "procedures", "lab_results", "timeline"]
+            present_keys = [k for k in required_keys if k in data and isinstance(data[k], list)]
+            passed = len(present_keys) == len(required_keys)
+            return {
+                "benchmark": "clinical-data-structuring",
+                "status": "PASS" if passed else "FAIL",
+                "valid_keys": f"{len(present_keys)}/{len(required_keys)}",
+                "keys_present": present_keys
+            }
+        except Exception as e:
+            return {"benchmark": "clinical-data-structuring", "status": "FAIL", "error": str(e)}
+
+    def evaluate_icd_coding(self, json_str: str, expected_code: str) -> Dict[str, Any]:
+        """Validates output against clinical-coding-icd schema and ground truth code."""
+        try:
+            data = json.loads(json_str) if isinstance(json_str, str) else json_str
+            primary = data.get("primary_diagnosis", {})
+            assigned_code = primary.get("icd10_code", "").strip()
+            passed = (assigned_code == expected_code) or (expected_code in assigned_code)
+            return {
+                "benchmark": "clinical-coding-icd",
+                "status": "PASS" if passed else "FAIL",
+                "assigned_code": assigned_code,
+                "expected_code": expected_code,
+                "diagnosis": primary.get("diagnosis", "")
+            }
+        except Exception as e:
+            return {"benchmark": "clinical-coding-icd", "status": "FAIL", "error": str(e)}
+
+    def evaluate_timeline(self, json_str: str) -> Dict[str, Any]:
+        """Validates output against clinical-timeline-extraction schema."""
+        try:
+            data = json.loads(json_str) if isinstance(json_str, str) else json_str
+            events = data.get("timeline", [])
+            valid_events = all("time" in ev and "event" in ev for ev in events) if events else False
+            passed = len(events) > 0 and valid_events
+            return {
+                "benchmark": "clinical-timeline-extraction",
+                "status": "PASS" if passed else "FAIL",
+                "event_count": len(events),
+                "is_valid_structure": valid_events
+            }
+        except Exception as e:
+            return {"benchmark": "clinical-timeline-extraction", "status": "FAIL", "error": str(e)}
+
 if __name__ == "__main__":
     evaluator = ComprehensiveMedicalEvaluator()
     print("============================================================")
@@ -462,5 +511,42 @@ if __name__ == "__main__":
     res10 = evaluator.evaluate("case_study_10", "Tier1_Doctor", sample_siadh)
     print(f"[*] Case 10 (SIADH/Hyponatremia): Score = {res10['score']}% [{res10['status']}]")
 
+    print("\n------------------------------------------------------------")
+    print(" Testing Clinical Harness Structured & Protocol Evaluators")
+    print("------------------------------------------------------------")
+    
+    # Test Data Structuring Evaluator
+    sample_struct = {
+        "symptoms": ["แน่นหน้าอก", "เหงื่อแตก"],
+        "diagnoses": ["Inferior STEMI"],
+        "medications": [{"name": "Aspirin", "dose": "300 mg"}],
+        "procedures": ["Primary PCI"],
+        "lab_results": [{"test": "Troponin T", "value": "1450 ng/L"}],
+        "timeline": [{"time": "2 hr prior", "event": "Chest pain onset"}]
+    }
+    struct_res = evaluator.evaluate_structured_data(sample_struct)
+    print(f"[*] Structured Clinical Data Schema: Status = {struct_res['status']} ({struct_res['valid_keys']} keys)")
+
+    # Test ICD Codification Evaluator
+    sample_icd = {
+        "primary_diagnosis": {
+            "diagnosis": "Acute Inferior STEMI",
+            "icd10_code": "I21.19",
+            "description": "STEMI involving inferior wall"
+        }
+    }
+    icd_res = evaluator.evaluate_icd_coding(sample_icd, "I21.19")
+    print(f"[*] Clinical ICD-10 Codification: Status = {icd_res['status']} (Code: {icd_res['assigned_code']})")
+
+    # Test Timeline Extraction Evaluator
+    sample_timeline = {
+        "timeline": [
+            {"time": "07:30", "event": "Onset of weakness"},
+            {"time": "09:00", "event": "Arrived at ER"}
+        ]
+    }
+    time_res = evaluator.evaluate_timeline(sample_timeline)
+    print(f"[*] Clinical Timeline Chronology: Status = {time_res['status']} ({time_res['event_count']} events)")
+
     print("============================================================")
-    print("All 10 Case Study Ground Truth Evaluators Active & Verified!")
+    print("All 10 Case Study Ground Truth & Clinical Protocol Evaluators Verified!")

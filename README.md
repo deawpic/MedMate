@@ -53,36 +53,53 @@ MedMate/
 └── .agents/                    # ⚙️ โฟลเดอร์ควบคุมระบบหลักของ Antigravity
     ├── AGENTS.md               # กฎระเบียบและบทบาทของ Agent (Mirror)
     ├── mcp_config.json         # พูลลงทะเบียนเชื่อมต่อ MCP Servers
-    └── skills/                 # คลังทักษะทางการแพทย์และ Harness ครบวงจร
-        ├── medical_skill/      # [Core] คำนวณ ABG, Anion Gap, DKA, AKI KDIGO
-        ├── pubmed-database/    # ค้นหางานวิจัยสากลด้วย MeSH & PICO Framework
-        ├── claude-ally-health/ # ระบบซักประวัติ HPI, Triage และ Red Flag Detector
-        ├── health-trend-analyzer/ # วิเคราะห์แนวโน้มผลแล็บและสัญญาณชีพต่อเนื่อง
-        ├── scientific-writing/ # เรียบเรียงเคสคลินิกและสร้าง SOAP Note
-        ├── rag-engineer/       # จัดการคลังเอกสาร RAG และตารางผลแล็บ
-        ├── tool-use-guardian/  # ดักจับและกู้คืนความผิดพลาดของ MCP Tools
-        ├── gdpr-data-handling/ # การรักษาความลับคนไข้ (De-identification)
-        ├── agent-evaluation/   # Benchmark และประเมินคุณภาพคำตอบ
-        ├── config_manager_skill/ # ตรวจสอบความพร้อมและ Health Check ระบบ
-        └── windows-node-setup/ # คู่มือติดตั้ง Node.js & nvm ผ่าน winget บน Windows
+    └── skills/                 # คลังทักษะทางการแพทย์และ Harness ครบวงจร (19 ทักษะ)
+        ├── medical_skill/              # [Core] คำนวณ ABG, Anion Gap, DKA, AKI KDIGO
+        ├── clinical-data-structuring/  # [New] แปลงเวชระเบียนเป็น Structured JSON Schema
+        ├── clinical-entity-extraction/ # [New] สกัด Named Entities (Diseases, Meds, Labs)
+        ├── clinical-coding-icd/        # [New] จับคู่รหัสโรคมาตรฐานสากล ICD-10/11
+        ├── clinical-timeline-extraction/# [New] สกัดเส้นเวลาและเหตุการณ์สำคัญทางคลินิก
+        ├── clinical-risk-prediction/   # [New] ประเมินความเสี่ยงและจัดระดับความรุนแรง (CURB-65, Killip)
+        ├── clinical-diagnostic-support/# [New] สนับสนุนการวินิจฉัยแยกโรค Differential Diagnoses
+        ├── clinical-qa/                # [New] ถาม-ตอบจากเวชระเบียนแบบ Grounded ป้องกัน Hallucination
+        ├── clinical-report-generation/ # [New] สร้างรายงานเวชระเบียนและสรุปประวัติส่งออก ./output/
+        ├── pubmed-database/            # ค้นหางานวิจัยสากลด้วย MeSH & PICO Framework
+        ├── claude-ally-health/         # ระบบซักประวัติ HPI, Triage และ Red Flag Detector
+        ├── health-trend-analyzer/      # วิเคราะห์แนวโน้มผลแล็บและสัญญาณชีพต่อเนื่อง
+        ├── scientific-writing/         # เรียบเรียงเคสคลินิกและสร้าง SOAP Note
+        ├── rag-engineer/               # จัดการคลังเอกสาร RAG และตารางผลแล็บ
+        ├── tool-use-guardian/          # ดักจับและกู้คืนความผิดพลาดของ MCP Tools
+        ├── gdpr-data-handling/         # การรักษาความลับคนไข้ (De-identification: Indexed Tags)
+        ├── agent-evaluation/           # Benchmark และประเมินคุณภาพคำตอบ
+        ├── config_manager_skill/       # ตรวจสอบความพร้อมและ Health Check ระบบ
+        └── windows-node-setup/         # คู่มือติดตั้ง Node.js & nvm ผ่าน winget บน Windows
 ```
 
 ---
 
-## 📦 สรุปความสามารถของ Skills ทั้ง 10 ทักษะ (Skills Summary)
+## 📦 สรุปความสามารถของ Skills ทั้ง 19 ทักษะ (Skills Summary)
 
 | Skill Name | สรุปความสามารถแบบย่อ (Core Superpower) | กลุ่มผู้ใช้หลัก |
 | :--- | :--- | :---: |
 | 🧪 **`medical_skill`** | คำนวณค่าคลินิก (Acid-Base, Anion Gap, DKA Criteria, KDIGO AKI) และ Route คำสั่งไปยัง MCP Servers | ทุก Tier |
+| 📋 **`clinical-data-structuring`** | แปลงประวัติคนไข้และโน้ตคลินิกแบบ Unstructured ให้อยู่ในรูป JSON Schema มาตรฐาน | ทุก Tier / Harness |
+| 🏷️ **`clinical-entity-extraction`** | สกัด Named Entities (Diseases, Symptoms, Meds, Procedures, Labs) คงรูปข้อความเดิม | ทุก Tier |
+| 🏛️ **`clinical-coding-icd`** | ถอดรหัสและจับคู่รหัสโรคมาตรฐานสากล ICD-10/11 ป้องกันการสร้างรหัสเท็จ | แพทย์ / นศพ. |
+| ⏱️ **`clinical-timeline-extraction`** | สกัดลำดับเหตุการณ์การรักษาและ Onset-to-Door Time จัดเรียงเป็น Chronological Timeline | แพทย์ / นศพ. |
+| ⚠️ **`clinical-risk-prediction`** | ประเมินระดับความเสี่ยง (Low/Mod/High/Critical) และคำนวณคะแนน CURB-65, BISAP, Killip | ทุก Tier |
+| 🩺 **`clinical-diagnostic-support`** | เสนอและจัดอันดับการวินิจฉัยแยกโรค (Differential Diagnoses) พร้อมระบุระดับความไม่แน่นอน | แพทย์ / นศพ. |
+| 🔍 **`clinical-qa`** | ตอบคำถามจากประวัติคนไข้และ RAG แบบ Grounded 100% พร้อม Fallback ชัดเจนเมื่อไม่มีข้อมูล | ทุก Tier |
+| 📄 **`clinical-report-generation`** | จัดทำรายงานเวชระเบียน, บันทึกการส่งต่อ, และ Discharge Summary บันทึกลงใน `./output/` | แพทย์ / นศพ. |
 | 📚 **`pubmed-database`** | ค้นหางานวิจัยระดับโลกด้วย MeSH Terms, PICO Syntax, กรองเฉพาะ RCTs / Meta-Analysis พร้อมดึง PMID/DOI | แพทย์ / นศพ. |
 | 🩺 **`claude-ally-health`** | ซักประวัติอาการ (HPI), คัดกรอง Triage, วินิจฉัยแยกโรค และตรวจจับสัญญาณอันตราย (**Red Flags**) | ทุก Tier |
 | 📊 **`health-trend-analyzer`** | วิเคราะห์แนวโน้มผลแล็บและสัญญาณชีพต่อเนื่องตามช่วงเวลา (Longitudinal Trends) เช่น ค่าไต ค่าน้ำตาล | แพทย์ / คนไข้ |
-| 📝 **`scientific-writing`** | สรุปเคสผู้ป่วย สังเคราะห์หลักฐานเชิงประจักษ์ และจัดทำบันทึกประวัติโครงสร้าง **SOAP Note** | นศพ. / แพทย์ |
+| 📝 **`scientific-writing`** | เรียบเรียงต้นฉบับงานวิจัยวิชาการโครงสร้าง IMRAD และการสังเคราะห์หลักฐานวิชาการ | นศพ. / แพทย์ |
 | 📂 **`rag-engineer`** | จัดการโครงสร้างเอกสารใน `RAG/` แบ่ง Chunking และดึงข้อมูลตารางผลแล็บ/เลกเชอร์ได้แม่นยำ | ทุก Tier |
 | 🛡️ **`tool-use-guardian`** | ดักจับและกู้คืนข้อผิดพลาดเมื่อเรียกใช้ MCP Tools (Auto-Retry, จัดการ Timeout และแก้ Schema ผิดรูป) | ระบบ Harness |
-| 🔒 **`gdpr-data-handling`** | เซนเซอร์และลบข้อมูลระบุตัวตนคนไข้ (De-identification: ปิดบังชื่อ/HN) ตามมาตรฐาน PDPA/HIPAA | ทุก Tier |
+| 🔒 **`gdpr-data-handling`** | เซนเซอร์และลบข้อมูลระบุตัวตนคนไข้ (De-identification: `[PATIENT_1]`, `[DATE_1]`) ตามมาตรฐาน PDPA/HIPAA | ทุก Tier |
 | 🎯 **`agent-evaluation`** | รันชุด Benchmark ทดสอบและให้คะแนนความแม่นยำของการวินิจฉัยเคสเทียบกับ Ground Truth | ผู้พัฒนาระบบ |
 | ⚙️ **`config_manager_skill`** | ตรวจสอบความพร้อม (Health Check) ของสภาพแวดล้อม Node.js, NPX, Python และ MCP Config | ผู้ดูแลระบบ |
+| 🪟 **`windows-node-setup`** | คู่มือการติดตั้งสภาพแวดล้อม Node.js, NPX และ NVM บน Windows ผ่าน winget | Windows Users |
 
 ---
 

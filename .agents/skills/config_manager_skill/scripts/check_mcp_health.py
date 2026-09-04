@@ -78,6 +78,27 @@ def inspect_and_fix_mcp_config(config_path: Path, auto_fix: bool = False):
 
     return True
 
+def inspect_medical_cache(workspace_root: Path):
+    print("[*] Checking Medical MCP Cache & Master Lexicon Layer...")
+    try:
+        sys.path.insert(0, str(workspace_root))
+        from medical_skill.medical_mcp_cache import default_medical_cache
+        from medical_skill.clinical_normalizer import default_normalizer
+        stats = default_medical_cache.get_telemetry_stats()
+        print(f"  [+] Cache Status: {stats['status']}")
+        print(f"  [+] Cache DB: {stats['db_path']}")
+        print(f"  [+] Entries: {stats['total_cached_entries']}, Hits: {stats['total_cache_hits']}")
+        print(f"  [+] Tokens Saved: {stats['total_ai_tokens_saved']}, Disk: {stats['disk_file_size_mb']} MB / {stats['disk_budget_limit_mb']} MB")
+        print(f"  [+] Grounding Oracle: {stats['verified_pmids_count']} PMIDs, {stats['verified_codes_count']} codes")
+
+        lex_stats = default_normalizer.get_stats()
+        print(f"  [+] Master Lexicon DB: {lex_stats['db_path']}")
+        print(f"  [+] Lexicon Terms: {lex_stats['total_terms']} ({lex_stats['canonical_concepts']} concepts), Safety Guarded: {lex_stats['prevent_merge_terms']}")
+        return True
+    except Exception as e:
+        print(f"  [!] Cache/Lexicon inspection failed: {e}")
+        return False
+
 def main():
     auto_fix = "--fix" in sys.argv or "-f" in sys.argv
     print("=" * 60)
@@ -97,6 +118,8 @@ def main():
     workspace_mcp_config = workspace_root / ".agents" / "mcp_config.json"
     inspect_and_fix_mcp_config(workspace_mcp_config, auto_fix=auto_fix)
     print("-" * 60)
+    inspect_medical_cache(workspace_root)
+    print("=" * 60)
 
 if __name__ == "__main__":
     main()

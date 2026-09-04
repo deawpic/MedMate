@@ -1,5 +1,10 @@
 # Output & Temporary Exports
 output/
+cache/
+*.db
+*.db-wal
+*.db-shm
+!medical_skill/data/clinical_lexicon.db
 
 # Python cache & environment
 __pycache__/

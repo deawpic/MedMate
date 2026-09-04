@@ -17,8 +17,12 @@ import os
 import re
 import sys
 import json
+from pathlib import Path
 from dataclasses import dataclass
 from typing import List, Dict, Any
+
+# Ensure workspace root is in sys.path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 @dataclass
 class EvaluationCriterion:
@@ -408,6 +412,25 @@ class ComprehensiveMedicalEvaluator:
         except Exception as e:
             return {"benchmark": "clinical-timeline-extraction", "status": "FAIL", "error": str(e)}
 
+    def evaluate_grounding_oracle(self, text: str, oracle_pmids: set, oracle_codes: set) -> Dict[str, Any]:
+        """Validates that all PMIDs and clinical codes cited in clinical output exist in the Grounding Oracle."""
+        from medical_skill.medical_mcp_cache import ClinicalPayloadDistiller
+        extracted_pmids = ClinicalPayloadDistiller.extract_pmids(text)
+        extracted_codes = ClinicalPayloadDistiller.extract_clinical_codes(text)
+        
+        hallucinated_pmids = [p for p in extracted_pmids if p not in oracle_pmids]
+        hallucinated_codes = [c for c in extracted_codes if c not in oracle_codes]
+        
+        passed = (len(hallucinated_pmids) == 0 and len(hallucinated_codes) == 0)
+        return {
+            "benchmark": "anti-hallucination-grounding-oracle",
+            "status": "PASS" if passed else "FAIL",
+            "verified_pmids": [p for p in extracted_pmids if p in oracle_pmids],
+            "hallucinated_pmids": hallucinated_pmids,
+            "verified_codes": [c for c in extracted_codes if c in oracle_codes],
+            "hallucinated_codes": hallucinated_codes
+        }
+
 if __name__ == "__main__":
     evaluator = ComprehensiveMedicalEvaluator()
     print("============================================================")
@@ -547,6 +570,13 @@ if __name__ == "__main__":
     }
     time_res = evaluator.evaluate_timeline(sample_timeline)
     print(f"[*] Clinical Timeline Chronology: Status = {time_res['status']} ({time_res['event_count']} events)")
+
+    # Test Anti-Hallucination Grounding Oracle Evaluator
+    oracle_pmids = {"31234567", "7477192"}
+    oracle_codes = {"I21.19", "E11.1", "2160-0"}
+    sample_clinical_text = "การรักษาด้วย Alteplase ตามงานวิจัย PMID: 7477192 ในผู้ป่วยรหัสโรค I21.19"
+    oracle_res = evaluator.evaluate_grounding_oracle(sample_clinical_text, oracle_pmids, oracle_codes)
+    print(f"[*] Anti-Hallucination Grounding Oracle: Status = {oracle_res['status']} (Verified PMIDs: {oracle_res['verified_pmids']}, Codes: {oracle_res['verified_codes']})")
 
     print("============================================================")
     print("All 10 Case Study Ground Truth & Clinical Protocol Evaluators Verified!")

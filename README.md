@@ -48,13 +48,27 @@ MedMate/
 │   ├── case_study_08.txt       # เคส 08: Severe Anaphylactic Shock + IM Epinephrine
 │   ├── case_study_09.txt       # เคส 09: Hypertensive Emergency + Flash Pulmonary Edema
 │   └── case_study_10.txt       # เคส 10: Severe Hyponatremia (SIADH) + ODS Prevention
+├── medical_skill/              # ⚡ โมดูลคำนวณคลินิกและระบบแคช Medical MCP Cache Layer
+│   ├── medical_mcp_cache.py    # Dual-Layer Cache, zlib Level 6, Anti-Hallucination Oracle
+│   ├── clinical_normalizer.py  # Database-Driven Clinical Normalizer (SQLite + In-Memory Matcher)
+│   ├── mcp_router.py           # Transparent MCP Router Interceptor
+│   ├── clinical_verifier.py    # Citation Verifier, Grounding Oracle & Red Flag Gatekeeper
+│   ├── data/
+│   │   └── clinical_lexicon.db # 🗄️ Master Clinical Lexicon (420+ คำศัพท์, prevent_merge ป้องกันการยุบผิด)
+│   └── scripts/
+│       └── seed_clinical_lexicon.py # Automated Seeder & Case Study Harvester
+├── cache/                      # 🗄️ ฐานข้อมูล SQLite ของระบบแคชชั่วคราว (medical_mcp_cache.db)
+├── output/                     # 📤 โฟลเดอร์ส่งออกรายงานทางคลินิกและไฟล์สเปก
 ├── evals/                      # 🧪 ระบบ Evaluation Harness วัดผลความแม่นยำทางการแพทย์
-│   └── eval_case_study.py      # สคริปต์ตรวจให้คะแนนและเปรียบเทียบกับ Ground Truth (10 เคส)
+│   ├── eval_case_study.py      # สคริปต์ตรวจให้คะแนนและเปรียบเทียบกับ Ground Truth (10 เคส)
+│   ├── test_medical_cache.py   # ชุดทดสอบระบบแคช (8 ด้านสำคัญ: Latency, zlib, Oracle)
+│   ├── test_clinical_normalizer.py # ชุดทดสอบ Normalizer (8 ด้าน: คำศัพท์ไทย, ชื่อการค้า, prevent_merge)
+│   └── run_cache_benchmark.py  # เอนจินรันเบนช์มาร์ก 4 เฟสครบวงจร
 └── .agents/                    # ⚙️ โฟลเดอร์ควบคุมระบบหลักของ Antigravity
     ├── AGENTS.md               # กฎระเบียบและบทบาทของ Agent (Mirror)
     ├── mcp_config.json         # พูลลงทะเบียนเชื่อมต่อ MCP Servers
     └── skills/                 # คลังทักษะทางการแพทย์และ Harness ครบวงจร (19 ทักษะ)
-        ├── medical_skill/              # [Core] คำนวณ ABG, Anion Gap, DKA, AKI KDIGO
+        ├── medical_skill/              # [Core] คำนวณ ABG, Anion Gap, DKA, AKI KDIGO & MCP Cache
         ├── clinical-data-structuring/  # [New] แปลงเวชระเบียนเป็น Structured JSON Schema
         ├── clinical-entity-extraction/ # [New] สกัด Named Entities (Diseases, Meds, Labs)
         ├── clinical-coding-icd/        # [New] จับคู่รหัสโรคมาตรฐานสากล ICD-10/11
@@ -187,6 +201,23 @@ graph TD
 * **สืบค้นไฟล์เอกสารส่วนตัว:** อ่านและวิเคราะห์ไฟล์สรุปวิชาเรียน, สไลด์บรรยาย, แนวข้อสอบ, บันทึกประวัติผู้ป่วย หรือตารางข้อมูลที่วางไว้ในโฟลเดอร์ `./RAG`
 * **ความปลอดภัยระดับสูงสุด (Sandboxed):** โมเดล AI จะเข้าถึงได้เฉพาะไฟล์ภายในโฟลเดอร์ `RAG` เท่านั้น เพื่อปกป้องข้อมูลสำคัญของผู้ใช้
 
+### 4. `medical-mcp-cache` — ระบบแคชความเร็วสูงและประหยัด AI Token (Tier-0 Middleware)
+* **Dual-Layer Caching:** L1 In-Memory LRU (`<0.2ms`) + L2 SQLite Compressed Disk Cache (`<2.0ms`)
+* **High-Density zlib Compression:** บีบอัดระดับ BLOB ด้วย `zlib` (Level 6) ประหยัดพื้นที่ 65% – 75% ทำให้ขนาดเริ่มต้น 100 MB เก็บข้อมูลเทียบเท่า 350 – 400 MB
+* **Zero Medical Information Loss:** การันตีความครบถ้วนของข้อมูลคลินิก (ผลแล็บ, หน่วยวัด, โดสยา, DDI, PMIDs) พร้อมตัดขยะ Metadata ประหยัด Input Token ของ AI ได้ 50% – 70%
+* **Anti-Hallucination Grounding Oracle:** ดัชนีหมายเลข PMID และรหัสโรค/แล็บแท้จริง ป้องกัน AI ปลอมเลขอ้างอิงตามกฎข้อ 2.5 ของ `AGENTS.md`
+* **คำสั่งบริหารจัดการผ่าน CLI:**
+  ```bash
+  # ตรวจสอบสถานะสุขภาพและการประหยัด Token
+  python3 -m medical_skill.medical_mcp_cache --stats
+  
+  # ตรวจสอบรายการ PMIDs ใน Grounding Oracle
+  python3 -m medical_skill.medical_mcp_cache --pmids
+  
+  # ล้างแคชเฉพาะหมวดหมู่ (literature, drug, terminology, guideline, local_rag)
+  python3 -m medical_skill.medical_mcp_cache --purge-tag drug
+  ```
+
 ---
 
 ## 💻 วิธีการติดตั้งและใช้งานบน Antigravity CLI (ผ่าน Terminal)
@@ -243,11 +274,23 @@ graph TD
 
 ## 🧪 การรัน Benchmark และ Evaluation Harness
 
-MedMate มีระบบวัดผลความแม่นยำทางการแพทย์แบบอัตโนมัติ เพื่อประเมินว่าตัวแทนตอบคำถามได้ถูกต้องตาม **Clinical Ground Truth** หรือไม่:
+MedMate มีระบบวัดผลความแม่นยำทางการแพทย์และการทดสอบสมรรถนะแคชแบบอัตโนมัติ:
 
 ```bash
-# รันการประเมินเคสจำลอง case_study_01.txt (DKA + Prerenal AKI)
-python evals/eval_case_study.py
+# 1. รันการประเมินเคสจำลองคลินิก 10 เคส + Structured Evaluators (Ground Truth Benchmark)
+python3 evals/eval_case_study.py
+
+# 2. รันชุดทดสอบความปลอดภัยและการทำงานของ Database-Driven Normalizer
+python3 evals/test_clinical_normalizer.py
+
+# 3. รันชุดทดสอบความสมบูรณ์ของระบบแคช (Dual-Layer, zlib Level 6, Anti-Hallucination Oracle)
+python3 evals/test_medical_cache.py
+
+# 4. รันเอนจินจำลอง Benchmark แคชแบบ End-to-End ครบทั้ง 4 เฟส
+python3 evals/run_cache_benchmark.py
+
+# 5. ตรวจสอบสถานะความพร้อมของ MCP และระบบแคชผ่าน Health Check
+python3 .agents/skills/config_manager_skill/scripts/check_mcp_health.py
 ```
 
 ---

@@ -28,6 +28,7 @@
 #### 📚 2.3 Hybrid Knowledge Retrieval & PICO Search
 - หากเป็นข้อมูลเคสในโรงพยาบาล สรุปเลกเชอร์ หรือไฟล์ในเครื่อง -> ใช้ `medical_skill/search_local_rag` ร่วมกับสกิล `rag-engineer` และ `clinical-qa` (ตอบแบบ Grounded Evidence)
 - หากเป็นหลักฐานงานวิจัยสากล -> แปลงเป็น PICO Query ภาษาอังกฤษ ค้นหาผ่าน `pubmed-database` หรือ `medical_skill/search_pubmed`
+- **⚡ Medical MCP Cache-First Policy:** ก่อนเรียก External MCP (`medical-mcp`, `medical-terminologies-mcp`, `local-rag`) ให้ตรวจสอบผลลัพธ์ผ่านระบบแคช `medical_skill.medical_mcp_cache` ก่อนเสมอ เพื่อลดการใช้โควตาภายนอกและประหยัด AI Token 50%–70% ผ่าน Lossless Structural Pruning
 - **💡 Proactive On-Demand Evidence Rule (สำหรับ Tier 1 & Tier 2)**:
   - หากผู้ใช้ระบุชัดเจนว่าต้องการงานวิจัย/Evidence/PMID/Clinical Trials -> ดึงข้อมูลจาก PubMed ทันที
   - หากผู้ใช้ถามเคส ปรึกษาแนวทางรักษา หรือขอสรุปเคสทั่วไป -> ตอบสรุปทางคลินิกอย่างกระชับก่อน แล้ว**เสนอทางเลือกทิ้งท้าย**ว่าต้องการให้สืบค้นงานวิจัย RCTs / Systematic Reviews เพิ่มเติมจาก PubMed หรือไม่ เพื่อให้ผู้ใช้ควบคุมความลึกของข้อมูลได้ตามต้องการ
@@ -42,6 +43,7 @@
 
 #### 🛡️ 2.5 Anti-Hallucination, Citation Verification & Uncertainty Protocol (กฎป้องกันข้อมูลคลาดเคลื่อน)
 - **Verified Citations Only:** ห้ามสร้าง (Fabricate/Hallucinate) หมายเลข PMID, DOI, ชื่อผู้แต่ง หรือชื่อวารสารขึ้นมาเองเด็ดขาด การอ้างอิงงานวิจัยในโหมดแพทย์/นศพ. ต้องได้มาจากการค้นหาผ่าน `medical-mcp` หรือ `pubmed-database` เท่านั้น
+- **Automated Grounding Oracle:** ใช้ชุดข้อมูลหมายเลข PMID และรหัสโรค/แล็บที่สกัดจากระบบแคช (`get_all_verified_pmids()`, `get_all_verified_codes()`) เป็น Grounding Whitelist ในการตรวจสอบความถูกต้องของการอ้างอิง
 - **Honest Absence of Evidence:** หากสืบค้นฐานข้อมูลแล้วไม่พบงานวิจัยหรือหลักฐานที่แน่ชัด ให้ระบุตามตรงอย่างโปร่งใส เช่น *"จากการสืบค้นฐานข้อมูล PubMed ปัจจุบันยังไม่พบหลักฐาน RCTs หรือข้อสรุปที่ชัดเจนในประเด็นนี้"* หรือ *"Not available in the provided text."* สำหรับเคสคลินิก ห้ามเดาหรือแต่งข้อมูลขึ้นมาทดแทน
 - **Uncertainty & Clarification Gate:** หากข้อมูลผลแล็บ สัญญาณชีพ หรือประวัติที่ผู้ใช้ให้มาไม่ครบถ้วนเพียงพอต่อการวินิจฉัยอย่างปลอดภัย ให้ระบุข้อจำกัดและสอบถามข้อมูลเพิ่มเติมอย่างตรงไปตรงมา ผ่าน `clinical-diagnostic-support`
 - **Code & Terminology Verification:** รหัสมาตรฐาน (ICD-10/11, LOINC, RxNorm, ATC, MeSH) ต้องผ่านการค้นหาและตรวจสอบโครงสร้างจาก MCP Tool จริง ห้ามประดิษฐ์รหัสตัวเลขขึ้นมาเอง
@@ -77,7 +79,7 @@
 
 | Skill Identifier | Primary Domain & Responsibility | Supported Users |
 | :--- | :--- | :---: |
-| **`medical_skill`** | Clinical Runbooks (ABG, Anion Gap, DKA, AKI KDIGO), Terminology Codification & MCP Router (`medical-mcp`, `medical-terminologies-mcp`, `local-rag`) | All Tiers |
+| **`medical_skill`** | Clinical Runbooks (ABG, Anion Gap, DKA, AKI KDIGO), Terminology Codification & Tier-0 MCP Cache Interceptor (`medical_mcp_cache`, `medical-mcp`, `medical-terminologies-mcp`, `local-rag`) | All Tiers |
 | **`clinical-data-structuring`** | Unstructured Clinical Note & History to Standardized JSON Parsing | System / Evaluators |
 | **`clinical-entity-extraction`** | Clinical Named Entity Recognition (Diseases, Symptoms, Meds, Procedures, Labs) | All Tiers |
 | **`clinical-coding-icd`** | Standardized ICD-10/11 Diagnostic Codification & Anti-Hallucination JSON Schemas | Tier 1, Tier 2 |

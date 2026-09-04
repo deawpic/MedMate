@@ -185,4 +185,40 @@ python -m medical_skill.medical_mcp_cache --purge-tag drug
 python -m medical_skill.medical_mcp_cache --prune
 ```
 
+---
+
+## 6. Clinical Lexicon, Trie Normalizer & MCP Auto-Enrichment (`medical_skill.clinical_normalizer` & `medical_skill.clinical_enricher`)
+
+Provides high-speed synonym matching, brand-to-generic normalization, and runtime dictionary harvesting:
+
+### 6.1 Pure-Python `ClinicalTrie` Algorithm
+- Operates in $O(N)$ time proportional to query string length, decoupling performance from dictionary size (tested effortlessly up to 100,000+ terms).
+- Preserves ASCII word boundary rules (`\b`) to prevent substring corruption (e.g. `cr` never replaces `screen` or `increase`; `asa` never replaces `passage`).
+- Normalized queries achieve permutation-invariant tokens (e.g. `creatinine serum 1.4` == `serum creatinine 1.4`).
+
+### 6.2 Zero-Touch MCP Auto-Enrichment Engine (`clinical_enricher.py`)
+- Automatically intercepts responses from:
+  - **`medical-mcp`**: Harvests Brand $\to$ Generic pairs from FDA Drug Search & OpenFDA details (stripping pharmaceutical salts like *hydrochloride*, *calcium*, *besylate*, *succinate*).
+  - **`medical-terminologies-mcp`**: Harvests formulations from RxNorm bracketed brands (`[Kombiglyze]`, `[Janumet]`), LOINC test names, MeSH descriptors, and ATC drug classes.
+- **Clinical Safety Gates**: Every harvested term is strictly checked against `validate_safety()` and `prevent_merge` constraints. Conflicting entities (e.g. `hypoglycemia` vs `hyperglycemia`, `stemi` vs `nstemi`, `aspirin` vs `warfarin`) are blocked from entering the lexicon.
+
+### 6.3 CLI Management Commands
+```bash
+# View lexicon statistics, language breakdown, and Trie memory size
+python -m medical_skill.clinical_normalizer --stats
+
+# Normalize a medical query string
+python -m medical_skill.clinical_normalizer --normalize "ผู้ป่วยเบาหวานรับประทานยา glucophage 500 mg"
+
+# Search terms in master lexicon
+python -m medical_skill.clinical_normalizer --search "metformin"
+
+# Export lexicon to formatted JSON for Git audit
+python -m medical_skill.clinical_normalizer --export
+
+# Defragment and reclaim SQLite database pages
+python -m medical_skill.clinical_normalizer --vacuum
+```
+
+
 

@@ -553,6 +553,21 @@ class MedicalMcpCache:
                     raw_tokens, saved_tokens, is_empty,
                     current_ts, expires_at, current_ts
                 ))
+
+            # Auto-enrich clinical lexicon from MCP payload
+            if self._normalizer is not None and not is_empty:
+                try:
+                    enriched = self._normalizer.auto_enrich_from_mcp(
+                        provider=provider,
+                        tool_name=tool_name,
+                        arguments=arguments,
+                        payload=raw_payload
+                    )
+                    if enriched > 0:
+                        logger.debug(f"Auto-enriched {enriched} terms into clinical lexicon from {provider}:{tool_name}")
+                except Exception as e:
+                    logger.debug(f"Auto-enrichment skipped: {e}")
+
             return True
         except sqlite3.DatabaseError as e:
             logger.error(f"Failed to persist medical cache entry: {e}")

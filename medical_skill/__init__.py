@@ -4,6 +4,7 @@ def __getattr__(name: str):
     valid_exports = (
         "MedicalMcpCache", "ClinicalPayloadDistiller", "default_medical_cache",
         "ClinicalNormalizer", "default_normalizer", "ClinicalSafetyViolationError",
+        "ClinicalLexiconEnricher", "default_enricher",
         "MedicalMcpRouter", "default_mcp_router",
         "audit_clinical_response", "sanitize_hallucinated_pmids",
         "detect_unverified_pmid_citations", "detect_unverified_clinical_codes"
@@ -14,6 +15,9 @@ def __getattr__(name: str):
             return locals()[name]
         elif name in ("ClinicalNormalizer", "default_normalizer", "ClinicalSafetyViolationError"):
             from .clinical_normalizer import ClinicalNormalizer, default_normalizer, ClinicalSafetyViolationError
+            return locals()[name]
+        elif name in ("ClinicalLexiconEnricher", "default_enricher"):
+            from .clinical_enricher import ClinicalLexiconEnricher, default_enricher
             return locals()[name]
         elif name in ("MedicalMcpRouter", "default_mcp_router"):
             from .mcp_router import MedicalMcpRouter, default_mcp_router
@@ -26,6 +30,7 @@ def __getattr__(name: str):
 __all__ = [
     "MedicalMcpCache", "ClinicalPayloadDistiller", "default_medical_cache",
     "ClinicalNormalizer", "default_normalizer", "ClinicalSafetyViolationError",
+    "ClinicalLexiconEnricher", "default_enricher",
     "MedicalMcpRouter", "default_mcp_router",
     "audit_clinical_response", "sanitize_hallucinated_pmids",
     "detect_unverified_pmid_citations", "detect_unverified_clinical_codes"

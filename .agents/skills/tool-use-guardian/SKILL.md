@@ -65,6 +65,15 @@ For multi-step tool chains, Guardian maintains checkpoints. If step 4 of 7 fails
 
 Guardian tracks failure patterns per tool. After 3+ failures of the same type, it marks the tool as unreliable and suggests alternatives.
 
+### Step 5: Mermaid Unicode & Non-ASCII Guardrail (`mermaid_guardian.py`)
+
+Protects markdown generation from Mermaid rendering crashes and lexical errors when Thai, Asian, or Non-ASCII characters are present:
+- **Strict Prohibitions:** Disallows `classDiagram`, `stateDiagram`, `erDiagram`, and `gitGraph` with Unicode/Thai; auto-converts to `flowchart TD`
+- **Identifier Protection:** Enforces ASCII Alphanumeric Node IDs and Subgraph IDs (e.g., `NodeA["ผู้ป่วย"]`)
+- **Quoted Label Gate:** Enforces double-quoting `["..."]` around all Thai labels, parentheses `()`, and special characters `:` `/` `-`
+- **Linebreak Sanitization:** Replaces raw unescaped newlines inside labels with `<br/>`
+- **Auto-Healing:** Pre-flight linting and runtime repair via `medical_skill.mermaid_guardian` (`sanitize_mermaid`, `validate_mermaid`)
+
 ## Best Practices
 
 - ✅ Let Guardian wrap all external tool calls automatically

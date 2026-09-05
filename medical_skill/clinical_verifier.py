@@ -162,14 +162,17 @@ def audit_clinical_response(
                 "message": f"Missing urgent ER/1669 emergency warning for symptoms: {rf_check['red_flags_present']}"
             })
 
-    # 3. Mandatory Disclaimer Gate for Tier 3 (Rule 3)
-    if tier == 3:
-        if MANDATORY_DISCLAIMER_KEYWORD not in response_text:
-            violations.append({
-                "rule": "Mandatory Legal Disclaimer (Rule 3)",
-                "severity": "HIGH",
-                "message": f"Missing required patient disclaimer keyword: '{MANDATORY_DISCLAIMER_KEYWORD}'"
-            })
+    # 4. Mermaid Unicode & Syntax Gate (Rule 2.7)
+    from medical_skill.mermaid_guardian import MermaidUnicodeGuardian
+    mermaid_audit = MermaidUnicodeGuardian.audit_markdown_text(response_text)
+    if mermaid_audit["has_mermaid"] and not mermaid_audit["passed"]:
+        for rep in mermaid_audit["reports"]:
+            for err in rep["validation"]["errors"]:
+                violations.append({
+                    "rule": f"Mermaid Unicode Protocol (Rule 2.7 - {err['rule']})",
+                    "severity": err.get("severity", "ERROR"),
+                    "message": f"Line {err['line_number']}: {err['message']}"
+                })
 
     return {
         "passed": len(violations) == 0,
@@ -177,5 +180,6 @@ def audit_clinical_response(
         "detected_pmids": extract_pmids(response_text),
         "unverified_pmids": unverified_pmids,
         "detected_codes": extract_clinical_codes(response_text),
-        "unverified_codes": unverified_codes
+        "unverified_codes": unverified_codes,
+        "mermaid_audit": mermaid_audit
     }

@@ -7,7 +7,8 @@ def __getattr__(name: str):
         "ClinicalLexiconEnricher", "default_enricher",
         "MedicalMcpRouter", "default_mcp_router",
         "audit_clinical_response", "sanitize_hallucinated_pmids",
-        "detect_unverified_pmid_citations", "detect_unverified_clinical_codes"
+        "detect_unverified_pmid_citations", "detect_unverified_clinical_codes",
+        "MermaidUnicodeGuardian", "sanitize_mermaid", "validate_mermaid"
     )
     if name in valid_exports:
         if name in ("MedicalMcpCache", "ClinicalPayloadDistiller", "default_medical_cache"):
@@ -25,6 +26,9 @@ def __getattr__(name: str):
         elif name in ("audit_clinical_response", "sanitize_hallucinated_pmids", "detect_unverified_pmid_citations", "detect_unverified_clinical_codes"):
             from .clinical_verifier import audit_clinical_response, sanitize_hallucinated_pmids, detect_unverified_pmid_citations, detect_unverified_clinical_codes
             return locals()[name]
+        elif name in ("MermaidUnicodeGuardian", "sanitize_mermaid", "validate_mermaid"):
+            from .mermaid_guardian import MermaidUnicodeGuardian, sanitize_mermaid, validate_mermaid
+            return locals()[name]
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 __all__ = [
@@ -33,5 +37,6 @@ __all__ = [
     "ClinicalLexiconEnricher", "default_enricher",
     "MedicalMcpRouter", "default_mcp_router",
     "audit_clinical_response", "sanitize_hallucinated_pmids",
-    "detect_unverified_pmid_citations", "detect_unverified_clinical_codes"
+    "detect_unverified_pmid_citations", "detect_unverified_clinical_codes",
+    "MermaidUnicodeGuardian", "sanitize_mermaid", "validate_mermaid"
 ]

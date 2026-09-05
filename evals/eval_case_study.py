@@ -431,6 +431,19 @@ class ComprehensiveMedicalEvaluator:
             "hallucinated_codes": hallucinated_codes
         }
 
+    def evaluate_mermaid_diagrams(self, markdown_text: str) -> Dict[str, Any]:
+        """Validates all Mermaid diagrams in markdown text for Unicode safety and crash-free rendering."""
+        from medical_skill.mermaid_guardian import MermaidUnicodeGuardian
+        audit = MermaidUnicodeGuardian.audit_markdown_text(markdown_text)
+        return {
+            "benchmark": "mermaid-unicode-safety",
+            "status": "PASS" if audit["passed"] else "FAIL",
+            "has_mermaid": audit["has_mermaid"],
+            "block_count": audit["block_count"],
+            "reports": audit["reports"],
+            "sanitized_markdown": audit["sanitized_markdown"]
+        }
+
 if __name__ == "__main__":
     evaluator = ComprehensiveMedicalEvaluator()
     print("============================================================")
@@ -577,6 +590,18 @@ if __name__ == "__main__":
     sample_clinical_text = "การรักษาด้วย Alteplase ตามงานวิจัย PMID: 7477192 ในผู้ป่วยรหัสโรค I21.19"
     oracle_res = evaluator.evaluate_grounding_oracle(sample_clinical_text, oracle_pmids, oracle_codes)
     print(f"[*] Anti-Hallucination Grounding Oracle: Status = {oracle_res['status']} (Verified PMIDs: {oracle_res['verified_pmids']}, Codes: {oracle_res['verified_codes']})")
+
+    # Test Mermaid Unicode & Syntax Guardian Evaluator
+    sample_mermaid_doc = """
+    ```mermaid
+    flowchart TD
+        NodeA["<b>ตรวจคัดกรอง FAST</b><br/>ประเมิน Onset ทันที"] --> NodeB{"ระยะเวลา < 4.5 ชม.?"}
+        NodeB -- "ใช่" --> NodeC["พิจารณาให้ยา IV rt-PA"]
+        NodeB -- "ไม่ใช่" --> NodeD["ประเมิน MRI DWI-FLAIR"]
+    ```
+    """
+    mermaid_res = evaluator.evaluate_mermaid_diagrams(sample_mermaid_doc)
+    print(f"[*] Mermaid Unicode Safety Guardian: Status = {mermaid_res['status']} ({mermaid_res['block_count']} diagram block tested)")
 
     print("============================================================")
     print("All 10 Case Study Ground Truth & Clinical Protocol Evaluators Verified!")

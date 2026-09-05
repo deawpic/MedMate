@@ -57,6 +57,20 @@
 - **Isolation Policy:** ห้ามบันทึกไฟล์ส่งออกปะปนในโฟลเดอร์หลัก (Root Directory) หรือโฟลเดอร์ `RAG/` โดยเด็ดขาด เว้นแต่ผู้ใช้จะระบุตำแหน่งพาธเฉพาะเจาะจงเป็นอย่างอื่น
 - **UTF-8 Encoding Protocol:** หากมีการบันทึกไฟล์เป็นชื่อภาษาไทย หรือมีเนื้อหาข้อมูลภาษาไทย ระบบและเครื่องมือเขียนไฟล์ต้องบังคับใช้การเข้ารหัสแบบ **UTF-8 (Encoding: UTF-8 / `encoding='utf-8'` / UTF-8 without BOM)** เสมออย่างเคร่งครัด เพื่อป้องกันปัญหาตัวอักษรผิดเพี้ยน (Encoding & Font Corruption) บนทุกระบบปฏิบัติการ
 
+#### 📊 2.7 Mermaid Diagram Unicode & Non-ASCII Safety Protocol (กฎความปลอดภัยการวาดแผนภาพ Mermaid)
+เพื่อป้องกันปัญหา **Mermaid Render Crash / Lexical Error** เมื่อสร้างแผนภาพด้วยบล็อก ````mermaid ```` ที่มีภาษาไทยหรืออักขระ Non-ASCII ระบบต้องปฏิบัติตามมาตรฐาน `medical_skill.mermaid_guardian` อย่างเคร่งครัด:
+1. **Strict Prohibitions (ข้อห้ามเด็ดขาด):**
+   - **ห้ามใช้ `classDiagram`, `stateDiagram`, `erDiagram` หรือ `gitGraph` กับภาษาไทยหรือ Non-ASCII โดยเด็ดขาด** เนื่องจาก Lexer ของ Mermaid จะเกิด Lexical Error ทันที หากต้องการแสดงการ์ดข้อมูล โครงสร้างความสัมพันธ์ หรือลำดับสถานะ ให้แปลงเป็น `flowchart TD` หรือ `flowchart LR` เสมอ
+   - **ห้ามตั้งชื่อ Node ID หรือ Subgraph ID เป็นภาษาไทย** (เช่น ❌ `คนไข้["คนไข้"]` หรือ `subgraph แผนกฉุกเฉิน`) ต้องใช้ ASCII Alphanumeric เท่านั้น (เช่น ✅ `NodeA["คนไข้"]`, `subgraph SubER ["แผนกฉุกเฉิน"]`)
+   - **ห้ามเคาะขึ้นบรรทัดใหม่ดิบ (Raw Newline) ภายใน Label ข้อความ** ให้ใช้ `<br/>` สำหรับการขึ้นบรรทัดใหม่เสมอ
+2. **Mandatory Types (ประเภทแผนภาพมาตรฐาน):** บังคับใช้ `flowchart TD`, `flowchart LR` หรือ `graph TD` สำหรับแผนภาพทางคลินิก โครงสร้างเวชระเบียน และผังการตัดสินใจทั้งหมด
+3. **Quoted Label Gate (กฎการครอบเครื่องหมายคำพูดคู่ `["..."]`):** ทุก Label หรือชื่อโหนดที่มีภาษาไทย, วงเล็บ `()`, `[]`, เครื่องหมายวรรคตอน `:`, `,`, `-`, `/` หรือแท็ก HTML (`<b>...</b>`) **ต้องครอบด้วยเครื่องหมายคำพูดคู่ (Double Quotes) เสมอ**
+4. **Pre-Flight Self-Checklist (รายการตรวจสอบก่อนส่งมอบ):**
+   - [ ] ใช้ `flowchart` หรือ `graph` (ไม่มี `classDiagram` ที่มีภาษาไทย)
+   - [ ] Node ID ทุกตัวเป็น ASCII ภาษาอังกฤษล้วน
+   - [ ] ข้อความภาษาไทยและวงเล็บทุกจุดครอบด้วย `["..."]` เรียบร้อย
+   - [ ] ใช้ `<br/>` แทนการเคาะ Enter ในกล่องข้อความ
+
 ---
 
 ### 3. Adaptive 3-Tier Routing (การปรับระดับภาษาตามกลุ่มผู้ใช้)
@@ -83,7 +97,7 @@
 
 | Skill Identifier | Primary Domain & Responsibility | Supported Users |
 | :--- | :--- | :---: |
-| **`medical_skill`** | Clinical Runbooks (ABG, Anion Gap, DKA, AKI KDIGO), Terminology Codification & Tier-0 MCP Cache Interceptor (`medical_mcp_cache`, `medical-mcp`, `medical-terminologies-mcp`, `local-rag`) | All Tiers |
+| **`medical_skill`** | Clinical Runbooks (ABG, Anion Gap, DKA, AKI KDIGO), Terminology Codification, Mermaid Unicode Guardian (`mermaid_guardian`) & Tier-0 MCP Cache Interceptor (`medical_mcp_cache`, `medical-mcp`, `medical-terminologies-mcp`, `local-rag`) | All Tiers |
 | **`clinical-data-structuring`** | Unstructured Clinical Note & History to Standardized JSON Parsing | System / Evaluators |
 | **`clinical-entity-extraction`** | Clinical Named Entity Recognition (Diseases, Symptoms, Meds, Procedures, Labs) | All Tiers |
 | **`clinical-coding-icd`** | Standardized ICD-10/11 Diagnostic Codification & Anti-Hallucination JSON Schemas | Tier 1, Tier 2 |
@@ -97,7 +111,7 @@
 | **`health-trend-analyzer`** | Longitudinal Health & Lab Trend Analysis over time | Tier 1, Tier 3 |
 | **`scientific-writing`** | Academic Research Paper Synthesis, IMRAD Manuscripts & Graphical Abstracts | Tier 1, Tier 2 |
 | **`rag-engineer`** | Medical Document Ingestion, Chunking & Hybrid Retrieval from `./RAG` | All Tiers |
-| **`tool-use-guardian`** | MCP Tool Reliability, Auto-Retry, Timeout Recovery & Schema Protection | System / Harness |
+| **`tool-use-guardian`** | MCP Tool Reliability, Mermaid Diagram Unicode Linter/Auto-Healer, Auto-Retry, Timeout Recovery & Schema Protection | System / Harness |
 | **`gdpr-data-handling`** | Healthcare Privacy, Indexed Placeholders (`[PATIENT_1]`) & Patient De-identification | All Tiers |
 | **`agent-evaluation`** | Clinical Case Benchmark & Ground Truth Scoring (`eval_case_study.py`) | Evaluators |
 | **`config_manager_skill`** | MCP Environment Health Check & Platform Diagnostic (`check_mcp_health.py`) | Admin / Dev |

@@ -30,7 +30,20 @@ Identify and extract:
 
 ---
 
-## 3. Output JSON Schema
+## 3. Output Formats (Table vs. JSON)
+
+### 3.1 Presentation Mode (Default for User Responses): Markdown Table
+เมื่อตอบหรือสรุปข้อมูลลำดับเวลาแก่ผู้ใช้ บุคลากรทางการแพทย์ หรือนักศึกษาแพทย์ ให้แสดงผลในรูปแบบ **ตาราง Markdown (Table)** เสมอ:
+
+| เวลา / ระยะเวลา (Time) | เหตุการณ์และอาการทางคลินิก (Event / Clinical Status) | หมวดหมู่ (Category) |
+| :--- | :--- | :--- |
+| **07:30** (Last known normal) | พบอาการแขนขาซีกขวาอ่อนแรงกะทันหัน พูดไม่เป็นภาษา | Symptom Onset |
+| **09:00** (Door time) | ถึงห้องฉุกเฉิน วัดความดัน 175/95 mmHg, NIHSS 16 เปิด Stroke Fast Track | ER Admission |
+| **09:25** (25 min post-door) | ตรวจ NCCT Brain: ASPECT score 9, ไม่พบภาวะเลือดออกในสมอง (No ICH) | Diagnostic Workup |
+| **09:45** (45 min post-door) | ให้ยาละลายลิ่มเลือด IV rt-PA (Alteplase) ภายในหน้าต่าง 4.5 ชม. | Treatment Intervention |
+
+### 3.2 Programmatic / JSON Schema Mode (สำหรับระบบ API หรือการประเมินผล Evaluator)
+หากผู้ใช้ระบุเจาะจงว่าต้องการ raw JSON ให้จัดรูปแบบตามสคีมา:
 
 ```json
 {

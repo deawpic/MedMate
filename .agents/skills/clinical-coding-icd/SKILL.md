@@ -37,9 +37,18 @@ This skill provides deterministic mapping of clinical diagnoses to international
 
 ---
 
-## 3. Output Format
+## 3. Output Formats (Table vs. JSON)
 
-Format result as a structured JSON object:
+### 3.1 Presentation Mode (Default for User Responses): Markdown Table
+เมื่อตอบหรือสรุปข้อมูลรหัสโรคแก่ผู้ใช้ บุคลากรทางการแพทย์ หรือนักศึกษาแพทย์ ให้แสดงผลในรูปแบบ **ตาราง Markdown (Table)** เสมอ:
+
+| ประเภทการวินิจฉัย (Type) | การวินิจฉัย (Diagnosis) | รหัสโรค (ICD-10 Code) | คำอธิบายรหัสโรค (Description) | หลักฐานทางคลินิกสนับสนุน (Clinical Justification) |
+| :--- | :--- | :--- | :--- | :--- |
+| **การวินิจฉัยหลัก (Primary)** | Type 2 Diabetes Mellitus with Severe DKA | **E11.10** | Type 2 diabetes mellitus with ketoacidosis without coma | Documented blood glucose 480 mg/dL, pH 7.15, positive urine ketones (4+), AG 23 |
+| **การวินิจฉัยร่วม (Secondary)** | Acute Kidney Injury, Prerenal | **N17.9** | Acute kidney failure, unspecified | BUN 56 mg/dL, Cr 2.8 mg/dL (BUN/Cr ratio = 20), severe dehydration |
+
+### 3.2 Programmatic / JSON Schema Mode (สำหรับระบบ API หรือการประเมินผล Evaluator)
+หากผู้ใช้ระบุเจาะจงว่าต้องการ raw JSON ให้จัดรูปแบบตามสคีมา:
 
 ```json
 {

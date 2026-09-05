@@ -36,9 +36,22 @@ If a category has no data in the source text, return an empty array `[]`.
 
 ---
 
-## 3. Output JSON Schema
+## 3. Output Formats (Table vs. JSON)
 
-Always format the output strictly as valid JSON:
+### 3.1 Presentation Mode (Default for User Responses): Markdown Table
+เมื่อตอบหรือสรุปข้อมูลเวชระเบียนแก่ผู้ใช้ บุคลากรทางการแพทย์ หรือนักศึกษาแพทย์ ให้แสดงผลในรูปแบบ **ตาราง Markdown (Table)** เสมอ เพื่อความชัดเจน อ่านง่าย และเป็นระเบียบ:
+
+| หมวดหมู่ (Category) | รายการ / รายละเอียด (Clinical Elements) | ข้อมูลสนับสนุน / ค่าสถานะ (Status / Details) |
+| :--- | :--- | :--- |
+| **อาการสำคัญและอาการแสดง (Symptoms)** | เจ็บแน่นหน้าอกร้าวไปกราม, เหงื่อแตกท่วมตัว, คลื่นไส้อาเจียน | เริ่มเป็น 2 ชั่วโมงก่อนมา รพ. |
+| **การวินิจฉัย (Diagnoses)** | Acute Inferior STEMI, Right Ventricular Infarction | Killip Class IV / Cardiogenic Shock |
+| **รายการยา (Medications)** | Aspirin 300 mg po stat, Ticagrelor 180 mg po stat | ได้รับการบริหารยาที่ห้องฉุกเฉิน |
+| **หัตถการ (Procedures)** | Emergency EKG 12 leads + V4R, Urgent Primary PCI | ส่งห้องปฏิบัติการสวนหัวใจเร่งด่วน |
+| **ผลแล็บ / สัญญาณชีพ (Labs & Vitals)** | Troponin T: 1450 ng/L (Elevated), BP: 78/48 mmHg | ความดันโลหิตต่ำรุนแรง (Hypotension) |
+| **เส้นเวลาทางคลินิก (Timeline)** | 2 ชม. ก่อนมา: เจ็บแน่นหน้าอกรุนแรง<br>แรกรับ ER: BP 78/48, EKG ST-elevation | Door-to-Needle / Door-to-Balloon window |
+
+### 3.2 Programmatic / JSON Schema Mode (สำหรับระบบ API หรือการประเมินผล Evaluator)
+หากผู้ใช้ระบุเจาะจงว่าต้องการ raw JSON ให้จัดรูปแบบตามสคีมา:
 
 ```json
 {

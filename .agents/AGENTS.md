@@ -71,39 +71,27 @@
    - [ ] ข้อความภาษาไทยและวงเล็บทุกจุดครอบด้วย `["..."]` เรียบร้อย
    - [ ] ใช้ `<br/>` แทนการเคาะ Enter ในกล่องข้อความ
 
-#### 📑 2.8 Cross-Platform Thai Document, PDF & Multi-OS Architecture Protocol (มาตรฐานการสร้างเอกสารและรันคำสั่งข้ามระบบปฏิบัติการ)
-เพื่อป้องกันปัญหา **Software Bugs ข้ามระบบปฏิบัติการ (Windows, macOS, Linux, Docker Containers)** ระบบและ Agent ต้องปฏิบัติตามกฎ 6 ประการอย่างเคร่งครัด:
+#### 📑 2.8 Markdown-Native Clinical Documentation & PDF/Print Advisory Protocol (มาตรฐานเอกสารเวชระเบียน Markdown และข้อแนะนำการแปลงเอกสาร)
+เพื่อรักษาความถูกต้องสูงสุดของสูตรคณิตศาสตร์และสมการเคมีคลินิก ($\LaTeX$ / KaTeX) และตัดปัญหาความเปราะบางของโปรแกรมแปลงเอกสารข้ามระบบปฏิบัติการ ระบบและ Agent ต้องปฏิบัติตามกฎ 4 ประการ:
 
-1. **Font Stack Hierarchy & Tofu-Free Protocol (Bug 1):**
-   เมื่อสร้างเอกสาร HTML/CSS, Web Page หรือ CSS Print สำหรับแปลงเป็นเอกสาร ต้องกำหนด Font Family Fallback ให้ครอบคลุมทุก OS เสมอ:
-   ```css
-   font-family: 'TH Sarabun New', 'Sarabun', 'Thonburi', 'Sukhumvit Set', 'Loma', 'Garuda', 'Noto Sans Thai', 'Leelawadee UI', Tahoma, sans-serif;
-   ```
-   เพื่อป้องกันปัญหา CMap Missing Glyph ที่ทำให้ Zero-Width Space (`\u200b`) หรืออักษรไทยกลายเป็นกล่องสี่เหลี่ยม `[ ]` (Tofu Box) และบน Linux/Docker ต้องรองรับแพ็กเกจ `fonts-thai-tlwg` และ `fonts-noto-core`
-2. **Tone Mark Preservation & Chromium Headless Architecture (Bug 2):**
-   การแปลงเอกสารเป็น PDF ภาษาไทยระดับคลินิก **ห้ามใช้ไลบรารี Programmatic ทั่วไป (เช่น ReportLab หรือ FPDF) ที่ขาด OpenType Shaping โดยเด็ดขาด** เพราะจะทำให้สระบนและวรรณยุกต์ชั้นบนสุดสูญหาย (เช่น "ที่" ไม้เอกหาย, "ชั้น" ไม้โทหาย)  
-   **ต้องใช้ Chromium Headless Print-to-PDF (`--headless=new`) ร่วมกับ HarfBuzz Engine เสมอ** พร้อมระบุ Flags ป้องกัน Container แครช:
-   - `--headless=new`
-   - `--disable-gpu`
-   - `--no-sandbox` (จำเป็นสำหรับ Linux Docker / Root)
-   - `--disable-dev-shm-usage` (**สำคัญที่สุดสำหรับ Docker** ป้องกันการแครชจากขีดจำกัด 64MB บน `/dev/shm`)
-   - `--user-data-dir` (แยกโปรไฟล์ชั่วคราว ป้องกันชนกับโปรไฟล์หลัก)
-3. **Subprocess & Multi-line Execution Safety (Bug 3):**
-   เมื่อ Agent หรือสคริปต์ต้องเรียกใช้คำสั่งภายนอกหรือรันโปรเซส Python:
-   - **ใช้ `sys.executable` เสมอ:** ห้าม Hardcode คำว่า `"python"` หรือ `"python3"` เพื่อรับประกันความเข้ากันได้กับ Python Environment ที่โปรเซสแม่ทำงานอยู่
-   - **เขียนลงไฟล์สคริปต์ชั่วคราว (`tempfile.NamedTemporaryFile`) เสมอ:** หลีกเลี่ยงการส่งสตริงโค้ดหลายบรรทัดผ่าน inline `python -c "..."` เพื่อป้องกันปัญหา Batch shim wrapper (`python.bat` / `python.cmd`) บน Windows และปัญหา Escape quote / newline แตกบน macOS/Linux
-4. **Saraban Standards & Collision-Free Metrics (Bug 4):**
-   เอกสารทางคลินิกและรายงานราชการไทยต้องปฏิบัติตามมาตรฐานงานสารบรรณ:
-   - กำหนดขนาดตัวอักษรเนื้อหาหลักเป็น **16 pt** และกำหนด `line-height: 1.45 - 1.5` เสมอ เพื่อเว้นระยะไม่ให้สระบน/วรรณยุกต์ซ้อน ชนกับสระล่างของบรรทัดก่อนหน้า
-   - กำหนดระยะหน้ากระดาษ A4 มาตรฐาน: `@page { size: A4; margin: 20mm 15mm 20mm 15mm; }`
-   - หัวข้อเอกสาร: Title 22pt (bold, line-height 1.25), H2 18pt (bold, line-height 1.35), H3 16pt (bold), Tables/Callout 14pt (line-height 1.4), Footer 11pt
-5. **Word DOCX Left-Alignment over ThaiDistribute (Bug 5):**
-   หากสร้างเอกสาร Word (`.docx`) ผ่าน `python-docx`:
-   - **ห้ามใช้การจัดหน้าแบบ `thaiDistribute` (`w:jc w:val="thaiDistribute"`) เด็ดขาด** เพราะเอนจินของ Word จะถ่างช่องไฟระหว่างตัวอักษร (Inter-character spacing) จนข้อความในบรรทัดสั้นหรือตารางผิดรูปและอ่านไม่ออก
-   - **ต้องใช้การจัดหน้าแบบชิดซ้ายธรรมชาติ (`WD_ALIGN_PARAGRAPH.LEFT`) เสมอ** ร่วมกับ Line Spacing `1.2 - 1.25` เท่า และ `space_after = Pt(4)` ถึง `Pt(6)`
-6. **OpenDocument (.ODT) Complex Text Layout CTL Font Binding (Bug 6):**
-   หากสร้างเอกสาร OpenDocument (`.odt`) ผ่าน `odfpy`:
-   - ใน `TextProperties` **ต้องกำหนดคุณสมบัติ Complex Text Layout (`fontnamecomplex="TH Sarabun New"`, `fontsizecomplex="16pt"`) ควบคู่กับแอตทริบิวต์ Western (`fontname`, `fontsize`) เสมอ** เพื่อป้องกันไม่ให้ LibreOffice Writer หรือ Microsoft Word ตกกลับไปใช้ฟอนต์ดีฟอลต์ขนาด 12pt
+1. **Markdown-Native Architecture (สถาปัตยกรรมเอกสารแบบ Markdown ล้วน):**
+   - เอกสารและรายงานเวชระเบียนทั้งหมด (`./output/*.md`) ต้องถูกสร้างและจัดเก็บในรูปแบบ Markdown (`.md`) มาตรฐานสากล (GFM) พร้อมการเข้ารหัส UTF-8 เสมอ
+   - **ยกเลิกการแปลงเป็น HTML, PDF, DOCX, และ ODT ภายใน Agent** เพื่อป้องกันปัญหาฟอนต์เพี้ยน (Tofu Box), สระลอย, วรรณยุกต์ซ้อน, และการตัดคำไทยผิดรูปข้ามระบบปฏิบัติการ
+2. **Clinical Math & Chemical Formulas Preservation (การรักษาสมการคณิตศาสตร์และเคมีคลินิก):**
+   - สมการและสูตรคำนวณทางการแพทย์ทั้งหมด (เช่น Anion Gap, $[H^+] = 24 \times \frac{PCO_2}{[HCO_3^-]}$, $\text{Na}^+, \text{K}^+, \text{HCO}_3^-$, Winter's formula, Corrected Sodium) ให้เขียนในรูปแบบ $\LaTeX$ / KaTeX มาตรฐาน เพื่อให้โปรแกรมเปิดอ่าน Markdown เรนเดอร์ได้อย่างถูกต้อง 100%
+3. **Mandatory PDF & Printing Advisory Requirement (ข้อบังคับการแนะนำโปรแกรมเสริมเมื่อผู้ใช้ต้องการพิมพ์หรือแปลงเป็น PDF):**
+   - **หากแพทย์หรือผู้ใช้ระบุว่าต้องการพิมพ์เอกสาร หรือต้องการแปลงเป็นไฟล์ PDF** ระบบต้องแสดงกล่องข้อความแนะนำ (Advisory Callout) การใช้โปรแกรมเสริมสากลท้ายคำตอบเสมอ ดังนี้:
+     > 💡 **คำแนะนำสำหรับการพิมพ์หรือแปลงเป็น PDF (Printing & PDF Export Guide):**
+     > เอกสารเวชระเบียนนี้ถูกจัดทำในรูปแบบ Markdown (`.md`) มาตรฐานสากล เพื่อรักษาความถูกต้องของสูตรคำนวณและสมการเคมีคลินิก ($\LaTeX$) ได้อย่างแม่นยำสูงสุด
+     > หากต้องการพิมพ์เป็นเอกสารกระดาษหรือบันทึกเป็น PDF ทางการแพทย์ แนะนำให้เปิดไฟล์ `.md` ผ่านโปรแกรมต่อไปนี้:
+     > 1. **Obsidian** (ฟรี - แนะนำสูงสุด): เปิดไฟล์ `.md` แล้วเลือกเมนู `Export to PDF` (รองรับภาษาไทย, แผนภาพ Mermaid และสูตร $\LaTeX$ อัตโนมัติ 100%)
+     > 2. **VS Code**: ติดตั้งส่วนขยาย *Markdown PDF* หรือ *Markdown Preview Enhanced* แล้วคลิกขวาเลือก `Export (pdf)`
+     > 3. **Typora**: เลือกเมนู `File -> Export -> PDF` จัดหน้าเอกสารได้สวยงามตามมาตรฐานงานสารบรรณ
+     > 4. **Google Chrome / Microsoft Edge**: ติดตั้ง Extension เช่น *Markdown Viewer* หรือเปิดดูผ่าน GitHub แล้วกดพิมพ์ `Ctrl + P` (Print -> Save as PDF)
+4. **Subprocess & Multi-line Execution Safety (Bug 3 Prevention):**
+   - เมื่อ Agent หรือสคริปต์ต้องเรียกใช้คำสั่งภายนอกหรือรันโปรเซส Python:
+     - **ใช้ `sys.executable` เสมอ:** ห้าม Hardcode คำว่า `"python"` หรือ `"python3"` เพื่อรับประกันความเข้ากันได้กับ Python Environment
+     - **เขียนลงไฟล์สคริปต์ชั่วคราว (`tempfile.NamedTemporaryFile`) เสมอ:** หลีกเลี่ยงการส่งสตริงโค้ดหลายบรรทัดผ่าน inline `python -c "..."` เพื่อป้องกันปัญหา Batch shim wrapper บน Windows และปัญหา Escape quote / newline แตกบน macOS/Linux
 
 ---
 
@@ -139,7 +127,7 @@
 | **`clinical-risk-prediction`** | Clinical Severity Stratification, Deterioration Alert & Evidence Scoring (CURB-65, BISAP, Killip) | Tier 1, Tier 3 |
 | **`clinical-diagnostic-support`** | Ranked Differential Diagnoses Formulation, Likelihood Scoring & Uncertainty Gate | Tier 1, Tier 2 |
 | **`clinical-qa`** | Zero-Hallucination Grounded Question Answering on Patient Records & RAG | All Tiers |
-| **`clinical-report-generation`** | Standardized Medical Discharge Summaries, Cross-Platform Thai PDF / DOCX / ODT & Clinical Reports into `./output/` (Rule 2.8) | Tier 1, Tier 2 |
+| **`clinical-report-generation`** | Standardized Medical Discharge Summaries, Markdown-Native (.md) Clinical Reports & PDF/Print Advisory (Rule 2.8) | Tier 1, Tier 2 |
 | **`pubmed-database`** | Advanced MeSH, PICO Syntax, RCT/Meta-analysis filtering & E-utilities API | Tier 1, Tier 2 |
 | **`claude-ally-health`** | Clinical Triage, Symptom Tracking, Differential Diagnosis & Red Flag Alerts | All Tiers |
 | **`health-trend-analyzer`** | Longitudinal Health & Lab Trend Analysis over time | Tier 1, Tier 3 |

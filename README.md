@@ -52,7 +52,7 @@ MedMate/
 ├── medical_skill/              # ⚡ โมดูลคำนวณคลินิกและระบบแคช Medical MCP Cache Layer
 │   ├── medical_mcp_cache.py    # Dual-Layer Cache, zlib Level 6, Anti-Hallucination Oracle
 │   ├── clinical_normalizer.py  # Database-Driven Clinical Normalizer (SQLite + In-Memory Matcher)
-│   ├── clinical_document_exporter.py # 🖨️ Universal Multi-OS Thai Typography & PDF Exporter (Bugs 1–6)
+│   ├── clinical_document_exporter.py # 📝 Markdown-Native Clinical Exporter & Math/Chemistry Preservation
 │   ├── mcp_router.py           # Transparent MCP Router Interceptor
 │   ├── clinical_verifier.py    # Citation Verifier, Grounding Oracle & Red Flag Gatekeeper
 │   ├── data/
@@ -63,7 +63,7 @@ MedMate/
 ├── output/                     # 📤 โฟลเดอร์ส่งออกรายงานทางคลินิกและไฟล์สเปก
 ├── evals/                      # 🧪 ระบบ Evaluation Harness วัดผลความแม่นยำทางการแพทย์
 │   ├── eval_case_study.py      # สคริปต์ตรวจให้คะแนนและเปรียบเทียบกับ Ground Truth (10 เคส)
-│   ├── test_clinical_document_exporter.py # ชุดทดสอบระบบสร้างเอกสารและ PDF ภาษาไทย (Bugs 1–6)
+│   ├── test_clinical_document_exporter.py # ชุดทดสอบระบบสร้างเอกสาร Markdown และคำแนะนำพิมพ์ PDF
 │   ├── test_medical_cache.py   # ชุดทดสอบระบบแคช (8 ด้านสำคัญ: Latency, zlib, Oracle)
 │   ├── test_clinical_normalizer.py # ชุดทดสอบ Normalizer (8 ด้าน: คำศัพท์ไทย, ชื่อการค้า, prevent_merge)
 │   └── run_cache_benchmark.py  # เอนจินรันเบนช์มาร์ก 4 เฟสครบวงจร
@@ -106,7 +106,7 @@ MedMate/
 | ⚠️ **`clinical-risk-prediction`** | ประเมินระดับความเสี่ยง (Low/Mod/High/Critical) และคำนวณคะแนน CURB-65, BISAP, Killip | ทุก Tier |
 | 🩺 **`clinical-diagnostic-support`** | เสนอและจัดอันดับการวินิจฉัยแยกโรค (Differential Diagnoses) พร้อมระบุระดับความไม่แน่นอน | แพทย์ / นศพ. |
 | 🔍 **`clinical-qa`** | ตอบคำถามจากประวัติคนไข้และ RAG แบบ Grounded 100% พร้อม Fallback ชัดเจนเมื่อไม่มีข้อมูล | ทุก Tier |
-| 📄 **`clinical-report-generation`** | จัดทำรายงานเวชระเบียน Discharge Summary และเอกสารสเปก ส่งออก HTML/PDF/DOCX/ODT รองรับมาตรฐานสารบรรณไทยและการพิมพ์ PDF ไร้ข้อผิดพลาด (Bugs 1–6) ใน `./output/` | แพทย์ / นศพ. |
+| 📄 **`clinical-report-generation`** | จัดทำรายงานเวชระเบียน Discharge Summary และ SOAP Note ในรูปแบบ Markdown (`.md`) มาตรฐานสากล คงรูปสูตรเคมี-คณิตศาสตร์ ($\LaTeX$) พร้อมคำแนะนำการพิมพ์/แปลงเป็น PDF ใน `./output/` | แพทย์ / นศพ. |
 | 📚 **`pubmed-database`** | ค้นหางานวิจัยระดับโลกด้วย MeSH Terms, PICO Syntax, กรองเฉพาะ RCTs / Meta-Analysis พร้อมดึง PMID/DOI | แพทย์ / นศพ. |
 | 🩺 **`claude-ally-health`** | ซักประวัติอาการ (HPI), คัดกรอง Triage, วินิจฉัยแยกโรค และตรวจจับสัญญาณอันตราย (**Red Flags**) | ทุก Tier |
 | 📊 **`health-trend-analyzer`** | วิเคราะห์แนวโน้มผลแล็บและสัญญาณชีพต่อเนื่องตามช่วงเวลา (Longitudinal Trends) เช่น ค่าไต ค่าน้ำตาล | แพทย์ / คนไข้ |

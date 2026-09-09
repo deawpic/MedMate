@@ -71,6 +71,40 @@
    - [ ] ข้อความภาษาไทยและวงเล็บทุกจุดครอบด้วย `["..."]` เรียบร้อย
    - [ ] ใช้ `<br/>` แทนการเคาะ Enter ในกล่องข้อความ
 
+#### 📑 2.8 Cross-Platform Thai Document, PDF & Multi-OS Architecture Protocol (มาตรฐานการสร้างเอกสารและรันคำสั่งข้ามระบบปฏิบัติการ)
+เพื่อป้องกันปัญหา **Software Bugs ข้ามระบบปฏิบัติการ (Windows, macOS, Linux, Docker Containers)** ระบบและ Agent ต้องปฏิบัติตามกฎ 6 ประการอย่างเคร่งครัด:
+
+1. **Font Stack Hierarchy & Tofu-Free Protocol (Bug 1):**
+   เมื่อสร้างเอกสาร HTML/CSS, Web Page หรือ CSS Print สำหรับแปลงเป็นเอกสาร ต้องกำหนด Font Family Fallback ให้ครอบคลุมทุก OS เสมอ:
+   ```css
+   font-family: 'TH Sarabun New', 'Sarabun', 'Thonburi', 'Sukhumvit Set', 'Loma', 'Garuda', 'Noto Sans Thai', 'Leelawadee UI', Tahoma, sans-serif;
+   ```
+   เพื่อป้องกันปัญหา CMap Missing Glyph ที่ทำให้ Zero-Width Space (`\u200b`) หรืออักษรไทยกลายเป็นกล่องสี่เหลี่ยม `[ ]` (Tofu Box) และบน Linux/Docker ต้องรองรับแพ็กเกจ `fonts-thai-tlwg` และ `fonts-noto-core`
+2. **Tone Mark Preservation & Chromium Headless Architecture (Bug 2):**
+   การแปลงเอกสารเป็น PDF ภาษาไทยระดับคลินิก **ห้ามใช้ไลบรารี Programmatic ทั่วไป (เช่น ReportLab หรือ FPDF) ที่ขาด OpenType Shaping โดยเด็ดขาด** เพราะจะทำให้สระบนและวรรณยุกต์ชั้นบนสุดสูญหาย (เช่น "ที่" ไม้เอกหาย, "ชั้น" ไม้โทหาย)  
+   **ต้องใช้ Chromium Headless Print-to-PDF (`--headless=new`) ร่วมกับ HarfBuzz Engine เสมอ** พร้อมระบุ Flags ป้องกัน Container แครช:
+   - `--headless=new`
+   - `--disable-gpu`
+   - `--no-sandbox` (จำเป็นสำหรับ Linux Docker / Root)
+   - `--disable-dev-shm-usage` (**สำคัญที่สุดสำหรับ Docker** ป้องกันการแครชจากขีดจำกัด 64MB บน `/dev/shm`)
+   - `--user-data-dir` (แยกโปรไฟล์ชั่วคราว ป้องกันชนกับโปรไฟล์หลัก)
+3. **Subprocess & Multi-line Execution Safety (Bug 3):**
+   เมื่อ Agent หรือสคริปต์ต้องเรียกใช้คำสั่งภายนอกหรือรันโปรเซส Python:
+   - **ใช้ `sys.executable` เสมอ:** ห้าม Hardcode คำว่า `"python"` หรือ `"python3"` เพื่อรับประกันความเข้ากันได้กับ Python Environment ที่โปรเซสแม่ทำงานอยู่
+   - **เขียนลงไฟล์สคริปต์ชั่วคราว (`tempfile.NamedTemporaryFile`) เสมอ:** หลีกเลี่ยงการส่งสตริงโค้ดหลายบรรทัดผ่าน inline `python -c "..."` เพื่อป้องกันปัญหา Batch shim wrapper (`python.bat` / `python.cmd`) บน Windows และปัญหา Escape quote / newline แตกบน macOS/Linux
+4. **Saraban Standards & Collision-Free Metrics (Bug 4):**
+   เอกสารทางคลินิกและรายงานราชการไทยต้องปฏิบัติตามมาตรฐานงานสารบรรณ:
+   - กำหนดขนาดตัวอักษรเนื้อหาหลักเป็น **16 pt** และกำหนด `line-height: 1.45 - 1.5` เสมอ เพื่อเว้นระยะไม่ให้สระบน/วรรณยุกต์ซ้อน ชนกับสระล่างของบรรทัดก่อนหน้า
+   - กำหนดระยะหน้ากระดาษ A4 มาตรฐาน: `@page { size: A4; margin: 20mm 15mm 20mm 15mm; }`
+   - หัวข้อเอกสาร: Title 22pt (bold, line-height 1.25), H2 18pt (bold, line-height 1.35), H3 16pt (bold), Tables/Callout 14pt (line-height 1.4), Footer 11pt
+5. **Word DOCX Left-Alignment over ThaiDistribute (Bug 5):**
+   หากสร้างเอกสาร Word (`.docx`) ผ่าน `python-docx`:
+   - **ห้ามใช้การจัดหน้าแบบ `thaiDistribute` (`w:jc w:val="thaiDistribute"`) เด็ดขาด** เพราะเอนจินของ Word จะถ่างช่องไฟระหว่างตัวอักษร (Inter-character spacing) จนข้อความในบรรทัดสั้นหรือตารางผิดรูปและอ่านไม่ออก
+   - **ต้องใช้การจัดหน้าแบบชิดซ้ายธรรมชาติ (`WD_ALIGN_PARAGRAPH.LEFT`) เสมอ** ร่วมกับ Line Spacing `1.2 - 1.25` เท่า และ `space_after = Pt(4)` ถึง `Pt(6)`
+6. **OpenDocument (.ODT) Complex Text Layout CTL Font Binding (Bug 6):**
+   หากสร้างเอกสาร OpenDocument (`.odt`) ผ่าน `odfpy`:
+   - ใน `TextProperties` **ต้องกำหนดคุณสมบัติ Complex Text Layout (`fontnamecomplex="TH Sarabun New"`, `fontsizecomplex="16pt"`) ควบคู่กับแอตทริบิวต์ Western (`fontname`, `fontsize`) เสมอ** เพื่อป้องกันไม่ให้ LibreOffice Writer หรือ Microsoft Word ตกกลับไปใช้ฟอนต์ดีฟอลต์ขนาด 12pt
+
 ---
 
 ### 3. Adaptive 3-Tier Routing (การปรับระดับภาษาตามกลุ่มผู้ใช้)
@@ -97,7 +131,7 @@
 
 | Skill Identifier | Primary Domain & Responsibility | Supported Users |
 | :--- | :--- | :---: |
-| **`medical_skill`** | Clinical Runbooks (ABG, Anion Gap, DKA, AKI KDIGO), Terminology Codification, Mermaid Unicode Guardian (`mermaid_guardian`) & Tier-0 MCP Cache Interceptor (`medical_mcp_cache`, `medical-mcp`, `medical-terminologies-mcp`, `local-rag`) | All Tiers |
+| **`medical_skill`** | Clinical Runbooks (ABG, Anion Gap, DKA, AKI KDIGO), Terminology Codification, Document & PDF Exporter (`clinical_document_exporter`), Mermaid Unicode Guardian (`mermaid_guardian`) & Tier-0 MCP Cache Interceptor (`medical_mcp_cache`, `medical-mcp`, `medical-terminologies-mcp`, `local-rag`) | All Tiers |
 | **`clinical-data-structuring`** | Unstructured Clinical Note & History to Standardized JSON Parsing | System / Evaluators |
 | **`clinical-entity-extraction`** | Clinical Named Entity Recognition (Diseases, Symptoms, Meds, Procedures, Labs) | All Tiers |
 | **`clinical-coding-icd`** | Standardized ICD-10/11 Diagnostic Codification & Anti-Hallucination JSON Schemas | Tier 1, Tier 2 |
@@ -105,15 +139,15 @@
 | **`clinical-risk-prediction`** | Clinical Severity Stratification, Deterioration Alert & Evidence Scoring (CURB-65, BISAP, Killip) | Tier 1, Tier 3 |
 | **`clinical-diagnostic-support`** | Ranked Differential Diagnoses Formulation, Likelihood Scoring & Uncertainty Gate | Tier 1, Tier 2 |
 | **`clinical-qa`** | Zero-Hallucination Grounded Question Answering on Patient Records & RAG | All Tiers |
-| **`clinical-report-generation`** | Standardized Medical Discharge Summaries & Clinical Reports into `./output/` | Tier 1, Tier 2 |
+| **`clinical-report-generation`** | Standardized Medical Discharge Summaries, Cross-Platform Thai PDF / DOCX / ODT & Clinical Reports into `./output/` (Rule 2.8) | Tier 1, Tier 2 |
 | **`pubmed-database`** | Advanced MeSH, PICO Syntax, RCT/Meta-analysis filtering & E-utilities API | Tier 1, Tier 2 |
 | **`claude-ally-health`** | Clinical Triage, Symptom Tracking, Differential Diagnosis & Red Flag Alerts | All Tiers |
 | **`health-trend-analyzer`** | Longitudinal Health & Lab Trend Analysis over time | Tier 1, Tier 3 |
 | **`scientific-writing`** | Academic Research Paper Synthesis, IMRAD Manuscripts & Graphical Abstracts | Tier 1, Tier 2 |
 | **`rag-engineer`** | Medical Document Ingestion, Chunking & Hybrid Retrieval from `./RAG` | All Tiers |
-| **`tool-use-guardian`** | MCP Tool Reliability, Mermaid Diagram Unicode Linter/Auto-Healer, Auto-Retry, Timeout Recovery & Schema Protection | System / Harness |
+| **`tool-use-guardian`** | MCP Tool Reliability, Cross-Platform Subprocess Safety (`sys.executable`), Mermaid Diagram Unicode Linter/Auto-Healer, Auto-Retry, Timeout Recovery & Schema Protection | System / Harness |
 | **`gdpr-data-handling`** | Healthcare Privacy, Indexed Placeholders (`[PATIENT_1]`) & Patient De-identification | All Tiers |
 | **`agent-evaluation`** | Clinical Case Benchmark & Ground Truth Scoring (`eval_case_study.py`) | Evaluators |
-| **`config_manager_skill`** | MCP Environment Health Check & Platform Diagnostic (`check_mcp_health.py`) | Admin / Dev |
+| **`config_manager_skill`** | MCP Environment Health Check, Multi-OS Diagnostics (Chromium, Node, NPX, Fonts) & Platform Diagnostic (`check_mcp_health.py`) | Admin / Dev |
 | **`windows-node-setup`** | Step-by-Step Node.js, NPX & NVM for Windows Setup via `winget` | Windows Users |
 

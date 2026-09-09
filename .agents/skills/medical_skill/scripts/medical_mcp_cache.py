@@ -159,6 +159,7 @@ class MedicalMcpCache:
         self._l1_tokens_saved = 0
         self._recovery_lock = threading.Lock()
         self._is_recovering = False
+        self._is_initializing = False
 
         # Master Lexicon Normalizer (SQLite backed)
         self.lexicon_db_path = Path(
@@ -171,11 +172,68 @@ class MedicalMcpCache:
         except Exception as e:
             logger.debug(f"Could not load ClinicalNormalizer: {e}")
 
-        self._init_db()
+        # Check and ensure cache file exists automatically
+        self._last_ensure_result = self.ensure_cache_file()
+
+    def check_cache_exists(self) -> bool:
+        """Check if the cache file exists on disk and is a non-empty file."""
+        return self.db_path.is_file() and self.db_path.stat().st_size > 0
+
+    def ensure_cache_file(self) -> Dict[str, Any]:
+        """
+        Check if cache database file exists on disk.
+        If missing or empty, automatically creates parent directory and database with full schema.
+        If file exists, verifies table existence and schema integrity.
+
+        Returns:
+            Dict containing:
+                - status: 'ready'
+                - db_path: str
+                - file_exists: bool
+                - existed_before: bool
+                - created_now: bool
+        """
+        self.db_path.parent.mkdir(parents=True, exist_ok=True)
+        existed_before = self.check_cache_exists()
+        created_now = False
+
+        if not existed_before:
+            logger.info(f"Cache database file not found at {self.db_path}. Auto-creating cache file...")
+            self._init_db()
+            created_now = True
+            logger.info(f"Successfully auto-created cache database at {self.db_path}")
+        else:
+            # File exists; verify table existence and basic schema integrity
+            try:
+                with sqlite3.connect(str(self.db_path), timeout=5.0) as conn:
+                    cur = conn.cursor()
+                    cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='mcp_medical_cache';")
+                    if not cur.fetchone():
+                        logger.warning(f"Cache file {self.db_path} exists but missing 'mcp_medical_cache' table. Initializing schema...")
+                        self._init_db()
+                        created_now = True
+            except sqlite3.DatabaseError as e:
+                logger.critical(f"Cache file integrity error: {e}. Initiating auto-recovery...")
+                self._recover_corrupted_db()
+                created_now = True
+
+        result = {
+            "status": "ready",
+            "db_path": str(self.db_path),
+            "file_exists": self.check_cache_exists(),
+            "existed_before": existed_before,
+            "created_now": created_now
+        }
+        self._last_ensure_result = result
+        return result
 
     @contextlib.contextmanager
     def _get_connection(self) -> Generator[sqlite3.Connection, None, None]:
         """Context manager guaranteeing connection closing and WAL pragma configuration."""
+        # Auto-check and auto-create cache file if deleted during runtime
+        if not self._is_initializing and not self.check_cache_exists():
+            self.ensure_cache_file()
+
         conn = sqlite3.connect(str(self.db_path), timeout=10.0)
         try:
             conn.execute("PRAGMA journal_mode = WAL;")
@@ -198,7 +256,9 @@ class MedicalMcpCache:
 
     def _init_db(self) -> None:
         """Initialize database schema with auto_vacuum FULL for disk page reclamation."""
+        self._is_initializing = True
         try:
+            self.db_path.parent.mkdir(parents=True, exist_ok=True)
             with self._get_connection() as conn:
                 conn.execute("PRAGMA auto_vacuum = FULL;")
                 conn.execute("""
@@ -229,8 +289,13 @@ class MedicalMcpCache:
                 conn.execute("CREATE INDEX IF NOT EXISTS idx_med_cache_tag ON mcp_medical_cache(category_tag, expires_at);")
                 conn.execute("CREATE INDEX IF NOT EXISTS idx_med_cache_created ON mcp_medical_cache(created_at DESC);")
         except sqlite3.DatabaseError as e:
-            logger.critical(f"Medical Database corruption detected: {e}. Initiating self-healing...")
-            self._recover_corrupted_db()
+            if not self._is_recovering:
+                logger.critical(f"Medical Database corruption detected: {e}. Initiating self-healing...")
+                self._recover_corrupted_db()
+            else:
+                logger.error(f"Failed during recovery database init: {e}")
+        finally:
+            self._is_initializing = False
 
     def _recover_corrupted_db(self) -> None:
         """Self-healing mechanism to isolate corrupt DB files and re-initialize cleanly."""
@@ -240,6 +305,7 @@ class MedicalMcpCache:
                 return
             self._is_recovering = True
 
+        self._is_initializing = True
         try:
             timestamp = int(time.time())
             corrupted_backup = self.db_path.with_name(f"{self.db_path.stem}.corrupted.{timestamp}.db")
@@ -283,6 +349,7 @@ class MedicalMcpCache:
                 conn.execute("CREATE INDEX IF NOT EXISTS idx_med_cache_tag ON mcp_medical_cache(category_tag, expires_at);")
                 conn.execute("CREATE INDEX IF NOT EXISTS idx_med_cache_created ON mcp_medical_cache(created_at DESC);")
         finally:
+            self._is_initializing = False
             with self._recovery_lock:
                 self._is_recovering = False
 
@@ -733,6 +800,7 @@ class MedicalMcpCache:
         return {
             "status": "healthy",
             "db_path": str(self.db_path),
+            "file_exists": self.check_cache_exists(),
             "total_cached_entries": entries,
             "total_cache_hits": total_hits,
             "l1_memory_hits": l1_hits,
@@ -788,6 +856,23 @@ class MedicalMcpCache:
         return distilled
 
 
+def check_cache_file(db_path: Optional[str] = None) -> bool:
+    """Check if the cache file exists on disk and is a non-empty file."""
+    path = Path(db_path or os.getenv("MEDICAL_CACHE_DB_PATH", "cache/medical_mcp_cache.db")).resolve()
+    return path.is_file() and path.stat().st_size > 0
+
+
+def ensure_cache_file(db_path: Optional[str] = None) -> Dict[str, Any]:
+    """
+    Check if the cache file exists; if not, create it automatically with full schema.
+
+    Returns:
+        Dict with status, db_path, file_exists, existed_before, created_now.
+    """
+    cache = MedicalMcpCache(db_path=db_path)
+    return getattr(cache, "_last_ensure_result", None) or cache.ensure_cache_file()
+
+
 # Global singleton instance for easy import across skills
 default_medical_cache = MedicalMcpCache()
 
@@ -798,6 +883,8 @@ def main():
     parser = argparse.ArgumentParser(description="MedMate Medical MCP Cache Management CLI")
     parser.add_argument("--stats", action="store_true", help="Print cache telemetry statistics as JSON")
     parser.add_argument("--health", action="store_true", help="Check cache health and connectivity")
+    parser.add_argument("--check", action="store_true", help="Check if cache file exists; if not, create it automatically")
+    parser.add_argument("--ensure", action="store_true", help="Ensure cache file and directory exist with valid schema")
     parser.add_argument("--prune", action="store_true", help="Prune expired cache entries and vacuum database")
     parser.add_argument("--purge-tag", type=str, help="Purge all entries matching category tag (literature, drug, terminology, guideline, local_rag)")
     parser.add_argument("--pmids", action="store_true", help="List all verified PMIDs in cache (Grounding Oracle)")
@@ -808,11 +895,30 @@ def main():
     args = parser.parse_args()
     cache = MedicalMcpCache(db_path=args.db_path)
 
-    if args.stats:
+    if args.check or args.ensure:
+        res = getattr(cache, "_last_ensure_result", None) or cache.ensure_cache_file()
+        stats = cache.get_telemetry_stats()
+        output = {
+            "status": "success",
+            "db_path": str(cache.db_path),
+            "file_exists": cache.check_cache_exists(),
+            "existed_before": res["existed_before"],
+            "created_now": res["created_now"],
+            "entries": stats["total_cached_entries"]
+        }
+        print(json.dumps(output, ensure_ascii=False, indent=2))
+    elif args.stats:
         print(json.dumps(cache.get_telemetry_stats(), ensure_ascii=False, indent=2))
     elif args.health:
+        res = cache.ensure_cache_file()
         stats = cache.get_telemetry_stats()
-        print(json.dumps({"status": stats["status"], "db_path": stats["db_path"], "entries": stats["total_cached_entries"]}, ensure_ascii=False, indent=2))
+        print(json.dumps({
+            "status": stats["status"],
+            "db_path": stats["db_path"],
+            "file_exists": stats["file_exists"],
+            "created_now": res["created_now"],
+            "entries": stats["total_cached_entries"]
+        }, ensure_ascii=False, indent=2))
     elif args.prune:
         pruned = cache.prune_expired()
         print(json.dumps({"status": "success", "pruned_entries": pruned}, ensure_ascii=False, indent=2))

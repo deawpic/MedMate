@@ -166,6 +166,9 @@ To preserve external MCP rate-limits (NLM PubMed 3 req/sec, LOINC/RxNorm registr
 
 ### 5.2 CLI Management Commands
 ```bash
+# Check cache file existence and auto-create if missing
+python -m medical_skill.medical_mcp_cache --check
+
 # Check cache health & connectivity
 python -m medical_skill.medical_mcp_cache --health
 

@@ -29,6 +29,8 @@ class MedicalMcpRouter:
 
     def __init__(self, cache: Optional[MedicalMcpCache] = None, workspace_root: Optional[Path] = None):
         self.cache = cache or default_medical_cache
+        if hasattr(self.cache, "ensure_cache_file"):
+            self.cache.ensure_cache_file()
         self.workspace_root = workspace_root or Path(__file__).resolve().parents[1]
         self._custom_handlers: Dict[str, Callable[..., Any]] = {}
 

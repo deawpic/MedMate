@@ -74,6 +74,14 @@ Protects markdown generation from Mermaid rendering crashes and lexical errors w
 - **Linebreak Sanitization:** Replaces raw unescaped newlines inside labels with `<br/>`
 - **Auto-Healing:** Pre-flight linting and runtime repair via `medical_skill.mermaid_guardian` (`sanitize_mermaid`, `validate_mermaid`)
 
+### Step 6: Cross-Platform Subprocess & Multi-line Execution Guardrail (`clinical_document_exporter.py`)
+
+Prevents agent tool-calling and subprocess traps across Windows, macOS, and Linux (Bug 3 Prevention):
+- **Virtual Environment Integrity:** Never hardcode `"python"` or `"python3"` in tool invocations or subprocesses; always bind to `sys.executable` to preserve installed libraries and virtualenv context.
+- **Temporary Script Isolation:** Never pass multi-line or block code via inline command flags (`python -c "..."`), which consistently break under Windows cmd/PowerShell shims and cause quote escaping errors on bash/zsh.
+- **Safe Subprocess Pattern:** Write code to a `tempfile.NamedTemporaryFile(suffix='.py', encoding='utf-8')` and execute via `subprocess.run([sys.executable, script_path], capture_output=True, text=True, timeout=timeout)`.
+- **Automatic Execution Wrapper:** Use `medical_skill.clinical_document_exporter.run_safe_python_script(script_code, timeout=60)` for all dynamic Python evaluations.
+
 ## Best Practices
 
 - ✅ Let Guardian wrap all external tool calls automatically

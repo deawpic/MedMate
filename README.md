@@ -9,7 +9,7 @@
 ## 📑 สารบัญ (Table of Contents)
 
 - [🏗️ โครงสร้างโฟลเดอร์ของโปรเจกต์ (Directory Structure)](#️-โครงสร้างโฟลเดอร์ของโปรเจกต์-directory-structure)
-- [📦 สรุปความสามารถของ Skills ทั้ง 10 ทักษะ (Skills Summary)](#-สรุปความสามารถของ-skills-ทั้ง-10-ทักษะ-skills-summary)
+- [📦 สรุปความสามารถของ Skills ทั้ง 19 ทักษะ (Skills Summary)](#-สรุปความสามารถของ-skills-ทั้ง-19-ทักษะ-skills-summary)
 - [⚙️ คุณสมบัติเด่นของระบบ (Core Features)](#️-คุณสมบัติเด่นของระบบ-core-features)
 - [🛠️ ขุมพลังและการทำงานของ MCP Servers (MCP Capabilities)](#️-ขุมพลังและการทำงานของ-mcp-servers-mcp-capabilities)
   - [1. `medical-mcp` — คลังงานวิจัย เภสัชวิทยา และแนวทางเวชปฏิบัติ](#1-medical-mcp--คลังงานวิจัย-เภสัชวิทยา-และแนวทางเวชปฏิบัติ)
@@ -27,6 +27,7 @@
 - [🧪 การรัน Benchmark และ Evaluation Harness](#-การรัน-benchmark-และ-evaluation-harness)
 - [💡 ตัวอย่างสถานการณ์และการสั่งใช้งานจริง (Production Use Cases)](#-ตัวอย่างสถานการณ์และการสั่งใช้งานจริง-production-use-cases)
 - [🔐 นโยบายความปลอดภัยของข้อมูล (Data Isolation & Privacy)](#-นโยบายความปลอดภัยของข้อมูล-data-isolation--privacy)
+- [⚖️ ข้อพึงระวังตามหลักการกำกับดูแลทางการแพทย์ (Clinical Governance)](#️-ข้อพึงระวังตามหลักการกำกับดูแลทางการแพทย์-clinical-governance)
 
 ---
 
@@ -51,6 +52,7 @@ MedMate/
 ├── medical_skill/              # ⚡ โมดูลคำนวณคลินิกและระบบแคช Medical MCP Cache Layer
 │   ├── medical_mcp_cache.py    # Dual-Layer Cache, zlib Level 6, Anti-Hallucination Oracle
 │   ├── clinical_normalizer.py  # Database-Driven Clinical Normalizer (SQLite + In-Memory Matcher)
+│   ├── clinical_document_exporter.py # 🖨️ Universal Multi-OS Thai Typography & PDF Exporter (Bugs 1–6)
 │   ├── mcp_router.py           # Transparent MCP Router Interceptor
 │   ├── clinical_verifier.py    # Citation Verifier, Grounding Oracle & Red Flag Gatekeeper
 │   ├── data/
@@ -61,6 +63,7 @@ MedMate/
 ├── output/                     # 📤 โฟลเดอร์ส่งออกรายงานทางคลินิกและไฟล์สเปก
 ├── evals/                      # 🧪 ระบบ Evaluation Harness วัดผลความแม่นยำทางการแพทย์
 │   ├── eval_case_study.py      # สคริปต์ตรวจให้คะแนนและเปรียบเทียบกับ Ground Truth (10 เคส)
+│   ├── test_clinical_document_exporter.py # ชุดทดสอบระบบสร้างเอกสารและ PDF ภาษาไทย (Bugs 1–6)
 │   ├── test_medical_cache.py   # ชุดทดสอบระบบแคช (8 ด้านสำคัญ: Latency, zlib, Oracle)
 │   ├── test_clinical_normalizer.py # ชุดทดสอบ Normalizer (8 ด้าน: คำศัพท์ไทย, ชื่อการค้า, prevent_merge)
 │   └── run_cache_benchmark.py  # เอนจินรันเบนช์มาร์ก 4 เฟสครบวงจร
@@ -103,7 +106,7 @@ MedMate/
 | ⚠️ **`clinical-risk-prediction`** | ประเมินระดับความเสี่ยง (Low/Mod/High/Critical) และคำนวณคะแนน CURB-65, BISAP, Killip | ทุก Tier |
 | 🩺 **`clinical-diagnostic-support`** | เสนอและจัดอันดับการวินิจฉัยแยกโรค (Differential Diagnoses) พร้อมระบุระดับความไม่แน่นอน | แพทย์ / นศพ. |
 | 🔍 **`clinical-qa`** | ตอบคำถามจากประวัติคนไข้และ RAG แบบ Grounded 100% พร้อม Fallback ชัดเจนเมื่อไม่มีข้อมูล | ทุก Tier |
-| 📄 **`clinical-report-generation`** | จัดทำรายงานเวชระเบียน, บันทึกการส่งต่อ, และ Discharge Summary บันทึกลงใน `./output/` | แพทย์ / นศพ. |
+| 📄 **`clinical-report-generation`** | จัดทำรายงานเวชระเบียน Discharge Summary และเอกสารสเปก ส่งออก HTML/PDF/DOCX/ODT รองรับมาตรฐานสารบรรณไทยและการพิมพ์ PDF ไร้ข้อผิดพลาด (Bugs 1–6) ใน `./output/` | แพทย์ / นศพ. |
 | 📚 **`pubmed-database`** | ค้นหางานวิจัยระดับโลกด้วย MeSH Terms, PICO Syntax, กรองเฉพาะ RCTs / Meta-Analysis พร้อมดึง PMID/DOI | แพทย์ / นศพ. |
 | 🩺 **`claude-ally-health`** | ซักประวัติอาการ (HPI), คัดกรอง Triage, วินิจฉัยแยกโรค และตรวจจับสัญญาณอันตราย (**Red Flags**) | ทุก Tier |
 | 📊 **`health-trend-analyzer`** | วิเคราะห์แนวโน้มผลแล็บและสัญญาณชีพต่อเนื่องตามช่วงเวลา (Longitudinal Trends) เช่น ค่าไต ค่าน้ำตาล | แพทย์ / คนไข้ |
@@ -208,6 +211,9 @@ graph TD
 * **Anti-Hallucination Grounding Oracle:** ดัชนีหมายเลข PMID และรหัสโรค/แล็บแท้จริง ป้องกัน AI ปลอมเลขอ้างอิงตามกฎข้อ 2.5 ของ `AGENTS.md`
 * **คำสั่งบริหารจัดการผ่าน CLI:**
   ```bash
+  # ตรวจสอบไฟล์แคช (ถ้ายังไม่มีจะสร้างอัตโนมัติพร้อมกำหนด Schema)
+  python3 -m medical_skill.medical_mcp_cache --check
+
   # ตรวจสอบสถานะสุขภาพและการประหยัด Token
   python3 -m medical_skill.medical_mcp_cache --stats
   
@@ -307,3 +313,13 @@ python3 .agents/skills/config_manager_skill/scripts/check_mcp_health.py
 
 ## 🔐 นโยบายความปลอดภัยของข้อมูล (Data Isolation & Privacy)
 เพื่อป้องกันไม่ให้ข้อมูลทางการแพทย์ที่สำคัญรั่วไหล ปลั๊กอิน `local-rag` ถูกออกแบบมาให้รันผ่านโปรโตคอลระบบไฟล์ที่มีการกำกับขอบเขตอย่างเข้มงวด (`@modelcontextprotocol/server-filesystem`) ตัวโมเดล AI จะได้รับอนุญาตให้สแกน อ่าน หรือเขียนไฟล์**เฉพาะภายในไดเรกทอรี `./RAG` ที่ระบุไว้ในคอนฟิกเท่านั้น** โดยไม่มีสิทธิ์เข้าถึงระบบไฟล์หลักของระบบปฏิบัติการหรือโฟลเดอร์อื่นนอกเหนือจากนี้ ทำให้มีความปลอดภัยสูงสุดระดับองค์กร
+
+---
+
+## ⚖️ ข้อพึงระวังตามหลักการกำกับดูแลทางการแพทย์ (Clinical Governance)
+
+แม้ระบบซอฟต์แวร์จะมีความสมบูรณ์ระดับ **ผ่านเกณฑ์ Production-Ready ในระดับเวิร์กสเตชันคลินิกและระบบบริการสุขภาพ (Clinical-grade)** เรียบร้อยแล้ว แต่ตามกฎหมายและมาตรฐานเครื่องมือแพทย์ (Software as a Medical Device - SaMD):
+- **Human-in-the-Loop (HITL):** ระบบถูกออกแบบมาเป็น **"ระบบสนับสนุนการตัดสินใจ (Decision Support)"** คำวินิจฉัยและคำสั่งการรักษาขั้นสุดท้ายต้องผ่านการตรวจสอบและลงนามอนุมัติ (Sign-off) โดยแพทย์ผู้มีใบอนุญาตประกอบวิชาชีพเวชกรรมเสมอ
+- **Data Privacy:** หากนำไปใช้กับฐานข้อมูลคนไข้จริงในโรงพยาบาล ให้คงเกณฑ์ Rule 2.2 (De-identification: ซ่อน HN, AN, ชื่อ-นามสกุล, และใช้ Indexed Placeholders เช่น `[PATIENT_1]`, `[DOCTOR_1]`) ตามมาตรฐาน PDPA, GDPR และ HIPAA ไว้อย่างเคร่งครัด
+
+----

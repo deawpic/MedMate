@@ -78,12 +78,22 @@ def inspect_and_fix_mcp_config(config_path: Path, auto_fix: bool = False):
 
     return True
 
-def inspect_medical_cache(workspace_root: Path):
+def inspect_medical_cache(workspace_root: Path, auto_fix: bool = False):
     print("[*] Checking Medical MCP Cache & Master Lexicon Layer...")
     try:
         sys.path.insert(0, str(workspace_root))
-        from medical_skill.medical_mcp_cache import default_medical_cache
+        from medical_skill.medical_mcp_cache import default_medical_cache, check_cache_file
         from medical_skill.clinical_normalizer import default_normalizer
+
+        # Check cache file existence and auto-creation status
+        cache_db_path = default_medical_cache.db_path
+        res = getattr(default_medical_cache, "_last_ensure_result", {})
+        if res.get("created_now"):
+            print(f"  [!] Cache file was missing: {cache_db_path}")
+            print(f"  [SUCCESS] Auto-created cache database and initialized schema at: {cache_db_path}")
+        else:
+            print(f"  [+] Cache File Exists: {cache_db_path}")
+
         stats = default_medical_cache.get_telemetry_stats()
         print(f"  [+] Cache Status: {stats['status']}")
         print(f"  [+] Cache DB: {stats['db_path']}")
@@ -97,6 +107,31 @@ def inspect_medical_cache(workspace_root: Path):
         return True
     except Exception as e:
         print(f"  [!] Cache/Lexicon inspection failed: {e}")
+        return False
+
+def inspect_document_and_pdf_system(workspace_root: Path):
+    print("[*] Checking Multi-OS Thai Typography, PDF & Subprocess System...")
+    try:
+        sys.path.insert(0, str(workspace_root))
+        from medical_skill.clinical_document_exporter import check_document_system_health
+        health = check_document_system_health()
+        print(f"  [+] Python Executable: {health['python_executable']} (sys.executable)")
+        print(f"  [+] Platform: {health['platform']}")
+        if health['chromium_available']:
+            print(f"  [+] Headless Chromium Binary: {health['chromium_binary']}")
+            print(f"  [+] PDF Engine Status: READY (HarfBuzz + ICU Thai Line Breaking)")
+        else:
+            print(f"  [!] Headless Chromium Binary: NOT FOUND")
+            print(f"      -> Warning: PDF export requires Chromium/Chrome/Edge. Install chromium via system package manager.")
+        
+        if health['thai_fonts_detected']:
+            print(f"  [+] Thai Fonts: DETECTED ({health['font_details']})")
+        else:
+            print(f"  [!] Thai Fonts: NOT DETECTED ({health['font_details']})")
+            print(f"      -> Recommendation: Install fonts-thai-tlwg or fonts-noto-cjk to prevent tofu boxes.")
+        return health['chromium_available']
+    except Exception as e:
+        print(f"  [!] Document system inspection failed: {e}")
         return False
 
 def main():
@@ -118,7 +153,9 @@ def main():
     workspace_mcp_config = workspace_root / ".agents" / "mcp_config.json"
     inspect_and_fix_mcp_config(workspace_mcp_config, auto_fix=auto_fix)
     print("-" * 60)
-    inspect_medical_cache(workspace_root)
+    inspect_medical_cache(workspace_root, auto_fix=auto_fix)
+    print("-" * 60)
+    inspect_document_and_pdf_system(workspace_root)
     print("=" * 60)
 
 if __name__ == "__main__":

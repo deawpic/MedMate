@@ -27,7 +27,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from medical_skill.medical_mcp_cache import (
     MedicalMcpCache,
-    ClinicalPayloadDistiller
+    ClinicalPayloadDistiller,
+    check_cache_file,
+    ensure_cache_file
 )
 
 
@@ -264,6 +266,64 @@ class TestMedicalMcpCache(unittest.TestCase):
         self.assertTrue(ok)
         healed_data = self.cache.get("medical-mcp", "search-medical-literature", {"q": "stemi"})
         self.assertEqual(healed_data, {"data": "healed"})
+
+    def test_09_check_cache_exists_and_auto_create(self):
+        """Verify check_cache_file and ensure_cache_file correctly detect and auto-create missing cache DB."""
+        fresh_db_path = Path(self.test_dir) / "subfolder" / "fresh_cache.db"
+        
+        # 1. Initially does not exist
+        self.assertFalse(check_cache_file(str(fresh_db_path)))
+        self.assertFalse(fresh_db_path.exists())
+
+        # 2. ensure_cache_file auto-creates parent directory, SQLite database and tables
+        result = ensure_cache_file(str(fresh_db_path))
+        self.assertEqual(result["status"], "ready")
+        self.assertTrue(result["file_exists"])
+        self.assertFalse(result["existed_before"])
+        self.assertTrue(result["created_now"])
+        self.assertTrue(fresh_db_path.is_file())
+        self.assertTrue(check_cache_file(str(fresh_db_path)))
+
+        # 3. Running check again on existing file returns existed_before=True and created_now=False
+        second_check = ensure_cache_file(str(fresh_db_path))
+        self.assertTrue(second_check["existed_before"])
+        self.assertFalse(second_check["created_now"])
+
+    def test_10_runtime_deletion_auto_recovery(self):
+        """Verify cache auto-recovers and recreates database file if deleted during runtime."""
+        args = {"query": "hyperkalemia calcium gluconate"}
+        self.cache.set("medical-mcp", "search-medical-literature", args, {"treatment": "stabilize membrane"})
+        self.assertTrue(self.db_path.exists())
+
+        # Simulate external process or user deleting cache file at runtime
+        self.db_path.unlink()
+        for suffix in ["-wal", "-shm"]:
+            p = Path(f"{self.db_path}{suffix}")
+            if p.exists():
+                p.unlink()
+        self.assertFalse(self.db_path.exists())
+
+        # Clear L1 to force SQLite disk access
+        with self.cache._l1_lock:
+            self.cache._l1_cache.clear()
+
+        # Database should be auto-created on next get/set without crashing
+        res = self.cache.get("medical-mcp", "search-medical-literature", args)
+        self.assertIsNone(res)  # Cache miss because file was freshly recreated
+        self.assertTrue(self.db_path.is_file())
+
+        # Verify new record can be saved into the auto-recreated database
+        ok = self.cache.set("medical-mcp", "search-medical-literature", args, {"treatment": "membrane stabilized"})
+        self.assertTrue(ok)
+        saved = self.cache.get("medical-mcp", "search-medical-literature", args)
+        self.assertEqual(saved, {"treatment": "membrane stabilized"})
+
+    def test_11_telemetry_includes_file_exists(self):
+        """Verify telemetry statistics include file_exists status."""
+        stats = self.cache.get_telemetry_stats()
+        self.assertIn("file_exists", stats)
+        self.assertTrue(stats["file_exists"])
+        self.assertEqual(stats["status"], "healthy")
 
 
 if __name__ == "__main__":

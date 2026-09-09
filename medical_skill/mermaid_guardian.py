@@ -179,7 +179,9 @@ class MermaidUnicodeGuardian:
                 ))
 
             # 4. Check for Thai/Non-ASCII in Node IDs (e.g. คนไข้["คนไข้"] or หมอ --> พยาบาล)
-            thai_node_id_matches = re.finditer(r'([\u0E00-\u0E7F][\u0E00-\u0E7F0-9_]*)\s*(\[|\(|\{|\-\-|\-\.\-|==>|-->)', line)
+            # Mask double-quoted strings first to avoid false positives on Thai text inside valid labels
+            line_outside_quotes = re.sub(r'"[^"\n]*"', '""', line)
+            thai_node_id_matches = re.finditer(r'([\u0E00-\u0E7F][\u0E00-\u0E7F0-9_]*)\s*(\[|\(|\{|\-\-|\-\.\-|==>|-->)', line_outside_quotes)
             for m in thai_node_id_matches:
                 invalid_id = m.group(1)
                 errors.append(MermaidSyntaxErrorDetail(

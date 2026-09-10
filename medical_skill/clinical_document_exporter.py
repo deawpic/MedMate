@@ -14,12 +14,110 @@ Architecture:
 import logging
 import os
 from pathlib import Path
+import re
 import subprocess
 import sys
 import tempfile
 from typing import Any, Dict, List, Optional, Union
 
 logger = logging.getLogger("MedMate.DocumentExporter")
+
+# Detection Regexes for ASCII art / boxes / tables
+BOX_DRAWING_REGEX = re.compile(r'[\u2500-\u257F]')
+ASCII_BOX_BORDER_REGEX = re.compile(r'^\s*(?:\+[=\-+]{2,}\+\s*)+$')
+ASCII_FLOWCHART_ARROW_REGEX = re.compile(r'(?:\[.+?\]|\|.+?\|)\s*(?:-{2,}>|={2,}>)\s*(?:\[.+?\]|\|.+?\|)')
+ASCII_TREE_REGEX = re.compile(r'[\u251C\u2514\u2502\u2500]?\s*[├└][─\-]+')
+MARKDOWN_TABLE_SEPARATOR_REGEX = re.compile(r'^\s*\|(?:\s*:?-+:?\s*\|)+\s*$')
+MERMAID_BLOCK_REGEX = re.compile(r'```mermaid\s*\n.*?```', re.DOTALL | re.IGNORECASE)
+
+
+def detect_ascii_tables_or_diagrams(text: str) -> List[Dict[str, Any]]:
+    """
+    Scans markdown text (excluding valid ```mermaid ... ``` code blocks)
+    for forbidden ASCII text diagrams, ASCII box drawings, and ASCII border tables.
+    Returns list of detected violations with line number, content, type, and recommendation.
+    """
+    violations: List[Dict[str, Any]] = []
+    lines = text.splitlines()
+    in_mermaid = False
+
+    for idx, line in enumerate(lines, 1):
+        stripped = line.strip()
+        if stripped.lower().startswith("```mermaid"):
+            in_mermaid = True
+            continue
+        if in_mermaid and stripped.startswith("```"):
+            in_mermaid = False
+            continue
+        if in_mermaid:
+            continue
+
+        # 1. Check ASCII box or table border (e.g. +------+------+ or +======+======+)
+        if ASCII_BOX_BORDER_REGEX.match(stripped):
+            violations.append({
+                "line": idx,
+                "content": stripped,
+                "type": "ascii_table_border",
+                "recommendation": "Replace ASCII border table with standard Markdown table (| ... |)."
+            })
+        # 2. Check ASCII tree branch symbols (e.g. ├─, └─, ├──, └──)
+        elif ASCII_TREE_REGEX.search(stripped):
+            violations.append({
+                "line": idx,
+                "content": stripped,
+                "type": "ascii_tree_diagram",
+                "recommendation": "Use Mermaid flowchart (flowchart TD/LR) or Markdown table instead of ASCII tree structure."
+            })
+        # 3. Check Unicode box-drawing characters (e.g. ┌, ─, ━, ┃, ├, └, etc.)
+        elif BOX_DRAWING_REGEX.search(stripped):
+            violations.append({
+                "line": idx,
+                "content": stripped,
+                "type": "box_drawing_characters",
+                "recommendation": "Use Mermaid diagram (```mermaid ... ```) for diagrams or Markdown table (| ... |) for tables."
+            })
+        # 4. Check ASCII flowchart arrow connections in text (e.g. [Step 1] ---> [Step 2])
+        elif ASCII_FLOWCHART_ARROW_REGEX.search(stripped):
+            violations.append({
+                "line": idx,
+                "content": stripped,
+                "type": "ascii_flowchart_arrow",
+                "recommendation": "Convert ASCII arrow flowchart into a native Mermaid diagram (flowchart TD/LR)."
+            })
+
+    return violations
+
+
+def audit_document_formatting(markdown_text: str) -> Dict[str, Any]:
+    """
+    Audits clinical markdown text for compliance with:
+    1. Mermaid Diagram protocol (Rule 2.7)
+    2. Markdown Table protocol (Rule 2.4 & 2.6)
+    3. Absence of forbidden ASCII diagrams and tables
+    """
+    mermaid_matches = MERMAID_BLOCK_REGEX.findall(markdown_text)
+
+    # Count markdown table separators
+    table_separator_count = 0
+    for line in markdown_text.splitlines():
+        if MARKDOWN_TABLE_SEPARATOR_REGEX.match(line):
+            table_separator_count += 1
+
+    violations = detect_ascii_tables_or_diagrams(markdown_text)
+    passed = len(violations) == 0
+
+    return {
+        "passed": passed,
+        "has_mermaid": len(mermaid_matches) > 0,
+        "mermaid_block_count": len(mermaid_matches),
+        "has_markdown_table": table_separator_count > 0,
+        "markdown_table_count": table_separator_count,
+        "violations": violations,
+        "violation_count": len(violations),
+        "summary": "Document formatting fully compliant (Mermaid & Markdown tables)" if passed
+                   else f"Found {len(violations)} ASCII formatting violations that must be converted to Mermaid or Markdown table."
+    }
+
 
 
 def get_pdf_export_guidance() -> str:
@@ -45,11 +143,12 @@ def export_clinical_markdown(
     markdown_content: str,
     filename: str,
     output_dir: Optional[Path] = None,
-    include_pdf_guidance: bool = True
+    include_pdf_guidance: bool = False
 ) -> Path:
     """
     Saves clinical report into ./output/<filename>.md with UTF-8 encoding (Rule 2.6).
-    Optionally appends the standardized PDF/Print guidance callout box.
+    Clean Medical Record Protocol: PDF/Print guidance is displayed in chat responses
+    only and is excluded from saved files by default (include_pdf_guidance=False).
     """
     base_dir = output_dir or (Path(__file__).resolve().parents[1] / "output")
     base_dir.mkdir(parents=True, exist_ok=True)
@@ -58,6 +157,14 @@ def export_clinical_markdown(
         filename += ".md"
 
     target_file = base_dir / filename
+
+    # Audit markdown content against ASCII text tables and diagrams protocol (Rule 2.4, 2.6, 2.7)
+    audit = audit_document_formatting(markdown_content)
+    if not audit["passed"]:
+        logger.warning(
+            f"ASCII Formatting Violations detected in {filename} ({audit['violation_count']} issues): "
+            f"{[v['type'] for v in audit['violations']]}"
+        )
 
     content_parts = [f"# {title}\n"]
     content_parts.append(markdown_content.strip())

@@ -223,5 +223,10 @@ python -m medical_skill.clinical_normalizer --export
 python -m medical_skill.clinical_normalizer --vacuum
 ```
 
+---
 
+## 7. Presentation & Documentation Protocol: Mermaid Diagrams & Markdown Tables (Anti-ASCII Standard)
 
+In all clinical responses and exported files (`./output/*.md`):
+1. **Mermaid Exclusivity for Visuals:** All clinical algorithms, pathophysiology pathways, timeline progressions, and workflows must be rendered with ````mermaid ```` code blocks adhering to Unicode safety rules (Rule 2.7). Plain ASCII text art, box-and-arrow drawings (`+---+`, `--->`), and ASCII tree pipes (`├──`, `└──`) are strictly prohibited.
+2. **Markdown Tables Exclusivity for Structured Data:** All diagnostic tables, lab panels, entity extractions, and clinical comparisons must be formatted as standard GFM Markdown tables (`| ... |`). ASCII bordered tables (`+===+`, `+---+`, `┌─┬─┐`) and plain-text space-padded pseudo-tables are strictly prohibited.

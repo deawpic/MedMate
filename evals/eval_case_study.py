@@ -444,6 +444,22 @@ class ComprehensiveMedicalEvaluator:
             "sanitized_markdown": audit["sanitized_markdown"]
         }
 
+    def evaluate_markdown_tables_and_mermaid(self, markdown_text: str) -> Dict[str, Any]:
+        """Validates that clinical outputs use Mermaid for diagrams and Markdown tables for data, prohibiting ASCII text."""
+        from medical_skill.clinical_document_exporter import audit_document_formatting
+        audit = audit_document_formatting(markdown_text)
+        return {
+            "benchmark": "mermaid-and-markdown-table-protocol",
+            "status": "PASS" if audit["passed"] else "FAIL",
+            "has_mermaid": audit["has_mermaid"],
+            "has_markdown_table": audit["has_markdown_table"],
+            "mermaid_block_count": audit["mermaid_block_count"],
+            "markdown_table_count": audit["markdown_table_count"],
+            "violations": audit["violations"],
+            "violation_count": audit["violation_count"],
+            "summary": audit["summary"]
+        }
+
 if __name__ == "__main__":
     evaluator = ComprehensiveMedicalEvaluator()
     print("============================================================")
@@ -602,6 +618,24 @@ if __name__ == "__main__":
     """
     mermaid_res = evaluator.evaluate_mermaid_diagrams(sample_mermaid_doc)
     print(f"[*] Mermaid Unicode Safety Guardian: Status = {mermaid_res['status']} ({mermaid_res['block_count']} diagram block tested)")
+
+    # Test Mermaid & Markdown Table Protocol Evaluator (Anti-ASCII text)
+    sample_clinical_doc = """
+    ## ตารางเปรียบเทียบผลแล็บ
+    | การตรวจ | ผลตรวจ | ค่าอ้างอิง | แปลผล |
+    | :--- | :--- | :--- | :--- |
+    | Serum Creatinine | 2.4 mg/dL | 0.7 - 1.2 | สูงผิดปกติ (Prerenal AKI) |
+    | Anion Gap | 23 mEq/L | 8 - 12 | HAGMA |
+
+    ## ผังขั้นตอนการรักษา
+    ```mermaid
+    flowchart LR
+        StepA["แรกรับ ER"] --> StepB["ให้ IV Normal Saline"]
+        StepB --> StepC["Continuous Regular Insulin"]
+    ```
+    """
+    fmt_res = evaluator.evaluate_markdown_tables_and_mermaid(sample_clinical_doc)
+    print(f"[*] Mermaid & Markdown Table Protocol: Status = {fmt_res['status']} (Mermaid: {fmt_res['has_mermaid']}, Tables: {fmt_res['has_markdown_table']}, Violations: {fmt_res['violation_count']})")
 
     print("============================================================")
     print("All 10 Case Study Ground Truth & Clinical Protocol Evaluators Verified!")

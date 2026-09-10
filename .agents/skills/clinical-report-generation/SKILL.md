@@ -35,12 +35,17 @@ This skill produces professional, standardized clinical documentation, SOAP note
 ## 3. Markdown-Native Architecture & Math/Chemistry Preservation (Rule 2.8)
 
 MedMate operates on a **Markdown-Native Architecture**:
-1. **Preservation of Clinical Formulas**:
+1. **Mermaid Diagrams & Markdown Tables Mandatory (Zero ASCII Art/Tables):**
+   - **Diagrams & Flowcharts:** All clinical pathways, patient admission workflows, diagnostic algorithms, and care timelines MUST be represented using **Mermaid diagrams (````mermaid ... ````)** compliant with Unicode safety rules (ASCII node IDs, quoted labels, `<br/>` line breaks).
+   - **Tables & Structured Data:** All clinical entity summaries, lab panels, medications, and comparative lists MUST be formatted as **GFM Markdown tables (`| ... |`)**.
+   - **Strict ASCII Ban:** Never generate or save ASCII text diagrams (e.g., `+---+`, `--->`, `├──`, `└──`) or ASCII border tables (`+===+`, `+---+`, `┌─┬─┐`) in reports or chat responses.
+2. **Preservation of Clinical Formulas**:
    - Math and chemical formulas (e.g., $[H^+] = 24 \times \frac{PCO_2}{[HCO_3^-]}$, $Na^+, K^+, \beta\text{-OHB}$) are kept in native $\LaTeX$ / KaTeX syntax to guarantee zero distortion.
-2. **Zero Conversion Fragility**:
+3. **Zero Conversion Fragility**:
    - Eliminates unstable conversions to HTML/PDF/DOCX/ODT that suffer from multi-OS font bugs, Thai tone mark clipping, and broken nested list indentation.
-3. **Built-in PDF & Printing Advisory Requirement**:
-   - Whenever clinicians or users request a PDF or ask to print the document, provide the standardized guidance callout box recommending modern tools with native KaTeX/Mermaid support (Obsidian, VS Code, Typora, Chrome/Edge Markdown Viewer).
+4. **Built-in PDF & Printing Advisory in Chat Only (แสดงในแชทเท่านั้น ไม่บันทึกลงไฟล์):**
+   - Whenever clinicians or users request a PDF or ask to print the document, provide the standardized guidance callout box in the **chat response ONLY**.
+   - **Never append this guidance into the saved `.md` file in `./output/`**, keeping exported clinical documentation strictly focused on patient data without external software usage notes.
 
 ---
 

@@ -82,6 +82,14 @@ Prevents agent tool-calling and subprocess traps across Windows, macOS, and Linu
 - **Safe Subprocess Pattern:** Write code to a `tempfile.NamedTemporaryFile(suffix='.py', encoding='utf-8')` and execute via `subprocess.run([sys.executable, script_path], capture_output=True, text=True, timeout=timeout)`.
 - **Automatic Execution Wrapper:** Use `medical_skill.clinical_document_exporter.run_safe_python_script(script_code, timeout=60)` for all dynamic Python evaluations.
 
+### Step 7: Diagram & Table Format Guardrail (`clinical_document_exporter.py`)
+
+Enforces Mermaid diagrams for visuals and GFM Markdown tables for data representation across all agent responses and saved documentation:
+- **Mermaid Exclusivity for Visuals:** Enforces ````mermaid ```` code blocks for all clinical pathways, timelines, and decision trees.
+- **Prohibition of ASCII Art/Diagrams:** Intercepts and flags plain text ASCII diagrams, ASCII boxes (`+---+`, `--->`), and ASCII trees (`├──`, `└──`).
+- **Markdown Tables Exclusivity for Tabular Data:** Enforces standard GFM Markdown tables (`| ... |`) for labs, entity listings, and metrics.
+- **Prohibition of ASCII Tables:** Intercepts and flags ASCII box-drawing tables (`+===+===+`, `+---+---+`, `┌─┬─┐`) and plain-text space-padded tables.
+
 ## Best Practices
 
 - ✅ Let Guardian wrap all external tool calls automatically

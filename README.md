@@ -26,6 +26,7 @@
   - [ขั้นตอนที่ 4: เริ่มต้นแชตใช้งาน](#ขั้นตอนที่-4-เริ่มต้นแชตใช้งาน)
 - [🧪 การรัน Benchmark และ Evaluation Harness](#-การรัน-benchmark-และ-evaluation-harness)
 - [💡 ตัวอย่างสถานการณ์และการสั่งใช้งานจริง (Production Use Cases)](#-ตัวอย่างสถานการณ์และการสั่งใช้งานจริง-production-use-cases)
+- [🚀 การปรับปรุงระบบด้วยโมเดลเอไอ (AI Model Enhancement)](#-การปรับปรุงระบบด้วยโมเดลเอไอ-ai-model-enhancement)
 - [🔐 นโยบายความปลอดภัยของข้อมูล (Data Isolation & Privacy)](#-นโยบายความปลอดภัยของข้อมูล-data-isolation--privacy)
 - [⚖️ ข้อพึงระวังตามหลักการกำกับดูแลทางการแพทย์ (Clinical Governance)](#️-ข้อพึงระวังตามหลักการกำกับดูแลทางการแพทย์-clinical-governance)
 
@@ -60,7 +61,7 @@ MedMate/
 │   └── scripts/
 │       └── seed_clinical_lexicon.py # Automated Seeder & Case Study Harvester
 ├── cache/                      # 🗄️ ฐานข้อมูล SQLite ของระบบแคชชั่วคราว (medical_mcp_cache.db)
-├── output/                     # 📤 โฟลเดอร์ส่งออกรายงานทางคลินิกและไฟล์สเปก
+├── output/                     # 📤 โฟลเดอร์ส่งออกรายงานทางคลินิก (รวมถึง medgemma_connect_plan.md)
 ├── evals/                      # 🧪 ระบบ Evaluation Harness วัดผลความแม่นยำทางการแพทย์
 │   ├── eval_case_study.py      # สคริปต์ตรวจให้คะแนนและเปรียบเทียบกับ Ground Truth (10 เคส)
 │   ├── test_clinical_document_exporter.py # ชุดทดสอบระบบสร้างเอกสาร Markdown และคำแนะนำพิมพ์ PDF
@@ -308,6 +309,33 @@ python3 .agents/skills/config_manager_skill/scripts/check_mcp_health.py
 1. **[Tier 1 - แพทย์]**: ปรับโดสยาผู้ป่วยโรคไต (CKD Stage 4), อัปเดต Clinical Trials มะเร็งปอด NSCLC จาก PubMed
 2. **[Tier 2 - นศพ.]**: สรุป Pathophysiology DKA, ถอดประวัติคนไข้ใน `RAG/case_study_01.txt` เป็น SOAP Note
 3. **[Tier 3 - คนทั่วไป]**: อธิบายอาการหน้ามืดจากความดันต่ำ (Orthostatic Hypotension) พร้อมเตือนข้อควรระวัง
+
+---
+
+## 🚀 การปรับปรุงระบบด้วยโมเดลเอไอ (AI Model Enhancement)
+
+เพื่อขยายขีดความสามารถของ **MedMate** ให้ก้าวข้ามข้อจำกัดด้านการประมวลผลข้อความทั่วไป และรองรับงานภาพถ่ายทางการแพทย์ (Multimodal Medical AI) ในระดับคลินิก ได้มีการจัดทำ **แผนยุทธศาสตร์และสถาปัตยกรรมทางเทคนิค: การยกระดับระบบ MedMate ด้วยโมเดลการแพทย์ MedGemma และ AI ทางเลือก (MedMate x MedGemma Integration Master Plan)**
+
+ผู้บริหารและผู้ดูแลระบบสามารถศึกษาแผนแม่บท รายละเอียดการประเมินความคุ้มค่า (TCO), การวิเคราะห์ฮาร์ดแวร์, และคู่มือติดตั้งระบบ (DevOps Runbook) ได้ที่:
+
+📄 **เอกสารฉบับเต็ม:** **[medgemma_connect_plan.md](medgemma_connect_plan.md)**
+
+### สรุปสาระสำคัญของแผนการปรับปรุงระบบ:
+1. **การเชื่อมต่อกับโมเดลการแพทย์ MedGemma (Google Health AI):**
+   - **MedGemma 4B / 27B (Multimodal):** รองรับการวิเคราะห์ภาพถ่ายรังสีวินิจฉัยความละเอียดสูง ภาพตัดขวาง 3 มิติ (3D CT/MRI volumes), เอกซเรย์ทรวงอก (CXR), ชิ้นเนื้อพยาธิวิทยา (Whole-Slide Histopathology), และการสกัดเวชระเบียน FHIR
+   - **ผลทดสอบทางการแพทย์โดดเด่น:** MedQA (+5%), EHRQA (+22%), 3D MRI Condition (+11%), และ RadGraph F1 30.3
+2. **สถาปัตยกรรมการติดตั้งที่ยืดหยุ่น (Zero-Infrastructure vs. On-Premises):**
+   - **Cloud-Native (Vertex AI Model Garden):** ไม่ต้องมีเซิร์ฟเวอร์ในพื้นที่ เริ่มต้นได้ทันทีในรูปแบบ Model-as-a-Service (MaaS) พร้อมฟังก์ชันลบข้อมูลส่วนบุคคล (Automated De-identification Engine) สอดคล้องตามเกณฑ์ PDPA/HIPAA
+   - **On-Premises Hardware (Data Sovereignty 100%):** สำหรับคลินิกและโรงพยาบาลที่ต้องการประมวลผลข้อมูลคนไข้ภายในระบบ LAN แบบ Air-Gapped โดยไม่ต้องส่งข้อมูลออกสู่อินเทอร์เน็ต:
+     - **AMD Strix Halo (Ryzen AI Max 395):** เด่นด้วย Unified Memory 128GB LPDDR5X (273 GB/s) รัน MedGemma 27B ได้อย่างคุ้มค่าในเครื่องขนาดกะทัดรัด (Mini PC) ประหยัดพลังงาน (55W–120W)
+     - **NVIDIA DGX Spark (GB10 Grace Blackwell):** เด่นด้วย 128GB Unified Memory พร้อมระบบนิเวศ CUDA/TensorRT-LLM แท้ 100% รองรับ Docker Image ต้นฉบับจาก Google ได้ทันที
+3. **การเปิดกว้างต่อโมเดลทางเลือกในตลาด (Alternative Medical AI Models):**
+   - ออกแบบระบบผ่าน **Model Context Protocol (MCP)** ทำให้ MedMate มี **Intelligent Model Router** สามารถสลับหรือผสมผสานการใช้งานร่วมกับโมเดลการแพทย์ชั้นนำอื่น เช่น:
+     - **BioMistral 7B:** โมเดลโอเพนซอร์สรวดเร็ว ประหยัด VRAM สำหรับงานสรุปประวัติข้อความ
+     - **Meditron 7B/70B:** ฝึกจากแนวทางเวชปฏิบัติสากล (Clinical Guidelines)
+     - **LLaVA-Med & BiomedCLIP:** เชี่ยวชาญงาน Visual QA 2D และการค้นหาภาพรังสีคล้ายกัน (Image Retrieval)
+     - **Med-Gemini / GPT-4o:** โมเดลเรือธงฝั่งคลาวด์สำหรับเคสซับซ้อนระดับสูง
+4. **มาตรฐานสากล 4 เสาหลัก:** ทำงานร่วมกับ **DICOMweb (WADO-RS)**, **HL7 FHIR R4**, **Orthanc Local PACS**, และ **MCP Server (`medgemma-mcp`)** โดยยังคงยึดหลักความปลอดภัยและบทบาทแพทย์ผู้ตรวจ (Human-in-the-Loop) เป็นสำคัญ
 
 ---
 

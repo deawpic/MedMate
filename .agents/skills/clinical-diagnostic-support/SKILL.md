@@ -25,27 +25,31 @@ This skill assists doctors (Tier 1) and medical students (Tier 2) in generating 
 
 ---
 
-## 2. Output Format
+## 2. Output Format (Markdown Table & Mermaid Flowchart)
 
-```text
-Problem Representation:
-A 58-year-old male with poorly controlled diabetes presenting with acute altered mental status, Kussmaul respiration, severe dehydration, hyperglycemia (480 mg/dL), and High Anion Gap Metabolic Acidosis (AG 23).
+### 2.1 Problem Representation
+> ผู้ป่วยชายไทยอายุ 58 ปี ประวัติเบาหวานควบคุมไม่ดี มาด้วยอาการซึมลงเฉียบพลัน หายใจหอบลึกแบบ Kussmaul ขาดน้ำรุนแรง น้ำตาลในเลือดสูง 480 mg/dL และมีภาวะ High Anion Gap Metabolic Acidosis (AG 23)
 
-Differential Diagnoses:
+### 2.2 Differential Diagnoses Table (Markdown Table)
 
-1. Diabetic Ketoacidosis (DKA) with Prerenal AKI [Most Likely]
-   - Supporting Evidence: Marked hyperglycemia (480 mg/dL), metabolic acidosis (pH 7.15, HCO3 9), positive urine ketones (4+), AG 23, Kussmaul breathing.
-   - Discriminator: Differentiated from HHS by significant acidosis and strong ketonemia.
+| ลำดับความน่าจะเป็น (Likelihood) | การวินิจฉัยแยกโรค (Diagnosis) | รหัสโรค (ICD-10) | หลักฐานทางคลินิกสนับสนุน (Supporting Evidence) | ข้อจำแนก / ยืนยัน (Discriminator / Key Tests) |
+| :--- | :--- | :--- | :--- | :--- |
+| **1. เป็นไปได้มากที่สุด (Most Likely)** | **Diabetic Ketoacidosis (DKA) with Prerenal AKI** | `E11.10`, `N17.9` | น้ำตาล 480 mg/dL, pH 7.15, $HCO_3^- = 9$, Urine Ketone 4+, Anion Gap 23, Kussmaul breathing | ต่างจาก HHS ตรงที่มี Acidosis ชัดเจนและคีโตนในปัสสาวะสูงมาก |
+| **2. ร่วมด้วย / เหลื่อมซ้อน (Possible / Overlap)** | **Hyperosmolar Hyperglycemic State (HHS)** | `E11.00` | น้ำตาลสูงรุนแรง, ขาดน้ำมาก, ซึมสับสน | ภาวะ Acidosis รุนแรงและ High AG บ่งชี้ไปทาง DKA หรือ Mixed DKA/HHS |
+| **3. ปัจจัยเสริมร่วม (Secondary Contributor)** | **Lactic Acidosis secondary to Sepsis / Dehydration** | `E87.2` | เม็ดเลือดขาวสูง, ขาดน้ำรุนแรง, ความดันโลหิตเริ่มลด | ตรวจ Serum Lactate level และ Blood hemoculture เพิ่มเติม |
 
-2. Hyperosmolar Hyperglycemic State (HHS) [Possible / Overlap]
-   - Supporting Evidence: Marked hyperglycemia, severe dehydration, altered sensorium.
-   - Counter-Evidence: Severe metabolic acidosis and high anion gap favor DKA/mixed picture.
+### 2.3 Diagnostic Decision Algorithm (Mermaid Flowchart)
 
-3. Lactic Acidosis secondary to Sepsis / Dehydration [Secondary Factor]
-   - Supporting Evidence: Leukocytosis, dehydration.
-   - Confirmatory Test: Serum Lactate level, Blood cultures.
-
-Recommended Next Diagnostic Steps:
-- Serial Electrolytes, venous blood gas, and beta-hydroxybutyrate.
-- Urine analysis and chest X-ray to identify precipitating infectious source.
+```mermaid
+flowchart TD
+    NodeA["<b>ผู้ป่วยเบาหวานที่มีภาวะซึมลงและหอบลึก</b><br/>DTX 480 mg/dL, AG 23"] --> NodeB{"ผลตรวจ Ketones & ABG"}
+    NodeB -- "pH < 7.30, HCO3 < 18<br/>Ketones Positive" --> NodeC["<b>DKA with Prerenal AKI</b><br/>ให้ IV Saline + Regular Insulin"]
+    NodeB -- "pH > 7.30, Osmolality > 320<br/>Ketones Minimal" --> NodeD["<b>HHS (Hyperosmolar State)</b><br/>เน้นการชดเชยสารน้ำอย่างระมัดระวัง"]
+    NodeC --> NodeE["เฝ้าระวัง Serum Potassium และ Anion Gap Closure"]
 ```
+
+> ⚠️ **Strict Ban on ASCII Text:** ห้ามนำเสนอการวินิจฉัยแยกโรคหรืออัลกอริทึมด้วย ASCII Text Art หรือ ASCII Box Drawings เด็ดขาด ทั้งในคำตอบและการบันทึกไฟล์รายงาน (Rule 2.4, 2.6, 2.7)
+
+### 2.4 Recommended Next Diagnostic Steps
+1. ติดตาม Serial Electrolytes, Venous Blood Gas และ Beta-hydroxybutyrate ทุก 2-4 ชั่วโมง
+2. ส่งตรวจ Urine analysis, Chest X-ray และ Blood culture เพื่อค้นหาตัวกระตุ้นการติดเชื้อ (Infectious precipitating source)

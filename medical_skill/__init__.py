@@ -38,13 +38,15 @@ def __getattr__(name: str):
             "find_system_chromium_binary", "generate_clinical_html", "convert_html_to_thai_pdf",
             "export_clinical_markdown", "run_safe_python_script", "export_clinical_docx",
             "export_clinical_odt", "check_document_system_health", "THAI_FONT_STACK", "get_thai_clinical_css",
-            "convert_markdown_file_to_pdf", "render_mermaid_to_svg"
+            "convert_markdown_file_to_pdf", "render_mermaid_to_svg", "get_pdf_export_guidance",
+            "detect_ascii_tables_or_diagrams", "audit_document_formatting"
         ):
             from .clinical_document_exporter import (
                 find_system_chromium_binary, generate_clinical_html, convert_html_to_thai_pdf,
                 export_clinical_markdown, run_safe_python_script, export_clinical_docx,
                 export_clinical_odt, check_document_system_health, THAI_FONT_STACK, get_thai_clinical_css,
-                convert_markdown_file_to_pdf, render_mermaid_to_svg
+                convert_markdown_file_to_pdf, render_mermaid_to_svg, get_pdf_export_guidance,
+                detect_ascii_tables_or_diagrams, audit_document_formatting
             )
             return locals()[name]
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
@@ -61,5 +63,6 @@ __all__ = [
     "find_system_chromium_binary", "generate_clinical_html", "convert_html_to_thai_pdf",
     "export_clinical_markdown", "run_safe_python_script", "export_clinical_docx",
     "export_clinical_odt", "check_document_system_health", "THAI_FONT_STACK", "get_thai_clinical_css",
-    "convert_markdown_file_to_pdf", "render_mermaid_to_svg"
+    "convert_markdown_file_to_pdf", "render_mermaid_to_svg", "get_pdf_export_guidance",
+    "detect_ascii_tables_or_diagrams", "audit_document_formatting"
 ]

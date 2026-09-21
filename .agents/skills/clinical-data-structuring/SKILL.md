@@ -50,6 +50,8 @@ If a category has no data in the source text, return an empty array `[]`.
 | **ผลแล็บ / สัญญาณชีพ (Labs & Vitals)** | Troponin T: 1450 ng/L (Elevated), BP: 78/48 mmHg | ความดันโลหิตต่ำรุนแรง (Hypotension) |
 | **เส้นเวลาทางคลินิก (Timeline)** | 2 ชม. ก่อนมา: เจ็บแน่นหน้าอกรุนแรง<br>แรกรับ ER: BP 78/48, EKG ST-elevation | Door-to-Needle / Door-to-Balloon window |
 
+> ⚠️ **Strict Ban on ASCII Text Tables & Diagrams:** ห้ามนำเสนอข้อมูลเวชระเบียนด้วยตัวอักษรตีกรอบ ASCII (`+---+`, `+===+`, `┌─┬─┐`) หรือเว้นวรรคช่องไฟแบบ plain text pseudo-table เด็ดขาด ทั้งในคำตอบสดและการบันทึกไฟล์ลงใน `./output/` (Rule 2.4, 2.6, 2.7)
+
 ### 3.2 Programmatic / JSON Schema Mode (สำหรับระบบ API หรือการประเมินผล Evaluator)
 หากผู้ใช้ระบุเจาะจงว่าต้องการ raw JSON ให้จัดรูปแบบตามสคีมา:
 

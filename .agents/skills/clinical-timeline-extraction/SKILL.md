@@ -30,7 +30,7 @@ Identify and extract:
 
 ---
 
-## 3. Output Formats (Table vs. JSON)
+## 3. Output Formats (Markdown Table & Mermaid Diagram vs. JSON)
 
 ### 3.1 Presentation Mode (Default for User Responses): Markdown Table
 เมื่อตอบหรือสรุปข้อมูลลำดับเวลาแก่ผู้ใช้ บุคลากรทางการแพทย์ หรือนักศึกษาแพทย์ ให้แสดงผลในรูปแบบ **ตาราง Markdown (Table)** เสมอ:
@@ -42,7 +42,19 @@ Identify and extract:
 | **09:25** (25 min post-door) | ตรวจ NCCT Brain: ASPECT score 9, ไม่พบภาวะเลือดออกในสมอง (No ICH) | Diagnostic Workup |
 | **09:45** (45 min post-door) | ให้ยาละลายลิ่มเลือด IV rt-PA (Alteplase) ภายในหน้าต่าง 4.5 ชม. | Treatment Intervention |
 
-### 3.2 Programmatic / JSON Schema Mode (สำหรับระบบ API หรือการประเมินผล Evaluator)
+### 3.2 Visual Progression Mode: Mermaid Diagram
+หากต้องการนำเสนอเป็นผังเวลาเชิงภาพ ให้ใช้ **Mermaid Diagram (````mermaid ... ````)** เสมอ โดยปฏิบัติตามกฎ Unicode Safety (Node ID เป็น ASCII, ข้อความครอบ `["..."]`):
+
+```mermaid
+flowchart LR
+    T1["<b>07:30</b><br/>Onset: แขนขาอ่อนแรง พูดไม่ชัด"] --> T2["<b>09:00</b> (Door)<br/>ถึง ER, NIHSS 16, Stroke Code"]
+    T2 --> T3["<b>09:25</b> (25m)<br/>NCCT Brain: No ICH, ASPECT 9"]
+    T3 --> T4["<b>09:45</b> (45m)<br/>IV rt-PA (Door-to-Needle 45m)"]
+```
+
+> ⚠️ **Strict Ban on ASCII Timelines:** ห้ามวาดเส้นเวลาด้วยข้อความ ASCII หรือผังต้นไม้แบบข้อความ (เช่น ❌ ห้ามใช้ `[07:30] ---> [09:00]`, `├──`, `└──`, หรือกล่องข้อความ ASCII) โดยเด็ดขาด ทั้งในคำตอบและการบันทึกไฟล์
+
+### 3.3 Programmatic / JSON Schema Mode (สำหรับระบบ API หรือการประเมินผล Evaluator)
 หากผู้ใช้ระบุเจาะจงว่าต้องการ raw JSON ให้จัดรูปแบบตามสคีมา:
 
 ```json
